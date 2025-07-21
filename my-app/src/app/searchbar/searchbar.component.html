@@ -1,0 +1,10 @@
+<div class="search-wrapper">
+  <img src="assets/Search.png" alt="Search" class="search-icon" />
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()"
+    placeholder="Search for products..."
+    class="form-control search-input"
+  />
+</div>

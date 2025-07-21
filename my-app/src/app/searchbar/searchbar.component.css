@@ -1,0 +1,33 @@
+.search-icon{
+    position: absolute;
+    top: 25%;
+    left: 16px;
+    height: 24px;
+    width: 24px;
+
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 55px;
+  color: #00000066;
+  background-color: #F0F0F0;
+  border: none;
+  border-radius: 999px; /* circular shape */
+  height: 48px;
+  outline: none;
+}
+
+
+@media (max-width: 576px) {
+  .search-input {
+   display: none;
+  }
+}
+
