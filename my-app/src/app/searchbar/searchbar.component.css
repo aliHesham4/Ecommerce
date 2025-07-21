@@ -22,6 +22,7 @@
   border-radius: 999px; /* circular shape */
   height: 48px;
   outline: none;
+  width: 100%;
 }
 
 
@@ -29,5 +30,10 @@
   .search-input {
    display: none;
   }
+
+  .search-icon{
+    display: none;
+  }
+
 }
 

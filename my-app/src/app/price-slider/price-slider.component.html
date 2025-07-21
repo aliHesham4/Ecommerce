@@ -1,0 +1,43 @@
+<div class="range-container">
+  <!-- Track Between Sliders -->
+  <div class="slider-track" [ngStyle]="getTrackStyle()"></div>
+
+  <!-- Min Slider -->
+  <input
+    type="range"
+    [min]="min"
+    [max]="max"
+    [(ngModel)]="minValue"
+    (change)="onMinChange()"
+  />
+
+  <!-- Max Slider -->
+  <input
+    type="range"
+    [min]="min"
+    [max]="max"
+    [(ngModel)]="maxValue"
+    (change)="onMaxChange()"
+  />
+
+  <!-- Min Value Label -->
+  <div
+    class="price-values min-price"
+    [ngStyle]="{
+      left: ((minValue - min) / (max - min)) * 100 + '%'
+    }"
+  >
+    ${{ minValue }}
+  </div>
+
+  <!-- Max Value Label -->
+  <div
+    class="price-values max-price"
+    [ngStyle]="{
+      left: ((maxValue - min) / (max - min)) * 100 + '%'
+    }"
+  >
+    ${{ maxValue }}
+  </div>
+</div>
+

@@ -15,15 +15,15 @@
 h3{
     font-family: 'Inter', sans-serif;
     color: white;
-    text-align: center;
     padding: 10px;
+    padding-left: 0px;
     font-weight: 400;
     font-size: 14px;
+    text-align: center;
 }
 
 .custom-close{
     position: absolute;
-    right:  113px;
     top: 10%;
     height: 20px;
     width: 20px;
@@ -33,29 +33,26 @@ h3{
 }
 
 .logo{
-    width: 161.35px;
-    height: 48px;
+    width: 100%;
     
 }
 
 .cart,
 .profile,
-.bar{
-    width: 24px;
-    height: 24px;
+.bar,
+.blacksearch{
+    width: 100%;
+    max-width: 24px;
 }
 
-.bar{
+.bar,.blacksearch{
     display: none;
 }
 
-.utilities{
-    gap: 12px;
-}
 
 .custom-line{
   margin:auto;
-  width: 1240px;
+  width: 1328px;
   border: none;
   height: 1px;
   background-color: #0000001A;   
@@ -64,10 +61,16 @@ h3{
 
 }
 
+.location-part{
+    padding-left: 100px;
+    padding-right: 100px;
+    
+}
+
 
 @media  (max-width: 576px){  
    
-    .first-order{
+    .first-order,.header-part,.location-part{
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -84,11 +87,17 @@ h3{
         top: 5%;
     }
 
-    .bar{
+    .bar,.blacksearch{
         display: block;
-        margin-right: auto;
+        
     }
     
+
+    .custom-line{
+        width: 358px;
+    }
+
+   
 }
 
 
