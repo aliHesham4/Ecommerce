@@ -9,6 +9,15 @@
 
             </div>
         </div>
+
+        <div class="products d-flex flex-wrap ">
+            <app-productlayer *ngFor="let product of products" 
+                [imageUrl]="product.imageUrl" 
+                [title]="product.title" 
+                [rating]="product.rating"
+                [price]="product.price"
+                [oldPrice]="product.oldPrice">
+            </app-productlayer>
             
       
         

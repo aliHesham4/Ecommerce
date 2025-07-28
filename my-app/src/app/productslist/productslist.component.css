@@ -2,7 +2,7 @@ h4{
     font-family: inter, sans-serif;
     font-weight: 700;
     font-size: 32px;
-    font-style: bold;
+    
 }
 
 p{
@@ -23,5 +23,15 @@ h3{
 
 h3, p {
   margin: 0;
+}
+
+.summary{
+    padding-bottom: 10px;
+}
+
+
+.products{
+    column-gap: 16px;
+    row-gap: 16px;
 }
 
