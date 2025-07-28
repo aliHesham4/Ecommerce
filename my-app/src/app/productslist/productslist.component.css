@@ -35,3 +35,30 @@ h3, p {
     row-gap: 16px;
 }
 
+
+.custom-line{
+    border: 1px solid #E5E5E5;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.btn-primary{
+    background-color: white;
+    color: black;
+    font-family: inter,sans serif;
+    font-size: 14px;
+    font-weight: 400; 
+    border: 1;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.btnn img{
+    margin-left: 8px;
+}
+
+
+.btnp img{
+    margin-right: 8px;
+}

@@ -1,0 +1,57 @@
+.footer{
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+.logos{
+    gap: 20px;
+    display: flex;
+    justify-content: left;
+    
+}
+.footer-logo{
+    width: 161px;
+    height: 45px;
+}
+
+
+/*Fonts*/
+h4,h3{
+    font-family: inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 22px;
+}
+
+h3{
+    font-size: 16px;
+}
+
+
+h5{
+    font-family: inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+
+/* Button Styles */
+.btnW{
+ background-color: white;
+}
+.btnB{
+background-color: black;
+}
+
+.btnW,.btnB{
+width: 28px;
+height: 28px;
+border-radius: 999px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+

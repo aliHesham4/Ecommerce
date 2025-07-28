@@ -3,7 +3,6 @@
     padding: 20px;
     border-radius: 10px;
     border: 1px solid lightgray;
-    padding-bottom: 40px;
 }
 
 
@@ -30,6 +29,7 @@
 .apply{
     background-color: #000;
     color: white;
+    border-color:black ;
     font-family: inter,sans-serif;
     font-size: 14px;
     font-weight: 500;
@@ -37,4 +37,5 @@
     border-radius: 999px;
     width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
 }
