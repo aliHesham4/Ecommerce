@@ -7,6 +7,7 @@
     display: flex;
     justify-content: left;
     
+    
 }
 .footer-logo{
     width: 161px;
@@ -32,6 +33,7 @@ h5{
     font-family: inter, sans-serif;
     font-size: 16px;
     font-weight: 500;
+    letter-spacing: 2px;
 }
 
 
@@ -52,6 +54,15 @@ display: flex;
 align-items: center;
 justify-content: center;
 border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.custom-line{
+    border: 1px solid;
+    align-items: center;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+
 }
 
 
