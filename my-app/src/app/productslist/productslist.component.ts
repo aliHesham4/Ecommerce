@@ -73,10 +73,29 @@ export class ProductslistComponent {
 
     
   ];
+
+  currentpage=1;
+  itemsperpage=4;
+
+
+get PaginatedProducts(){
+  const start= (this.currentpage-1) * this.itemsperpage;
+  return this.products.slice(start,start+ this.itemsperpage );
+}
+
+get totalPages(){
+  return Math.ceil(this.products.length / this.itemsperpage);
+}
+
+changePage(page: number) {
+  this.currentpage = page;
+  window.scrollTo(0, 0); 
 }
 
 
 
+
+}
 
 
 

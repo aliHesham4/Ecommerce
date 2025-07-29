@@ -2,7 +2,7 @@
         <div class="summary d-flex justify-content-between ">
             <div><h4>Products</h4></div>
             <div class="d-flex align-items-center gap-3"> 
-            <div><p>Showing 1-10 of 100 Products</p></div>
+            <div><p>Showing 1-{{itemsperpage}} of {{products.length}} Products</p></div>
             <div><p>Sort by:</p></div>
             <div><h3>Most Popular</h3></div>
             <img src="assets/arrow-down.png" alt="arrow-down Icon" class="arrow-down">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="products d-flex flex-wrap ">
-            <app-productlayer *ngFor="let product of products" 
+            <app-productlayer *ngFor="let product of PaginatedProducts" 
                 [imageUrl]="product.imageUrl" 
                 [title]="product.title" 
                 [rating]="product.rating"
@@ -20,17 +20,22 @@
             </app-productlayer>
         </div>
         <div class="custom-line"></div>
-        <div class="slides d-flex  justify-content-between">
-            <div class="col-2 previous d-flex justify-content-start">
-                <button class="btnp btn-primary"><img src="assets/arrow-left-real.png" alt="Previous">Previous</button>
+
+        <!--Pagination-->
+        <nav class="pagination d-flex  justify-content-between" >
+            <div class="col-2 previous d-flex justify-content-start"[class.disabled]="currentpage===1">
+                <button class="btnp btn-primary" (click)=changePage(currentpage-1)><img src="assets/arrow-left-real.png" alt="Previous">Previous</button>
             </div>
-            <div class="col-8 d-flex range justify-content-center">
-                Page Numbers
+            <div class="col-8 d-flex range justify-content-center ">
+            <div class="repeat" *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.active]="currentpage === i + 1">
+               <button class="btn-page" (click)="changePage(i + 1)">{{ i + 1 }}</button>
+               </div>
             </div>
-            <div class="col-2 previous d-flex justify-content-end">
-                <button class="btnn btn-primary">Next<img src="assets/arrow-right-real.png" alt="Next"></button>
+            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage===totalPages">
+                <button class="btnn btn-primary" (click)=changePage(currentpage+1)>Next<img src="assets/arrow-right-real.png" alt="Next"></button>
             </div>
-    </div>
+        </nav>
             
       
         
