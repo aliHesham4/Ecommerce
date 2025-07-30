@@ -1,0 +1,9 @@
+@media (max-width: 576px) {
+    .vertical-sidebar{
+        display: none;
+    }
+
+    .products{
+        padding: 10px;
+    }
+}

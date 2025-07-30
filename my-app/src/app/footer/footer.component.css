@@ -65,4 +65,18 @@ border: 1px solid rgba(0, 0, 0, 0.2);
 
 }
 
+@media (max-width: 576px) {
+    .footer{
+        padding: 20px;
+    }
+    .footer-logo{
+        width: 100px;
+        height: 30px;
+    }
+    h3,h5{
+        font-size: 14px;
+    }
+    
+}
+
 

@@ -6,6 +6,7 @@
 
 }
 
+
 .image{
     mix-blend-mode: multiply;
     width: 100%;
@@ -49,3 +50,22 @@ p{
     font-weight: 400;
 }
 
+@media(max-width: 576px) {
+    .image-box{
+        width: 172px;
+        height: 174px;
+    }
+
+    .details{
+        width:172px
+    }
+    
+
+    h3, h4, h5 {
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+}

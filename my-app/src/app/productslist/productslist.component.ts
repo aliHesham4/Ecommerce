@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ProductlayerComponent } from '../productlayer/productlayer.component';
 import { NgFor } from '@angular/common';
+import { HostListener,OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-productslist',
@@ -8,7 +11,10 @@ import { NgFor } from '@angular/common';
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
-export class ProductslistComponent {
+export class ProductslistComponent implements OnInit {
+
+
+  
  products = [
     {
       imageUrl: 'assets/product1.png',
@@ -76,6 +82,25 @@ export class ProductslistComponent {
 
   currentpage=1;
   itemsperpage=4;
+
+  ngOnInit() {
+    this.updateItemsPerPage();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateItemsPerPage();
+  }
+
+  updateItemsPerPage() {
+    const width = window.innerWidth;
+
+    if (width >= 576) {
+      this.itemsperpage = 9; // Small screens only
+    } else {
+      this.itemsperpage = 6;
+    }
+  }
 
 
 get PaginatedProducts(){

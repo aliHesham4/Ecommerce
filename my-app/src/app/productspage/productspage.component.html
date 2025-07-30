@@ -1,0 +1,16 @@
+<!-- products-page.component.html -->
+<app-header></app-header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-3 pt-3 vh-100 vertical-sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class=" col-12 col-sm-9 pt-3 products">
+      <router-outlet></router-outlet> <!-- this renders child routes like ProductsList -->
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
+

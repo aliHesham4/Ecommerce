@@ -28,6 +28,11 @@ h3, p {
 .summary{
     padding-bottom: 10px;
 }
+.sort{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
 
 
 .products{
@@ -73,6 +78,12 @@ h3, p {
     height: 40px;
 }
 
+.btnp,.btnn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
 
 
 .disabled {
@@ -87,3 +98,38 @@ h3, p {
      
 }
 
+.filterbutton{
+        display: none;
+        
+    }
+
+
+@media (max-width: 576px){
+    .sort
+    {
+        display: none;
+    }
+
+    p{
+        font-size: 14px;
+    }
+    h4{
+        font-size: 24px;
+    }
+    
+    .filterbutton{
+        display: block;
+        
+    }
+
+    .products{
+        row-gap: 8px;
+        column-gap: 8px;
+        justify-content: center;
+    }
+
+    .app-product-layer {
+        width: 185px;
+    }
+
+}
