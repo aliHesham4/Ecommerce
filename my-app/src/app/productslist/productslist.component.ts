@@ -2,18 +2,24 @@ import { Component } from '@angular/core';
 import { ProductlayerComponent } from '../productlayer/productlayer.component';
 import { NgFor } from '@angular/common';
 import { HostListener,OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-productslist',
-  imports: [ProductlayerComponent, NgFor],
+  imports: [ProductlayerComponent, NgFor,RouterOutlet], // <-- Add RouterOutlet here
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
 export class ProductslistComponent implements OnInit {
 
+  constructor(private router: Router, private route: ActivatedRoute) {}
+  openPopup() {
+  this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
+}
 
+
+  
   
  products = [
     {

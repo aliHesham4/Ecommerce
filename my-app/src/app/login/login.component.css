@@ -1,7 +1,6 @@
 .logo{
     height: 45px;
     width: 161px;
-    
 }
 
 .details{
@@ -29,6 +28,10 @@
     
 }
 
+.login{
+    width: 100%;
+}
+
 
 
 .form-control{
@@ -36,7 +39,8 @@
    font-weight: 400;
    font-size: 14px;
    color: rgba(133, 141, 157, 1);
-   width: 358px;
+   max-width: 358px;
+    width: 100%;
 }
 
 .remember-me{
@@ -67,6 +71,7 @@ h4{
     font-family: Inter, sans-serif;
     font-weight: 700;
     font-size: 24px;
+    text-align: center;
     color: rgba(34, 43, 85, 1);
 }
 

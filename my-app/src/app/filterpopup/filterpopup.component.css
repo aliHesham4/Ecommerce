@@ -1,0 +1,60 @@
+.filterpopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* dim background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.close-button {
+  background-color: #000;
+}
+.filterbox {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+
+.h4{
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    font-style: bold;
+}
+
+.custom-line{
+    border: 1px solid #E5E5E5;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.arrow-up{
+    width: 16px;
+    height: 16px;
+}
+
+.apply{
+    background-color: #000;
+    color: white;
+    border-color:black ;
+    font-family: inter,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 999px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+
