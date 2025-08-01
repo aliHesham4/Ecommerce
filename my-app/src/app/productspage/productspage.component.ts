@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {HeaderComponent } from '../header/header.component';
+import {HeaderComponent } from '../Done/header/header.component';
 import { sidebarComponent} from '../sidebar/sidebar.component';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../Done/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 
 

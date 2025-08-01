@@ -8,9 +8,9 @@
     <div class="col-12 pt-3 header-part">
        <div class="row align-items-center g-3">
       <div class="col-4 col-sm-2 d-flex gap-3 justify-content-sm-start"> <img src="assets/bar.png" alt="bar" class="bar"/> <img src="assets/LDC.png" alt="LDC" class="logo" /></div>
-      <div class="col-4 col-sm-9 d-flex d-sm-block justify-content-end"><app-searchbar></app-searchbar></div>
+      <div class="col-4 col-sm-9 d-flex d-sm-block justify-content-end" ><div [class.hide]="isPopupSearch"><app-searchbar></app-searchbar></div></div>
       <div class="col-4 col-sm-1  gap-2 d-flex justify-content-end justify-content-end"style="flex-wrap: wrap;">
-        <img src="assets/blacksearch.png" alt="blacksearch" class="blacksearch"/>
+        <img src="assets/blacksearch.png" alt="blacksearch" class="blacksearch" (click)="openPopup()"/>
         <img src="assets/Cart.png" alt="Cart" class="cart"/> 
         <img src="assets/Profile.png" alt="Profile" class="profile" /></div>
      </div>

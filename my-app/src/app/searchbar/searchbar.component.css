@@ -27,13 +27,13 @@
 
 
 @media (max-width: 576px) {
-  .search-input {
-   display: none;
-  }
-
-  .search-icon{
+  .search-wrapper{
     display: none;
   }
 
+
+  .show {
+    display: block;
+  }
 }
 

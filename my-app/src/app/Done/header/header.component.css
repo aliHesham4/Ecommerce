@@ -67,6 +67,10 @@ h3{
     
 }
 
+ .hide{
+        display: none!important;
+    }
+
 
 @media  (max-width: 576px){  
    
@@ -97,6 +101,7 @@ h3{
         width: 358px;
     }
 
+   
    
 }
 

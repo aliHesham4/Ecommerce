@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PriceSliderComponent } from '../price-slider/price-slider.component';
+import { PriceSliderComponent } from '../Done/price-slider/price-slider.component';
 
 
 @Component({

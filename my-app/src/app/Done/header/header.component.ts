@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { SearchbarComponent } from '../searchbar/searchbar.component';
+import { SearchbarComponent } from '../../searchbar/searchbar.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -13,6 +14,16 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+
+   constructor(private router: Router, private route: ActivatedRoute) {}
+
+   openPopup() {
+  this.router.navigate(['/products', { outlets: { popup: ['search'] } }]);
+}
+
+get isPopupSearch(): boolean {
+  return this.router.url.includes('(popup:search)');
+}
 
   showColumn = true;
 
