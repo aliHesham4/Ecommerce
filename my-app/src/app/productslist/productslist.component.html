@@ -36,7 +36,7 @@
                <button class="btn-page" (click)="changePage(i + 1)">{{ i + 1 }}</button>
                </div>
             </div>
-            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage===totalPages">
+            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage===totalPages || totalPages === 0">
                 <button class="btnn btn-primary" (click)=changePage(currentpage+1)>Next<img src="assets/arrow-right-real.png" alt="Next"></button>
             </div>
         </nav>

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ProductlayerComponent } from '../productlayer/productlayer.component';
 import { NgFor } from '@angular/common';
 import { HostListener,OnInit } from '@angular/core';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
+import { SearchService } from '../shared/search.service';
+import {Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -11,9 +14,11 @@ import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
-export class ProductslistComponent implements OnInit {
+export class ProductslistComponent implements OnInit,OnDestroy {
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService) {}
+  searchTerm: string = '';
+  private sub!: Subscription;
   openPopup() {
   this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
 }
@@ -91,7 +96,19 @@ export class ProductslistComponent implements OnInit {
 
   ngOnInit() {
     this.updateItemsPerPage();
+    this.sub= this.searchService.searchTerm$.subscribe(term => {
+      this.searchTerm = term;
+    });
+
   }
+
+
+  ngOnDestroy() {
+  if (this.sub) {
+    this.sub.unsubscribe();
+  }
+}
+
 
   @HostListener('window:resize')
   onResize() {
@@ -108,14 +125,18 @@ export class ProductslistComponent implements OnInit {
     }
   }
 
-
+get filteredProducts() {
+  return this.products.filter(product =>
+    product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+  );
+}
 get PaginatedProducts(){
   const start= (this.currentpage-1) * this.itemsperpage;
-  return this.products.slice(start,start+ this.itemsperpage );
+  return this.filteredProducts.slice(start,start+ this.itemsperpage );
 }
 
 get totalPages(){
-  return Math.ceil(this.products.length / this.itemsperpage);
+  return Math.ceil(this.filteredProducts.length / this.itemsperpage);
 }
 
 changePage(page: number) {

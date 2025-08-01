@@ -1,6 +1,7 @@
 import { Component,Output,EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
+import { SearchService } from '../shared/search.service';
 
 
 @Component({
@@ -10,10 +11,10 @@ import { FormsModule } from '@angular/forms'
   styleUrls: ['./searchbar.component.css']
 })
 export class SearchbarComponent {
-  searchTerm: string = '';
-  @Output() search = new EventEmitter<string>();
+  searchTerm= '';
+  constructor(private searchService: SearchService) {}
   onSearch() {
-    this.search.emit(this.searchTerm);
+    this.searchService.setSearchTerm(this.searchTerm);
   }
 
 }
