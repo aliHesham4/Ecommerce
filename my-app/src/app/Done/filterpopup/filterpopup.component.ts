@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { PriceSliderComponent } from '../price-slider/price-slider.component';
 
@@ -21,6 +21,12 @@ closePopupApply(){
  this.router.navigate(['/products',{ outlets: { popup: null } }]);
 
 }
+
+ @ViewChild('priceSlider') priceSlider!: PriceSliderComponent;
+
+  onSliderChange() {
+    this.priceSlider.onSliderChange();
+  }
 
 
 }
