@@ -14,6 +14,14 @@ import { Router } from '@angular/router';
 export class SearchbarComponent {
   searchTerm= '';
   constructor(private searchService: SearchService, private router: Router) {}
+
+  searchOrnot(){
+    if(!this.isInPopupRoute) {
+      this.onSearch();
+    }
+
+
+  }
   onSearch() {
     this.searchService.setSearchTerm(this.searchTerm);
   }

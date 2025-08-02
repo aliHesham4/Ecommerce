@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 
@@ -20,5 +20,10 @@ closePopupApply(){
  this.router.navigate(['/products',{ outlets: { popup: null } }]);
 
 }
+
+@ViewChild('searchbar') searchbar!: SearchbarComponent;
+  onSearch() {
+    this.searchbar.onSearch();
+  }
 
 }

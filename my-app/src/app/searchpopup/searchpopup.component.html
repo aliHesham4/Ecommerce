@@ -2,11 +2,11 @@
       <div class="searchpopup" (click)="closePopup()">
         
       <div class="searchbox "(click)= "$event.stopPropagation()">
-        <app-searchbar></app-searchbar>
+        <app-searchbar #searchbar></app-searchbar>
         
       
         <div class="apply-button d-flex justify-content-center pt-4">
-            <button class="btn btn-primary apply " (click) ="closePopupApply()">Apply Search</button>
+            <button class="btn btn-primary apply " (click) ="searchbar.onSearch();closePopupApply()">Apply Search</button>
         </div>
 
        </div>
