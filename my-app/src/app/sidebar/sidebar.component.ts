@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PriceSliderComponent } from '../Done/price-slider/price-slider.component';
 
 
@@ -9,5 +9,10 @@ import { PriceSliderComponent } from '../Done/price-slider/price-slider.componen
   styleUrls: ['./sidebar.component.css']
 })
 export class sidebarComponent {
+  @ViewChild('priceSlider') priceSlider!: PriceSliderComponent;
+
+  onSliderChange() {
+    this.priceSlider.onSliderChange();
+  }
 
 }

@@ -11,10 +11,10 @@
            <img src="assets/arrow-up.png" alt="arrow-up icon" class="arrow-up" /> 
         </div>
         <div class="price-range">
-            <app-price-slider></app-price-slider>
+            <app-price-slider #priceSlider></app-price-slider>
         </div>
         <div class="apply-button d-flex justify-content-center pt-4">
-            <button class="btn btn-primary apply ">Apply Filter</button>
+            <button class="btn btn-primary apply "(click)="onSliderChange()">Apply Filter</button>
         </div>
 
        </div>

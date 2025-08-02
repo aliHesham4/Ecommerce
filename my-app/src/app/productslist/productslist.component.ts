@@ -4,6 +4,7 @@ import { NgFor } from '@angular/common';
 import { HostListener,OnInit } from '@angular/core';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 import { SearchService } from '../shared/search.service';
+import { PriceService } from '../shared/price.service';
 import {Subscription } from 'rxjs';
 
 
@@ -16,9 +17,11 @@ import {Subscription } from 'rxjs';
 })
 export class ProductslistComponent implements OnInit,OnDestroy {
 
-  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService) {}
   searchTerm: string = '';
   private sub!: Subscription;
+  private priceSub!: Subscription;
+  
   openPopup() {
   this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
 }
@@ -92,12 +95,18 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   ];
 
   currentpage=1;
-  itemsperpage=4;
+  itemsperpage=9;
+  priceRange = { min: 0, max: 250 };
 
   ngOnInit() {
     this.updateItemsPerPage();
     this.sub= this.searchService.searchTerm$.subscribe(term => {
       this.searchTerm = term;
+      this.updateItemsPerPage(); // Update items per page on search term change
+    });
+    this.priceSub = this.priceService.priceRange$.subscribe(range => {
+      this.priceRange = range;
+      this.updateItemsPerPage(); // Update items per page on price range change
     });
 
   }
@@ -107,7 +116,10 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   if (this.sub) {
     this.sub.unsubscribe();
   }
+  if (this.priceSub) {
+    this.priceSub.unsubscribe();
 }
+  }
 
 
   @HostListener('window:resize')
@@ -117,17 +129,20 @@ export class ProductslistComponent implements OnInit,OnDestroy {
 
   updateItemsPerPage() {
     const width = window.innerWidth;
+    const filteredCount = this.filteredProducts.length;
 
-    if (width >= 576) {
-      this.itemsperpage = 9; // Small screens only
+    if (width <= 576) {
+      this.itemsperpage = Math.min(6, filteredCount);
     } else {
-      this.itemsperpage = 6;
+      this.itemsperpage = Math.min(9, filteredCount);
     }
   }
 
 get filteredProducts() {
   return this.products.filter(product =>
-    product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+    product.title.toLowerCase().includes(this.searchTerm.toLowerCase())&&
+    product.price >= this.priceRange.min &&
+    product.price <= this.priceRange.max
   );
 }
 get PaginatedProducts(){

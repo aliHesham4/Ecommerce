@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PriceService } from '../../shared/price.service';
 
 @Component({
   selector: 'app-price-slider',
@@ -11,8 +12,15 @@ import { CommonModule } from '@angular/common';
 export class PriceSliderComponent {
   min = 0;
   max = 250;
-  minValue = 50;
-  maxValue = 200;
+  minValue = 0;
+  maxValue = 250;
+
+  constructor(private priceService: PriceService) {}
+
+  onSliderChange(){
+    this.priceService.setPriceRange({ min: this.minValue, max: this.maxValue });
+   
+  }
 
   onMinChange() {
     if (this.minValue > this.maxValue - 1) {
