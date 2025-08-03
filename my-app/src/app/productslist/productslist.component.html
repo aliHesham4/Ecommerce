@@ -2,7 +2,9 @@
         <div class="summary d-flex justify-content-between ">
             <div><h4>Products</h4></div>
             <div class="d-flex align-items-center gap-3"> 
-            <div class="d-flex align-items-center gap-2"><p>Showing 1-{{itemsperpage}} of {{products.length}} Products</p>
+            <div class="d-flex align-items-center gap-2"><p *ngIf="filteredProducts.length > 0">Showing  {{ (currentpage - 1) * itemsperpage + 1 }} - 
+                                                            {{ getMin(currentpage * itemsperpage, filteredProducts.length) }} 
+                                                               of {{ filteredProducts.length }} Products</p>
             <img src="assets/filterbutton.png" alt="filterbutton Icon" class="filterbutton" (click)="openPopup()">
             
             </div>
@@ -37,7 +39,7 @@
                <button class="btn-page" (click)="changePage(i + 1)">{{ i + 1 }}</button>
                </div>
             </div>
-            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage===totalPages || totalPages === 0">
+            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage>=totalPages">
                 <button class="btnn btn-primary" (click)=changePage(currentpage+1)>Next<img src="assets/arrow-right-real.png" alt="Next"></button>
             </div>
         </nav>

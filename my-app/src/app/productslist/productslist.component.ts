@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ProductlayerComponent } from '../productlayer/productlayer.component';
-import { NgFor } from '@angular/common';
+import { NgFor,NgIf } from '@angular/common';
 import { HostListener,OnInit } from '@angular/core';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 import { SearchService } from '../shared/search.service';
@@ -11,7 +11,7 @@ import {Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-productslist',
-  imports: [ProductlayerComponent, NgFor,RouterOutlet], // <-- Add RouterOutlet here
+  imports: [ProductlayerComponent, NgFor,NgIf,RouterOutlet], // <-- Add RouterOutlet here
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
@@ -89,7 +89,16 @@ export class ProductslistComponent implements OnInit,OnDestroy {
       title: 'Loose Fit Bermuda Shorts',
       rating: 3.0,
       price: 80,
+    },
+
+    {
+      imageUrl: 'assets/product10.png',
+      title: 'Blue Regular Polo T-shirt',
+      rating: 4.0,
+      price: 200,
+      oldPrice: 220
     }
+    
 
     
   ];
@@ -97,6 +106,7 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   currentpage=1;
   itemsperpage=9;
   priceRange = { min: 0, max: 250 };
+ // noItems = false;
 
   ngOnInit() {
     this.updateItemsPerPage();
@@ -130,11 +140,16 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   updateItemsPerPage() {
     const width = window.innerWidth;
     const filteredCount = this.filteredProducts.length;
+    // if (filteredCount === 0) {
+    //   this.noItems = true;
+    // }else{
+    //   this.noItems = false;
+    // }
 
     if (width <= 576) {
-      this.itemsperpage = Math.min(6, filteredCount);
+      this.itemsperpage = 6;
     } else {
-      this.itemsperpage = Math.min(9, filteredCount);
+      this.itemsperpage = 9;
     }
   }
 
@@ -157,6 +172,11 @@ get totalPages(){
 changePage(page: number) {
   this.currentpage = page;
   window.scrollTo(0, 0); 
+}
+
+
+getMin(a: number, b: number): number {
+  return Math.min(a, b);
 }
 
 
