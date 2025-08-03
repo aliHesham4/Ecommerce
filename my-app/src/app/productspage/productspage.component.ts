@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {HeaderComponent } from '../Done/header/header.component';
-import { sidebarComponent} from '../sidebar/sidebar.component';
+import { sidebarComponent} from '../Done/sidebar/sidebar.component';
 import { FooterComponent } from '../Done/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 

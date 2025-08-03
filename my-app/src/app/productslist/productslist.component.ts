@@ -106,7 +106,7 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   currentpage=1;
   itemsperpage=9;
   priceRange = { min: 0, max: 250 };
- // noItems = false;
+ 
 
   ngOnInit() {
     this.updateItemsPerPage();
@@ -140,12 +140,7 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   updateItemsPerPage() {
     const width = window.innerWidth;
     const filteredCount = this.filteredProducts.length;
-    // if (filteredCount === 0) {
-    //   this.noItems = true;
-    // }else{
-    //   this.noItems = false;
-    // }
-
+   
     if (width <= 576) {
       this.itemsperpage = 6;
     } else {

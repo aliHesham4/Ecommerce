@@ -4,7 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { ProductspageComponent } from './productspage/productspage.component';
 import { PagenotfoundComponent } from './Done/pagenotfound/pagenotfound.component';
 import { FilterpopupComponent } from './Done/filterpopup/filterpopup.component';
-import { SearchpopupComponent } from './searchpopup/searchpopup.component';
+import { SearchpopupComponent } from './Done/searchpopup/searchpopup.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch:'full'},
@@ -18,6 +19,7 @@ export const routes: Routes = [
      }
      ]
      },
+     {path: 'register',component: RegisterComponent},
     { path: '**', component: PagenotfoundComponent },
      
 ]

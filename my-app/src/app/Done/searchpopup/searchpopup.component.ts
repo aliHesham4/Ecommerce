@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SearchbarComponent } from '../searchbar/searchbar.component';
+import { SearchbarComponent } from '../../searchbar/searchbar.component';
 
 @Component({
   selector: 'app-searchpopup',

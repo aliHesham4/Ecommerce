@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SearchbarComponent } from '../../searchbar/searchbar.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,RouterLink } from '@angular/router';
+
 
 
 
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, SearchbarComponent],
+  imports: [CommonModule, SearchbarComponent,RouterLink],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']

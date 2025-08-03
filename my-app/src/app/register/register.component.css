@@ -14,7 +14,7 @@
     margin: auto;
 }
 
-.email{
+.email,.password{
     margin-bottom: 16px;
 }
 
@@ -28,7 +28,7 @@
     
 }
 
-.login{
+.signup{
     width: 100%;
 }
 
