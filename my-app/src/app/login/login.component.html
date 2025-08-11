@@ -2,23 +2,36 @@
 <img src="assets/LDC.png" class="logo"alt="logo"> 
 <div><h4>Sign in to your account</h4></div>
 
-
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
 <div class=" login">
 <div class="email">
 
     <label for="emailaddress" class="form-label"><h3>E-mail</h3></label>
-  <input type="email" class="form-control" id="emailaddress" placeholder="E-mail">
+  <input type="email" class="form-control" id="emailaddress" placeholder="E-mail" formControlName="email" required>
+  <small class="error" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+      <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</small>
+      <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</small>
+    </small>
 
 </div>
 
 <div class="password">
 
     <label for="password" class="form-label"><h3>Password</h3></label>
-  <input type="password" class="form-control" id="password" placeholder="Password">
+  <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" required>
+  <small class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+      <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</small>
+      <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</small>
+    </small> 
 
 </div>
 
+<div>
+  <small class="error mt-2" *ngIf="loginForm.get('email')?.errors?.['emailExists']">Email or password is incorrect, Please try again</small>
 </div>
+
+</div>
+</form>
 
 <div class="options">
 
@@ -32,13 +45,14 @@
 </div>
 
 <div class="button">
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button type="submit" class="btn btn-primary" (click)="onSubmit()">Sign in</button>
 </div>
 
 <div class="register">
   <p>Don't have an account? <a routerLink="/register" style="color: rgba(69, 67, 174, 1); ">Sign Up</a></p>
 
 </div>
+
 
 </div>
 <app-footer></app-footer>

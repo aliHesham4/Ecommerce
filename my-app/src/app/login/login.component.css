@@ -94,6 +94,14 @@ a{
 }
 
 
+small{
+    font-family: Inter, sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    color: #FF0000;
+}
+
+
 
 @media (max-width: 567px){
     .details{
