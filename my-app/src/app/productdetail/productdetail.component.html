@@ -18,28 +18,46 @@
         </div>
     </div>
 
-    <div class="col-12 col-sm-9 d-flex main-image">
+    <div class="col-12 col-sm-9 d-flex main-image justify-content-center">
         <img [src]="selected" alt="Main Product Image" class="main-img">
 
     </div>
     </div>
     </div>
     <div class="col-12 col-sm-6 details">
-        <h1 class="product-title">Product Title</h1>
-        <p class="product-rating">4.5/5</p>
-        <div class="price">$99.99
+        <div><h1 class="product-title mt-2 mt-sm-0">One Life Graphic Tshirt</h1>
+        <p class="product-rating">4.5/<span style="color: rgba(0, 0, 0, 0.6);">5</span></p>
+        <div class="price d-flex gap-2">$99.99
         <div class="old-price">$129.99</div>
         <div class="discount">20% </div>
         </div>
-        <div class="details"></div>
-        <div class="custom-line"></div>
-       <div class="bars">
-       <div> quantity</div>
-       <div> <button class="btn btn-primary add-to-cart">Add to Cart</button> </div>
+        <div class="description">This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric,
+         it offers superior comfort and style.</div>
+        <hr>
+        </div>
+       <div class="bars d-flex align-items-center gap-3 justify-content-between">
+       <div> <button class="btn btn-primary quantity gap-4"><img src="assets/subtract.png" alt="subtract" class="subtract" (click)="subtract()">
+        {{itemquantity}}<img src="assets/add.png" alt="add" class="add" (click)="add()"></button>
+    </div>
+        <button class="btn btn-primary add-to-cart">Add to Cart</button>
         </div>
         
 
 
 </div>
+</div>
+<div class="recommendations">
+    <div class="recommend-title"><h1>You might also like</h1></div>
+    <div class="products d-flex gap-3">
+    <app-productlayer *ngFor="let product of getRandomProducts()" 
+        [imageUrl]="product.imageUrl" 
+        [title]="product.title" 
+        [rating]="product.rating"
+        [price]="product.price"
+        [oldPrice]="product.oldPrice">
+    </app-productlayer>
+    </div>
+</div>
+
 </div>
 <app-footer></app-footer>

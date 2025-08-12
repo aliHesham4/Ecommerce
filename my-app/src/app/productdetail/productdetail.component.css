@@ -1,7 +1,7 @@
 .preview-1,
 .preview-2,
 .preview-3 {
-  width: 152px;
+  max-width: 152px;
   height: 167px;
   border-radius: 16px;
   background-color: white;
@@ -24,12 +24,102 @@
 
 
 .main-image{
-    width: 444px;
+    max-width: 444px;
     height: 530px;
 }
 
+.add-to-cart{
+    background-color: black;
+    color: white;
+    font-family: inter,sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    width: 100%;
+    border-color: black;
+    border-radius: 99px;
+    padding: 10px;
+    
+    
+}
 
-@media(max-width: 576px) {
+.quantity{
+    display: flex;
+    align-items: center;
+    color: black;
+    background-color: rgba(240, 240, 240, 1);
+    border-radius: 99px;
+    border-color:  rgba(240, 240, 240, 1);
+    padding: 10px;
+}
+
+h1,h2{
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 1);
+}
+
+h2{
+    font-size: 48px;
+}
+
+
+.recommend-title{
+    display: flex;
+    justify-content: center;
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.description,p{
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+p{
+    color:black
+}
+
+.price,.old-price{
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: rgba(0, 0, 0, 1);
+    
+}
+
+.old-price{
+    color: rgba(0, 0, 0, 0.3);
+    text-decoration: line-through;
+}
+
+.discount{
+ font-family: Inter, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(255, 51, 51, 1);
+    background-color: rgba(255, 51, 51, 0.1);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+
+
+@media(max-width: 768px) {
     .preview-1,.preview-2,.preview-3 {
         width: 106px;
         height: 112px;
@@ -45,5 +135,10 @@
         display: flex;
         justify-content: center;
         flex-direction: column-reverse;
+    }
+
+    .products{
+        justify-content: center;
+
     }
 }
