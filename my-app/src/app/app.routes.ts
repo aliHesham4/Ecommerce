@@ -6,6 +6,7 @@ import { PagenotfoundComponent } from './Done/pagenotfound/pagenotfound.componen
 import { FilterpopupComponent } from './Done/filterpopup/filterpopup.component';
 import { SearchpopupComponent } from './Done/searchpopup/searchpopup.component';
 import { RegisterComponent } from './register/register.component';
+import { ProductdetailComponent } from './productdetail/productdetail.component';
 
 export const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch:'full'},
@@ -20,6 +21,7 @@ export const routes: Routes = [
      ]
      },
      {path: 'register',component: RegisterComponent},
+     {path: 'product/:id', component: ProductdetailComponent},
     { path: '**', component: PagenotfoundComponent },
      
 ]

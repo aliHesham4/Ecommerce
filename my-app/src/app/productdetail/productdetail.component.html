@@ -1,0 +1,45 @@
+<app-header></app-header>
+<div class="container">
+<div class="row ">
+    <div class="col-12 col-sm-6 images">
+    <div class="row gap-2 layout">
+     <div class=" col-12 col-sm-3 d-flex flex-sm-column gap-2 justify-sm-content-center threepreviews">
+        <div class="preview-1">
+         <img src="assets/productdetail.png" alt="Product 1" class="img" (click)="onPreviewClick('assets/productdetail.png')" [class.active]="selected === 'assets/productdetail.png'">
+
+        </div>
+
+        <div class="preview-2">
+            <img src="assets/productdetail2.png" alt="Product 2" class="img" (click)="onPreviewClick('assets/productdetail2.png')" [class.active]="selected === 'assets/productdetail2.png'">
+        </div>
+
+        <div class="preview-3">
+            <img src="assets/productdetail3.png" alt="Product 3" class="img" (click)="onPreviewClick('assets/productdetail3.png')" [class.active]="selected === 'assets/productdetail3.png'">
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-9 d-flex main-image">
+        <img [src]="selected" alt="Main Product Image" class="main-img">
+
+    </div>
+    </div>
+    </div>
+    <div class="col-12 col-sm-6 details">
+        <h1 class="product-title">Product Title</h1>
+        <p class="product-rating">4.5/5</p>
+        <div class="price">$99.99
+        <div class="old-price">$129.99</div>
+        <div class="discount">20% </div>
+        </div>
+        <div class="details"></div>
+        <div class="custom-line"></div>
+       <div class="bars">
+       <div> quantity</div>
+       <div> <button class="btn btn-primary add-to-cart">Add to Cart</button> </div>
+        </div>
+        
+
+
+</div>
+</div>
+<app-footer></app-footer>

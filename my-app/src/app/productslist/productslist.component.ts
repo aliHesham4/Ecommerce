@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ProductlayerComponent } from '../productlayer/productlayer.component';
+import { ProductlayerComponent } from '../Done/productlayer/productlayer.component';
 import { NgFor,NgIf } from '@angular/common';
 import { HostListener,OnInit } from '@angular/core';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';

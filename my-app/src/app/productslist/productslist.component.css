@@ -10,6 +10,8 @@ p{
     font-weight: 400;
     font-size: 16px;
     color: #00000099;
+    padding-left: 1cm;
+    text-align: center;
     
 }
 
@@ -111,7 +113,7 @@ h3, p {
     }
 
     p{
-        font-size: 14px;
+        font-size: 11px;
     }
     h4{
         font-size: 24px;
