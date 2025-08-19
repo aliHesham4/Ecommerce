@@ -50,6 +50,32 @@ p{
     font-weight: 400;
 }
 
+.stars {
+  --star-color: white;
+  --star-background: #fc0;    /* yellow color for filled stars */
+  --rating: 0;                /* default rating if not passed */
+  
+  font-size: 20px;  
+  font-family: Times;           /* font that supports ★ */
+  line-height: 1;               /* keeps stars aligned properly */
+  display: inline-block;        /* so stars act like text */
+}
+
+.stars::before {
+  content: "★★★★★";   
+  letter-spacing: 2px; 
+  
+  background: linear-gradient(
+    90deg,
+    var(--star-background) calc(var(--rating) / 5 * 100%),
+    var(--star-color) calc(var(--rating) / 5 * 100%)
+  );
+  
+  background-clip: text;  /* apply gradient only inside text */
+  -webkit-text-fill-color: transparent; /* hide text color so gradient shows */
+}
+
+
 @media(max-width: 576px) {
     .image-box{
         width: 172px;

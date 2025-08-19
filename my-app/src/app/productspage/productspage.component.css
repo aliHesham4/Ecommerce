@@ -7,3 +7,16 @@
         padding: 10px;
     }
 }
+
+@media(min-width:577px) and (max-width:992px) {
+.vertical-sidebar{
+    display: none;
+}
+
+.products{
+    justify-content: center;
+    flex: 0 0 100%
+}
+
+}
+    

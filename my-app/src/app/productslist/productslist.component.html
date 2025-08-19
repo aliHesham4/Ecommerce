@@ -15,7 +15,6 @@
              </div>
             </div>
         </div>
-        <div class="mobile-products">
         <div class="products d-flex flex-wrap ">
             <app-productlayer *ngFor="let product of PaginatedProducts" 
                 [imageUrl]="product.imageUrl" 
@@ -25,7 +24,7 @@
                 [oldPrice]="product.oldPrice">
             </app-productlayer>
         </div>
-        </div>
+        
         <div class="custom-line"></div>
 
         <!--Pagination-->

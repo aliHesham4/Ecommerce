@@ -130,8 +130,17 @@ h3, p {
         justify-content: center;
     }
 
-    .app-product-layer {
-        width: 185px;
-    }
+    
+
+}
+
+@media(min-width:577px) and (max-width:992px) {
+.filterbutton{
+    display: block;
+}
+
+.products{
+    justify-content: center;   
+}
 
 }

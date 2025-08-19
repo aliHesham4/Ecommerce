@@ -1,11 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ProductlayerComponent } from '../Done/productlayer/productlayer.component';
 import { NgFor,NgIf } from '@angular/common';
-import { HostListener,OnInit } from '@angular/core';
+import { HostListener,OnInit,inject} from '@angular/core';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 import { SearchService } from '../shared/search.service';
 import { PriceService } from '../shared/price.service';
 import {Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 
 
@@ -131,15 +133,18 @@ export class ProductslistComponent implements OnInit,OnDestroy {
 }
   }
 
-
+private platformId = inject(PLATFORM_ID);
   @HostListener('window:resize')
   onResize() {
     this.updateItemsPerPage();
   }
 
   updateItemsPerPage() {
-    const width = window.innerWidth;
-    const filteredCount = this.filteredProducts.length;
+   let width=0
+   if (isPlatformBrowser(this.platformId)) {
+     width = window.innerWidth;
+   }
+   
    
     if (width <= 576) {
       this.itemsperpage = 6;
