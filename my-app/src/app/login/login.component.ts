@@ -4,6 +4,7 @@ import { FooterComponent } from '../Done/footer/footer.component';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { FormGroup,FormBuilder,ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,9 @@ import { FormGroup,FormBuilder,ReactiveFormsModule, Validators } from '@angular/
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  private APIurl="https://localhost:7096/api/Customer/login";
   loginForm!: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -25,14 +27,25 @@ export class LoginComponent {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    if (localStorage.getItem(email) === password) {
-      console.log('Login successful');
-      this.router.navigate(['/products']); 
-    } else {
-      this.loginForm.get('email')?.setErrors({ emailExists: true });
-      console.log('Email or password is incorrect');
+    if (this.loginForm.get('email')?.value=="" || this.loginForm.get('password')?.value==""){
+      this.loginForm.markAllAsTouched();
     }
+
+    else {
+      this.http.post(this.APIurl, { email, password }).subscribe({
+        next: (response) => {
+          console.log('Login successful', response);
+          this.router.navigate(['/products']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+          this.loginForm.get('email')?.setErrors({ invalidlogin: true });
+        }
+      });
+    }
+
   }
-
-
 }
+
+
+

@@ -8,11 +8,17 @@
             <img src="assets/filterbutton.png" alt="filterbutton Icon" class="filterbutton" (click)="openPopup()">
             
             </div>
-            <div class="sort">
+            <div class="sort position-relative" (click)="showOptions()">
             <div><p>Sort by:</p></div>
-            <div><h3>Most Popular</h3></div>
+            <div><h3>{{currentOption}}</h3></div>
             <img src="assets/arrow-down.png" alt="arrow-down Icon" class="arrow-down">
-             </div>
+            <ul *ngIf="displayOptions" class="sort-options">
+            <li (click)="sortProducts('Most Popular')">Most Popular</li>
+            <li (click)="sortProducts('Rating')">Best Rating</li>
+            <li (click)="sortProducts('Price: High to Low')">Price: High → Low</li>
+            <li (click)="sortProducts('Price: Low to High')">Price: Low → High</li>
+            </ul>
+            </div>
             </div>
         </div>
         <div class="products d-flex flex-wrap ">

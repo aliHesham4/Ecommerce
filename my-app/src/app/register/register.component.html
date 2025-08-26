@@ -1,10 +1,20 @@
-<div class="details vh-100 ">
+<div class="details ">
 <img src="assets/LDC.png" class="logo"alt="logo"> 
 <div><h4>Join Our Community</h4></div>
 
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
   
 <div class=" signup">
+
+  <div class="name">
+
+    <label for="name" class="form-label"><h3>Name</h3></label>
+  <input type="name" class="form-control" id="name" placeholder="Name" formControlName="name" required>
+  <div class="error" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+      <small *ngIf="registerForm.get('name')?.errors?.['required']">Name is required</small>
+    </div>
+
+</div>
 <div class="email">
 
     <label for="emailaddress" class="form-label"><h3>E-mail</h3></label>
@@ -12,7 +22,7 @@
   <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
       <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
       <small *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</small>
-      <small *ngIf="registerForm.get('email')?.errors?.['emailExists']">Email already exists</small>
+      <small *ngIf="registerForm.get('email')?.errors?.['emailexists']">Email already exists</small>
     </div>
 
 </div>
@@ -23,7 +33,8 @@
   <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" required>
   <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
       <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</small>
-      <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</small>
+      <small *ngIf="registerForm.get('password')?.errors?.['invalidpassword']">Password must be at least 8 characters,
+      it must contain at least one uppercase, one lowercase, one number, and one special character</small>
     </div>
 </div>
 <div class="confirm-password">
@@ -48,7 +59,7 @@
     <input type="checkbox" id="rememberMe">
     <label for="rememberMe" style="color: rgba(15, 23, 42, 1); font-size: 14px;" >Remember me</label>
   </div>
-  <div class="forgot-password">
+  <div class="forgot-password" style="display: none;">
     <a href="#" style="color: rgba(9, 9, 23, 1); font-size: 12px;">Forgot password?</a>
   </div>
 </div>

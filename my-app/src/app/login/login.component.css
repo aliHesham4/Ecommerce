@@ -12,6 +12,8 @@
     width: 358px;
     padding: 10px;
     margin: auto;
+    min-height: 100vh;
+    
 }
 
 .email{

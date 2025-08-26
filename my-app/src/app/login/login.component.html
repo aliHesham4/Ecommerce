@@ -1,4 +1,4 @@
-<div class="details vh-100 ">
+<div class="details ">
 <img src="assets/LDC.png" class="logo"alt="logo"> 
 <div><h4>Sign in to your account</h4></div>
 
@@ -21,13 +21,13 @@
   <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" required>
   <small class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
       <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</small>
-      <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</small>
+      
     </small> 
 
 </div>
 
 <div>
-  <small class="error mt-2" *ngIf="loginForm.get('email')?.errors?.['emailExists']">Email or password is incorrect, Please try again</small>
+  <small class="error mt-2" *ngIf="loginForm.get('email')?.errors?.['invalidlogin']">Email or password is incorrect, Please try again</small>
 </div>
 
 </div>

@@ -108,17 +108,20 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   currentpage=1;
   itemsperpage=9;
   priceRange = { min: 0, max: 250 };
+
+  displayProducts: ProductlayerComponent[] = [];
  
 
   ngOnInit() {
     this.updateItemsPerPage();
+    this.displayProducts = [...this.filteredProducts];
     this.sub= this.searchService.searchTerm$.subscribe(term => {
       this.searchTerm = term;
-      this.updateItemsPerPage(); // Update items per page on search term change
+      this.applyFilters();
     });
     this.priceSub = this.priceService.priceRange$.subscribe(range => {
       this.priceRange = range;
-      this.updateItemsPerPage(); // Update items per page on price range change
+      this.applyFilters(); 
     });
 
   }
@@ -140,7 +143,7 @@ private platformId = inject(PLATFORM_ID);
   }
 
   updateItemsPerPage() {
-   let width=0
+   let width=0;
    if (isPlatformBrowser(this.platformId)) {
      width = window.innerWidth;
    }
@@ -160,9 +163,10 @@ get filteredProducts() {
     product.price <= this.priceRange.max
   );
 }
+
 get PaginatedProducts(){
   const start= (this.currentpage-1) * this.itemsperpage;
-  return this.filteredProducts.slice(start,start+ this.itemsperpage );
+  return this.displayProducts.slice(start,start+ this.itemsperpage );
 }
 
 get totalPages(){
@@ -179,11 +183,38 @@ getMin(a: number, b: number): number {
   return Math.min(a, b);
 }
 
+displayOptions=false;
+currentOption="Most Popular";
 
+applyFilters() {
+  this.displayProducts = this.filteredProducts; 
+  this.sortProducts(this.currentOption);        
+  this.currentpage = 1;                          
+}
+
+
+showOptions(){
+  this.displayOptions=!this.displayOptions;
+}
+
+sortProducts(criteria:string){
+  this.displayOptions=false;
+  this.currentOption=criteria;
+  if(criteria==="Most Popular"){
+    this.displayProducts = [...this.filteredProducts];
+}
+
+ else if(criteria==="Rating"){
+  this.displayProducts.sort((a,b)=>b.rating-a.rating);
+}
+else if(criteria==="Price: Low to High"){
+  this.displayProducts.sort((a,b)=>a.price-b.price);
+}
+else if(criteria==="Price: High to Low"){
+  this.displayProducts.sort((a,b)=>b.price-a.price);
+}
 
 
 }
 
-
-
-
+}
