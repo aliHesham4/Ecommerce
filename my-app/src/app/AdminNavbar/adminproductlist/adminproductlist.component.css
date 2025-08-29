@@ -1,0 +1,123 @@
+body {
+   background-color: rgba(255, 249, 249, 0.712);   
+  
+}
+
+
+
+
+
+
+h2,h3{
+font-family: inter,sans-serif;
+font-size: 24px;
+font-weight: 500;
+color: rgba(51, 56, 67, 1);
+
+}
+
+h3{
+font-size: 14px;
+}
+
+a{
+    cursor: pointer;
+    color: inherit;
+}
+
+.add{
+    
+    background-color: rgba(92, 89, 232, 1);
+    font-family: inter,sans-serif;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+
+}
+
+.options{
+    color: rgba(102, 112, 133, 1);
+    font-family: inter,sans-serif;
+    font-size: 14px;
+    font-weight: 500px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 16px;
+    height: 40px;
+}
+
+
+
+.search-icon{
+    position: absolute;
+    top: 20%;
+    left: 10px;
+    height: 24px;
+    width: 24px;
+
+}
+
+.search-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 40px;
+  color: #00000066;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 4px; 
+  height: 40px;
+  outline: none;
+  width: 100%;
+}
+.search-wrapper {
+  position: relative;
+}
+
+.viewdata{
+  background-color: rgba(249, 249, 252, 1);
+  color: rgba(51, 56, 67, 1);
+  font-family: inter,sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.product-box{
+  border: 1px solid lightgray;
+  border-radius: 4px;
+   padding: 0; /* remove internal space if needed */
+  margin: 0;
+  
+
+}
+
+.productlist,.paging{
+  color: rgba(102, 112, 133, 1);
+  font-family: inter,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(249, 249, 252, 1);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.paging{
+  padding: 10px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.previous,.next{
+  background-color: rgba(222, 222, 250, 1);
+  color: rgba(92, 89, 232, 1);
+  
+}
+
+.num{
+  background-color: rgba(92, 89, 232, 1);
+  color: white;
+  
+}

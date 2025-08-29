@@ -1,0 +1,111 @@
+<div class="title">
+<h2> Add Product</h2>
+<h3><a routerLink="/admin/dashboard" class="text-decoration-none" style="color: rgba(92, 89, 232, 1);">Dashboard</a>  >   
+  <a routerLink="/admin/productlist" class="text-decoration-none"  style="color: rgba(92, 89, 232, 1);">Product</a> > 
+  <a routerLink="/admin/productlist/add-product" class="text-decoration-none"> Add Product</a></h3>
+</div>  
+<!-- -------------------------------------------------- -->
+<div class=" col-9 addingproduct">
+<!-- ------------------------------ -->
+<div class="generalinfo mt-2">
+<h2 style="font-size: 20px;">General Information</h2>
+<form [formGroup]="productForm" >
+  <div class="ProductName mb-3">
+    <label for="productName" class="form-label">Product Name</label>
+    <input type="text" id="productName" class="form-control" placeholder="Type product name here. . ." formControlName="productName">
+    <div *ngIf="productForm.get('productName')?.invalid && productForm.get('productName')?.touched" class="text-danger">
+      Product name is required.
+    </div>
+  </div>
+
+  <div class="Description ">
+    <label for="description" class="form-label">Description</label>
+    <textarea type="text" id="description" class="form-control noresize " placeholder="Type product description here. . ." formControlName="description" rows="3"></textarea>
+    <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-danger">
+      Description must be at least 10 characters.
+    </div>
+  </div>
+
+</form>
+
+</div>
+
+<!-- ----------------------------------------------------------- -->
+
+
+
+<div class="media">
+<h2 style="font-size: 20px;">Media</h2>
+<form [formGroup]="mediaForm">
+<label for="photo" class="form-label">Photo</label>
+<input type="file" id="fileInput" multiple (change)="onFilesSelected($event)"> 
+<div class="mediablock">
+  <label for="fileInput" class="custom-upload">Choose Files</label>
+    <div  class="lists" *ngIf="media.controls.length > 0">
+        <ul><li *ngFor="let control of media.controls; let i = index">
+        {{ control.value }}
+        <button type="button" class="removebtn" (click)="removeFile(i)">X</button>
+       </li>
+       </ul>
+     </div>
+    </div>
+
+  <small *ngIf="media.errors?.['maxNum']">You can upload a maximum of 3 images.</small>
+ </form>
+ 
+</div>
+
+<!-- ----------------------------   -->
+ <div class="pricing">
+  <h2 style="font-size: 20px;">Pricing</h2>
+  <form [formGroup]="priceForm">
+    <div class="baseprice mb-3">
+    <div>
+    <label for="baseprice" class="form-label">Base Price</label>
+    </div>
+    <div class="input-wrapper">
+    <img src="/assets/dollar.png" class="dollar" alt="dollar">
+    <input type="number" id="baseprice" class="form-control" placeholder="Type base price here. . ." formControlName="baseprice"></div>
+    <div *ngIf="priceForm.get('baseprice')?.invalid && priceForm.get('baseprice')?.touched" class="text-danger">
+     Base Price is required.
+    </div>
+    </div>
+    <div class="col-6">
+    <div class="Discount mb-3 ">
+    <label for="discount" class="form-label">Discount Type</label>
+     <div class="input-wrapper2">
+    <img src="/assets/arrow-down.png" class="down" alt="down">
+    <select id="discounttype" class="form-control " formControlName="discounttype" >
+     <option value="percentage" selected>Percentage</option>
+     <option value="bogo">Buy One Get One</option>
+     <option value="bogo">Membership</option>
+     <option value="seasonal">Seasonal</option>
+     </select>
+     </div>
+  </div>
+  <div class="Tax">
+    <label for="tax" class="form-label">Tax Class</label>
+    <div class="input-wrapper2">
+    <img src="/assets/arrow-down.png" class="down" alt="down">
+    <select id="tax" class="form-control " formControlName="taxclass" >
+     <option value="standard" selected>Standard</option>
+     <option value="low">Reduced</option>
+     <option value="no">No Tax</option>
+     </select>
+    </div>
+  </div>
+
+    </div>
+
+  </form>
+ </div>
+</div>
+
+
+
+
+
+<div class="col-3 additions">
+
+</div>
+        

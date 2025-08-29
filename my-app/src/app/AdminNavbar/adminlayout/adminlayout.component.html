@@ -1,0 +1,18 @@
+<div class="container-fluid mt-2">
+<div class="row">
+<div class="col-lg-2 col-3">
+    <img src="/assets/LDCadmin.png" class="logo" alt="logo" >
+    <img src ="/assets/LDCadminshortcut.png" class="ldc" alt="ldc">
+    <div class="categories mt-4">
+        <a routerLink="/admin/dashboard" routerLinkActive="active-link" class="Dashboard d-flex align-items-center gap-2 text-decoration-none"><img src="/assets/dashboard.png" class="dashboard" alt="dashboard"><h3>Dashboard</h3></a>
+        <a routerLink="/admin/productlist" routerLinkActive="active-link" class="Product List d-flex align-items-center gap-2 text-decoration-none"><img src="/assets/productlist.png" class="productlist" alt="productlist"><h3>Product List</h3></a>
+        <a routerLink="/admin/orders" routerLinkActive="active-link" class=" Orders d-flex align-items-center gap-2 text-decoration-none"><img src="/assets/orders.png" class="orders" alt="orders"><h3>Orders</h3></a>
+        <a routerLink="/admin/customers" routerLinkActive="active-link" class="Customers d-flex align-items-center gap-2 text-decoration-none"><img src="/assets/customers.png" class="customers" alt="customers"><h3>Customers</h3></a>
+
+    </div>
+</div>
+<div class="col-lg-10 col-9">
+      <router-outlet></router-outlet>
+    </div>
+    </div>
+

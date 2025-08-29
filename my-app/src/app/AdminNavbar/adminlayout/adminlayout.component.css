@@ -1,0 +1,52 @@
+h3{
+    font-family: inter,sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(102, 112, 133, 1);
+    margin-bottom: 0px;
+}
+
+.logo{
+  height: 34px;
+  width: 121px;
+  margin-left: 10px;
+}
+
+
+.ldc{
+    display: none;
+}
+
+.dashboard,.customers,.orders,.productlist {
+    padding: 10px;
+
+}
+.active-link {
+  border-radius: 8px; /* Optional for rounded edges */
+  background-color: purple; /* Optional light purple background */
+  transition: all 0.3s ease;
+}
+
+.active-link h3 {
+  color: white; /* Change text color to white */
+}
+.active-link img {
+  filter: brightness(0) invert(1); /* Converts the image to white */
+}
+
+
+
+
+@media (max-width: 576px) {
+    .ldc {
+        display: block;
+        width: 44px;
+        height: 34px;
+        margin: 10px auto;
+    }
+
+    .logo{
+        display: none;
+    }
+
+}

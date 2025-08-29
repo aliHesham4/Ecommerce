@@ -7,6 +7,12 @@ import { FilterpopupComponent } from './Done/filterpopup/filterpopup.component';
 import { SearchpopupComponent } from './Done/searchpopup/searchpopup.component';
 import { RegisterComponent } from './register/register.component';
 import { ProductdetailComponent } from './productdetail/productdetail.component';
+import { AdminLayoutComponent } from './AdminNavbar/adminlayout/adminlayout.component';
+import { AdminproductlistComponent } from './AdminNavbar/adminproductlist/adminproductlist.component';
+import { OrdersComponent } from './AdminNavbar/orders/orders.component';
+import { CustomersComponent } from './AdminNavbar/customers/customers.component';
+import { DashboardComponent } from './AdminNavbar/dashboard/dashboard.component';
+import { AddproductComponent } from './AdminNavbar/addproduct/addproduct.component';
 
 export const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch:'full'},
@@ -22,6 +28,15 @@ export const routes: Routes = [
 },
      {path: 'register',component: RegisterComponent},
      {path: 'product/:id', component: ProductdetailComponent},
+     {path: 'admin',component: AdminLayoutComponent,children: [
+    { path: '', redirectTo: 'productlist', pathMatch: 'full' }, // ✅ Default child
+    { path: 'productlist', component: AdminproductlistComponent },
+    {path:'productlist/add-product',component: AddproductComponent},
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'customers', component: CustomersComponent },
+    { path: 'orders', component: OrdersComponent }]},
+
+
     { path: '**', component: PagenotfoundComponent },
      
 ]

@@ -1,0 +1,85 @@
+<div class="row viewproducts p-2">
+    <div class="col-12 titles d-flex justify-content-between">
+        <div class="left">
+            <h2>Product</h2>
+            <h3><a routerLink="/admin/dashboard" class="text-decoration-none" style="color: rgba(92, 89, 232, 1);">Dashboard</a>  >   
+                <a routerLink="/admin/productlist" class="text-decoration-none">Product</a></h3>
+            
+                <div class="search-wrapper"> <img src="assets/Search.png" alt="Search" class="search-icon" /> 
+                <input type="text" class="form-control search-input"  [(ngModel)]="searchText" placeholder="Search Product ..." aria-label="Search">
+ 
+                </div>   
+                
+            </div>
+
+       
+       <div class="right ">
+            <div class="d-flex justify-content-end"><button class="btn btn-primary add " routerLink="/admin/productlist/add-product">+ Add Product</button></div>
+            <div class=" d-flex align-items-end gap-2 mt-2 twobuttons">
+             <button class="btn options d-flex gap-2 "><img src="/assets/calender.png" alt="calender"/>Select Dates</button>
+             <button class="btn options d-flex gap-2  "><img src="/assets/filteradmin.png" alt="filter"/>Filters</button>
+           </div>
+
+</div>
+
+</div>
+<div class="product-box mt-3 ">
+<div class=" col-12 viewdata border-bottom">
+    <div class="row">
+    <div class="col-3 product d-flex justify-content-between">
+     <div><input type="checkbox" [(ngModel)]="select"> 
+      Product
+     </div>
+     <div><img src="/assets/arrow-down.png" class="arrow" alt="arrow"></div>
+        </div>
+
+     <div class="col-1 SKU d-flex justify-content-center">
+            SKU
+        </div>
+
+    <div class="col-2 Categories d-flex justify-content-center">
+            Categories
+        </div>
+
+    <div class="col-1 d-flex justify-content-between">
+        Stock
+    <div><img src="/assets/arrow-down.png" class="arrow" alt="arrow"></div> 
+    </div>
+
+    <div class="col-1 d-flex justify-content-between">
+        Price
+    <div><img src="/assets/arrow-down.png" class="arrow" alt="arrow"></div>
+    </div>
+
+    <div class="col-2 d-flex justify-content-between Status">
+        Status
+    <div><img src="/assets/arrow-down.png" class="arrow" alt="arrow"></div>
+    </div>
+
+    <div class="col-1 d-flex justify-content-between Added">
+        Added
+    <div><img src="/assets/arrow-down.png" class="arrow" alt="arrow"></div>
+    </div>
+
+    <div class="col-1 d-flex justify-content-center Action">
+        Action
+    </div>
+
+    </div>
+</div>
+<!-- Temporary No Products Available -->
+<div class="productlist">
+No products available 
+</div>
+<!-- ------------------------ -->
+ <div class="paging d-flex justify-content-between align-items-center">
+<div> Showing 1-1 from 0</div>
+<div class="d-flex gap-2"> <button class="btn previous"><</button>
+<button class="btn num">1</button>
+<button class="btn next">></button>
+</div>
+
+ </div>
+</div>
+
+</div>
