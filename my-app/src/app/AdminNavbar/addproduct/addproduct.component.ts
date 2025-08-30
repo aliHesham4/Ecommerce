@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, FormArray, AbstractControl } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
+import { response } from 'express';
+import { error } from 'console';
 
 @Component({
   selector: 'app-addproduct',
@@ -29,7 +32,7 @@ categoryStatusForm: FormGroup;
 
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(10)]]
@@ -60,7 +63,7 @@ categoryStatusForm: FormGroup;
     });
     this.categoryStatusForm = this.fb.group({
       category: ['', Validators.required],
-      status: ['draft']
+      status: ['InStock']
     });
 
   this.shippingForm.get('isPhysical')?.valueChanges.subscribe((isPhysical: boolean) => {
@@ -80,6 +83,67 @@ categoryStatusForm: FormGroup;
 
   }
 
+onSave(){
+  if(this.productForm.invalid && this.mediaForm.invalid && this.priceForm.invalid
+   && this.inventoryForm.invalid && this.shippingForm.invalid && this.categoryStatusForm.invalid){
+   this.productForm.markAllAsTouched();
+  this.mediaForm.markAllAsTouched();
+  this.priceForm.markAllAsTouched();
+  this.inventoryForm.markAllAsTouched();
+  this.shippingForm.markAllAsTouched();
+  this.categoryStatusForm.markAllAsTouched();
+   }
+
+   const productImages = this.media.value.map((imageName: string) => ({
+    url: imageName
+  }));
+
+const data={
+name: this.productForm.get('productName')?.value,
+description: this.productForm.get('description')?.value,
+amount: this.priceForm.get('baseprice')?.value,
+type: this.categoryStatusForm.get('category')?.value,
+quantity: this.inventoryForm.get('stockquantity')?.value,
+status: this.categoryStatusForm.get('status')?.value,
+productImage: productImages
+
+};
+
+
+
+const APIurl = "https://localhost:7096/api/Product/addproduct";
+
+this.http.post<any>(APIurl, data).subscribe({
+  next: (response) => {
+    if (response?.data?.id) {
+      const extraData = {
+        sku: response.data.id,
+        discounttype: this.priceForm.get('discounttype')?.value,
+        discountpercentage: this.priceForm.get('discountper')?.value,
+        tax: this.priceForm.get('taxclass')?.value,
+        VAT: this.priceForm.get('VAT')?.value,
+        weight: this.shippingForm.get('weight')?.value,
+        height: this.shippingForm.get('height')?.value,
+        length: this.shippingForm.get('length')?.value,
+        width: this.shippingForm.get('width')?.value,
+        date: new Date().toLocaleString(),
+        images: productImages
+      };
+
+      localStorage.setItem(`product-${response.data.id}`, JSON.stringify(extraData));
+      console.log('Product saved locally:', extraData);
+      this.router.navigate(['/admin/productlist']);
+    } else {
+      console.error('Invalid response structure:', response);
+    }
+  },
+  error: (err) => {
+    console.error('API Error:', err);
+    alert('Failed to add product. Please try again.');
+  }
+});
+
+}
 
 
  get progress(): number {
@@ -87,7 +151,6 @@ categoryStatusForm: FormGroup;
     this.productForm,
     this.mediaForm,
     this.priceForm,
-    this.inventoryForm,
     this.shippingForm,
     this.categoryStatusForm
   ];
@@ -103,7 +166,7 @@ getProgressColor(): string {
   if (this.progress >= 25) return 'lightcoral'; // lighter red
   return 'red';
 }
-
+// ------------------------------------media import logic----------------------------
   get media(): FormArray {
   return this.mediaForm.get('media') as FormArray;
 }
@@ -127,8 +190,7 @@ const input = event.target as HTMLInputElement;
     this.media.removeAt(index);
   }
 
-  redirect(){
-    
-  }
+  // ------------------------------------------------
+
 
 }

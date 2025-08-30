@@ -118,19 +118,19 @@
 
   </form>
  </div>
- <!-- --------------------------------------------- -->
+ <!-- --------------------------------------------- 
   <div class="inventory">
   <h2 style="font-size: 20px;">Inventory</h2>
   <form [formGroup]="inventoryForm">
     <div class="row">
     <div class="col-12col-lg-6">
-      <!-- <div class="SKU mb-3">
+       <div class="SKU mb-3">
         <label for="SKU" class="form-label">SKU</label>
         <input type="text" id="SKU" class="form-control" placeholder="Type product SKU here. . ." formControlName="SKU">
         <div *ngIf="inventoryForm.get('SKU')?.invalid && inventoryForm.get('SKU')?.touched" class="text-danger">
           SKU is required.
         </div>
-      </div> -->
+      </div> 
     </div>
     <div class="col-12 col-lg-6">
       <div class="stockquantity mb-3">
@@ -144,7 +144,7 @@
     </div>
   </form>
   </div>
-  <!-- --------------------------------------------- -->
+   --------------------------------------------- -->
    <div class="shipping mb-lg-5">
     <h2 style="font-size: 20px;">Shipping</h2>
     <form [formGroup]="shippingForm">
@@ -230,10 +230,10 @@
       <div class="input-wrapper2">
         <img src="/assets/arrow-down.png" class="down" alt="down">
         <select id="status" class="form-control" aria-placeholder="Select Status" formControlName="status">
-          <option value="published">Published</option>
-          <option value="outofstock">Out of Stock</option>
-          <option value="lowstock">Low Stock</option>
-          <option value="draft" selected>Draft</option>
+          <option value="InStock">In Stock</option>
+          <option value="OutOfStock">Out of Stock</option>
+          <!-- <option value="lowstock">Low Stock</option>
+          <option value="draft" selected>Draft</option> -->
         </select>
       </div>
     </div>
@@ -249,7 +249,7 @@
 
   <div class="right d-flex gap-2 align-items-center">
     <button class="btn cancel" [routerLink]="['/admin/productlist']">X Cancel</button>
-    <button class="btn savebtn" >Save </button>
+    <button class="btn savebtn" (click)="onSave()" >Save </button>
   </div>
 
 </div>
