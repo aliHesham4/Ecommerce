@@ -23,7 +23,7 @@ h3{
 }
 .active-link {
   border-radius: 8px; /* Optional for rounded edges */
-  background-color: purple; /* Optional light purple background */
+  background-color: rgba(92, 89, 232, 1); /* Optional light purple background */
   transition: all 0.3s ease;
 }
 
@@ -47,6 +47,10 @@ h3{
 
     .logo{
         display: none;
+    }
+
+    h3{
+      display: none;
     }
 
 }

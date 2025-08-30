@@ -11,12 +11,15 @@ import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, Fo
   styleUrl: './addproduct.component.css'
 })
 export class AddproductComponent {
+
 productForm: FormGroup;
 mediaForm: FormGroup;
 priceForm: FormGroup;
 inventoryForm: FormGroup;
 shippingForm: FormGroup;
 categoryStatusForm: FormGroup;
+
+
 
 
 
@@ -44,7 +47,7 @@ categoryStatusForm: FormGroup;
     });
 
     this.inventoryForm = this.fb.group({
-      SKU: ['', Validators.required],
+      // SKU: ['', Validators.required],
       stockquantity: ['', [Validators.required, Validators.min(0)]],
     });
 
@@ -77,7 +80,29 @@ categoryStatusForm: FormGroup;
 
   }
 
- 
+
+
+ get progress(): number {
+  const forms = [
+    this.productForm,
+    this.mediaForm,
+    this.priceForm,
+    this.inventoryForm,
+    this.shippingForm,
+    this.categoryStatusForm
+  ];
+
+  const completedForms = forms.filter(form => form.valid).length;
+  return (completedForms / forms.length) * 100;
+}
+
+getProgressColor(): string {
+  if (this.progress >= 100) return 'green';
+  if (this.progress >= 75) return 'lightgreen';
+  if (this.progress >= 50) return 'orange';
+  if (this.progress >= 25) return 'lightcoral'; // lighter red
+  return 'red';
+}
 
   get media(): FormArray {
   return this.mediaForm.get('media') as FormArray;
@@ -100,6 +125,10 @@ const input = event.target as HTMLInputElement;
 
   removeFile(index: number): void {
     this.media.removeAt(index);
+  }
+
+  redirect(){
+    
   }
 
 }

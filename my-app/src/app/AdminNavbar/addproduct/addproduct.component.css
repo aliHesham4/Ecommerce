@@ -1,9 +1,14 @@
-h2,h3{
+h2,h3,h4{
 font-family: inter,sans-serif;
 font-size: 24px;
 font-weight: 500;
 color: rgba(51, 56, 67, 1);
 
+}
+
+h4{
+  font-size: 16px;
+  color: black;
 }
 
 
@@ -32,6 +37,7 @@ a{
     border: 1px solid lightgray;
     border-radius: 4px;
     padding: 20px;
+    background-color: white;
 }
 
 
@@ -173,4 +179,96 @@ display: block;
 .dimmed {
   opacity: 0.5;
   pointer-events: none; /* makes inputs unreachable */
+}
+
+
+span{
+  color: white;
+  border-radius: 999px;
+  padding: 5px;
+  font-size: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -7.5px;
+
+}
+
+
+.save{
+  background-color: rgb(255, 255, 255);
+  border: 1px ridge rgb(211, 211, 211,0.3);
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  margin-left: -15px;
+  width: 84%;
+  
+  z-index: 1000; /* stays above other elements */
+}
+
+.cancel{
+  color: grey;
+  background-color: white;
+  border: 1px ridge rgb(211, 211, 211,0.3);
+  
+}
+
+.savebtn,.cancel{
+  padding: 10px 20px;
+  font-family: inter,sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.savebtn{
+  color: white;
+  background-color: rgba(92, 89, 232, 1);
+
+}
+
+
+@media (max-width: 576px) {
+
+
+  .form-check-input {
+  margin-top: 24px;
+}
+
+.form-check-input label{
+  font-size: 12px;
+}
+
+.Weight{
+  margin-top: 16px;
+}
+
+.Category{
+  margin-top: 0px;
+
+}
+
+.save{
+  gap:18px;
+}
+
+.right,.left{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+.cancel,.savebtn{
+  font-size: 10px;
+  padding: 5px 10px;
+}
+
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .save{
+  gap: 70px;
+}
+
 }
