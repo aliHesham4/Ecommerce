@@ -126,7 +126,6 @@ this.http.post<any>(APIurl, data).subscribe({
         height: this.shippingForm.get('height')?.value,
         length: this.shippingForm.get('length')?.value,
         width: this.shippingForm.get('width')?.value,
-        date: new Date().toLocaleString(),
         images: productImages
       };
 
