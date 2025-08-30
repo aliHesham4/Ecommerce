@@ -5,6 +5,7 @@
   <a routerLink="/admin/productlist/add-product" class="text-decoration-none"> Add Product</a></h3>
 </div>  
 <!-- -------------------------------------------------- -->
+<div class="row">
 <div class=" col-9 addingproduct">
 <!-- ------------------------------ -->
 <div class="generalinfo mt-2">
@@ -70,6 +71,7 @@
      Base Price is required.
     </div>
     </div>
+    <div class="row">
     <div class="col-6">
     <div class="Discount mb-3 ">
     <label for="discount" class="form-label">Discount Type</label>
@@ -96,9 +98,102 @@
   </div>
 
     </div>
+  <div class="col-6">
+    <div class=" discountper mb-3">
+      <label for="discountper" class="form-label">Discount Percentage (%)</label>
+      <input type="number" id="discountper" class="form-control " formControlName="discountper" min="0" max="100">
+      <div *ngIf="priceForm.get('discountper')?.invalid && priceForm.get('discountper')?.touched" class="text-danger">
+        Discount Percentage must be between 0 and 100.
+      </div>
+  </div>
+  <div class="VAT mb-3">
+    <label for="VAT" class="form-label">VAT Amount(%)</label>
+    <input type="number" id="VAT" class="form-control" min="0" max="100" formControlName="VAT">
+    <div *ngIf="priceForm.get('VAT')?.invalid && priceForm.get('VAT')?.touched" class="text-danger">
+      VAT Amount must be between 0 and 100.
+    </div>
+  </div>
+  </div>
+  </div>
 
   </form>
  </div>
+ <!-- --------------------------------------------- -->
+  <div class="inventory">
+  <h2 style="font-size: 20px;">Inventory</h2>
+  <form [formGroup]="inventoryForm">
+    <div class="row">
+    <div class="col-6">
+      <div class="SKU mb-3">
+        <label for="SKU" class="form-label">SKU</label>
+        <input type="text" id="SKU" class="form-control" placeholder="Type product SKU here. . ." formControlName="SKU">
+        <div *ngIf="inventoryForm.get('SKU')?.invalid && inventoryForm.get('SKU')?.touched" class="text-danger">
+          SKU is required.
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="stockquantity mb-3">
+        <label for="stockquantity" class="form-label">Quantity</label>
+        <input type="number" id="stockquantity" class="form-control" placeholder="Type product quantity here. . ." formControlName="stockquantity" min="0">
+        <div *ngIf="inventoryForm.get('stockquantity')?.invalid && inventoryForm.get('stockquantity')?.touched" class="text-danger">
+          Please Enter Quantity
+        </div>
+      </div>
+    </div>
+    </div>
+  </form>
+  </div>
+  <!-- --------------------------------------------- -->
+   <div class="shipping">
+    <h2 style="font-size: 20px;">Shipping</h2>
+    <form [formGroup]="shippingForm">
+    <div class="d-flex align-items-center form-check-input mb-3">
+    <input type="checkbox" id="isPhysical"  formControlName="isPhysical">
+    <label for="isPhysical">This is a physical product</label>
+    </div>
+      <div class="row" [class.dimmed]="!shippingForm.get('isPhysical')?.value">
+        <div class="col-3">
+          <div class="Weight mb-3">
+            <label for="weight" class="form-label">Weight</label>
+            <input type="number" id="weight" class="form-control" placeholder="Product Weight. . ." formControlName="weight" min="0">
+            <div *ngIf="shippingForm.get('weight')?.invalid && shippingForm.get('weight')?.touched" class="text-danger">
+              Please Enter Weight
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="height mb-3">
+            <label for="height" class="form-label">Height</label>
+            <input type="number" id="height" class="form-control" placeholder="Height(cm). . ." formControlName="height" min="0">
+            <div *ngIf="shippingForm.get('height')?.invalid && shippingForm.get('height')?.touched" class="text-danger">
+              Please Enter Height
+            </div>
+          </div>
+          </div>
+          <div class="col-3">
+            <div class="width mb-3">
+              <label for="width" class="form-label">Width</label>
+              <input type="number" id="width" class="form-control" placeholder="Width(cm). . ." formControlName="width" min="0">
+              <div *ngIf="shippingForm.get('width')?.invalid && shippingForm.get('width')?.touched" class="text-danger">
+                Please Enter Width
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="length mb-3">
+              <label for="length" class="form-label">Length</label>
+              <input type="number" id="length" class="form-control" placeholder="Length(cm). . ." formControlName="length" min="0">
+              <div *ngIf="shippingForm.get('length')?.invalid && shippingForm.get('length')?.touched" class="text-danger">
+                Please Enter Length
+              </div>
+            </div>
+        </div>
+        
+      </div>
+    </form>
+
+   </div>
 </div>
 
 
@@ -106,6 +201,43 @@
 
 
 <div class="col-3 additions">
+  <form [formGroup]="categoryStatusForm">
+    <div class="Category  mt-4 mb-3">
+      <h2 style="font-size: 20px;">Category</h2>
+      <label for="category" class="form-label">Product Category</label>
+    <div class="input-wrapper2">
+    <img src="/assets/arrow-down.png" class="down" alt="down">
+    <select id="category" class="form-control" aria-placeholder="Select Category" formControlName="category">
 
+        <option value="tops">Tops</option>
+        <option value="Bottoms">Bottoms</option>
+        <option value="Shoes">Shoes</option>
+        <option value="accessories">Accessories</option>
+
+    </select>
+    </div>
+
+    <div *ngIf="categoryStatusForm.get('category')?.invalid && categoryStatusForm.get('category')?.touched" class="text-danger">
+      Category is required.
+     </div>
+
+     </div>
+
+    
+    <div class="Status">
+      <h2 style="font-size: 20px;">Status</h2>
+      <label for="status" class="form-label">Product Status</label>
+      <div class="input-wrapper2">
+        <img src="/assets/arrow-down.png" class="down" alt="down">
+        <select id="status" class="form-control" aria-placeholder="Select Status" formControlName="status">
+          <option value="published">Published</option>
+          <option value="outofstock">Out of Stock</option>
+          <option value="lowstock">Low Stock</option>
+          <option value="draft" selected>Draft</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
 </div>
         

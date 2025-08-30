@@ -25,10 +25,10 @@ a{
     gap: 20px;
 }
 
-.generalinfo,.media,.pricing{
+.generalinfo,.media,.pricing,.inventory,.shipping,.Category,.Status{
     display: flex;
     flex-direction: column;
-    gap: 17px;
+    /* gap: 17px; */
     border: 1px solid lightgray;
     border-radius: 4px;
     padding: 20px;
@@ -151,4 +151,26 @@ display: block;
 }
 
 
+.form-check-input {
+  color: rgba(92, 89, 232, 1);
+  font-family: inter,sans-serif;
+  font-size: 14px;
+  gap: 5px;
+}
 
+.form-check-input label{
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.form-check-input input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: rgba(92, 89, 232, 1); 
+  cursor: pointer;
+}
+
+.dimmed {
+  opacity: 0.5;
+  pointer-events: none; /* makes inputs unreachable */
+}

@@ -14,6 +14,13 @@ export class AddproductComponent {
 productForm: FormGroup;
 mediaForm: FormGroup;
 priceForm: FormGroup;
+inventoryForm: FormGroup;
+shippingForm: FormGroup;
+categoryStatusForm: FormGroup;
+
+
+
+
 
 
 
@@ -31,10 +38,47 @@ priceForm: FormGroup;
     this.priceForm=this.fb.group({
       baseprice: ['',[Validators.required]],
       discounttype:['percentage'],
-      taxclass:['standard']
-    })
+      taxclass:['standard'],
+      discountper: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      VAT: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
+    });
+
+    this.inventoryForm = this.fb.group({
+      SKU: ['', Validators.required],
+      stockquantity: ['', [Validators.required, Validators.min(0)]],
+    });
+
+    this.shippingForm = this.fb.group({
+      isPhysical: [true],
+      weight: ['', [Validators.required, Validators.min(0)]],
+      height: ['', [Validators.required, Validators.min(0)]],
+      width: ['', [Validators.required, Validators.min(0)]],
+      length: ['', [Validators.required, Validators.min(0)]]
+    });
+    this.categoryStatusForm = this.fb.group({
+      category: ['', Validators.required],
+      status: ['draft']
+    });
+
+  this.shippingForm.get('isPhysical')?.valueChanges.subscribe((isPhysical: boolean) => {
+  if (isPhysical) {
+    this.shippingForm.get('weight')?.enable();
+    this.shippingForm.get('height')?.enable();
+    this.shippingForm.get('width')?.enable();
+    this.shippingForm.get('length')?.enable();
+  } else {
+    this.shippingForm.get('weight')?.disable();
+    this.shippingForm.get('height')?.disable();
+    this.shippingForm.get('width')?.disable();
+    this.shippingForm.get('length')?.disable();
   }
-  
+});
+
+
+  }
+
+ 
+
   get media(): FormArray {
   return this.mediaForm.get('media') as FormArray;
 }
