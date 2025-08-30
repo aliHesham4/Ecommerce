@@ -32,10 +32,14 @@ export class LoginComponent {
     }
 
     else {
-      this.http.post(this.APIurl, { email, password }).subscribe({
+      this.http.post<any>(this.APIurl, { email, password }).subscribe({
         next: (response) => {
           console.log('Login successful', response);
+          const loginID = response.data.id;
+          if(!response.data.isAdmin){
           this.router.navigate(['/products']);
+          }else
+          this.router.navigate(['/admin/productlist'],{ queryParams: { loginID } });
         },
         error: (error) => {
           console.error('Login failed', error);

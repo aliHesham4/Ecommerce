@@ -68,7 +68,7 @@
     </div>
 </div>
 <!-- Temporary No Products Available -->
-<div class="productlist">
+<div class="productlist" *ngIf="hasError||products.length === 0">
 No products available 
 </div>
 <!-- ------------------------ -->

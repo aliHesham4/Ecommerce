@@ -85,11 +85,12 @@ categoryStatusForm: FormGroup;
 
 onSave(){
   if(this.productForm.invalid && this.mediaForm.invalid && this.priceForm.invalid
-   && this.inventoryForm.invalid && this.shippingForm.invalid && this.categoryStatusForm.invalid){
+  //  && this.inventoryForm.invalid
+    && this.shippingForm.invalid && this.categoryStatusForm.invalid){
    this.productForm.markAllAsTouched();
   this.mediaForm.markAllAsTouched();
   this.priceForm.markAllAsTouched();
-  this.inventoryForm.markAllAsTouched();
+  // this.inventoryForm.markAllAsTouched();
   this.shippingForm.markAllAsTouched();
   this.categoryStatusForm.markAllAsTouched();
    }
@@ -128,8 +129,9 @@ this.http.post<any>(APIurl, data).subscribe({
         width: this.shippingForm.get('width')?.value,
         images: productImages
       };
+      const productId = response.data.id;
 
-      localStorage.setItem(`product-${response.data.id}`, JSON.stringify(extraData));
+      localStorage.setItem(`product-${productId}`, JSON.stringify(extraData));
       console.log('Product saved locally:', extraData);
       this.router.navigate(['/admin/productlist']);
     } else {
