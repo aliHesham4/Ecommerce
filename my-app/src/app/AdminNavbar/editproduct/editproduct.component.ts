@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, FormArray, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Product } from '../adminproductlist/adminproductlist.component';
 
 
 @Component({
-  selector: 'app-addproduct',
+  selector: 'app-editproduct',
   imports: [RouterModule,FormsModule,ReactiveFormsModule,CommonModule],
-  templateUrl: './addproduct.component.html',
-  styleUrl: './addproduct.component.css'
+  templateUrl: './editproduct.component.html',
+  styleUrl: './editproduct.component.css'
 })
-export class AddproductComponent {
+export class EditproductComponent {
 
 productForm: FormGroup;
 mediaForm: FormGroup;
@@ -20,6 +21,10 @@ priceForm: FormGroup;
 inventoryForm: FormGroup;
 shippingForm: FormGroup;
 categoryStatusForm: FormGroup;
+product: Product | null = null;
+parsed: any;
+
+productId: string | null = null;
 
 
 
@@ -31,7 +36,7 @@ categoryStatusForm: FormGroup;
 
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private route: ActivatedRoute) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(10)]]
@@ -61,7 +66,7 @@ categoryStatusForm: FormGroup;
       length: ['', [Validators.required, Validators.min(0)]]
     });
     this.categoryStatusForm = this.fb.group({
-      category: ['', Validators.required],
+      category: ['Tops', Validators.required],
       status: ['InStock']
     });
 
@@ -80,7 +85,51 @@ categoryStatusForm: FormGroup;
 });
 
 
+
   }
+
+
+
+ngOnInit(): void{
+  this.productId = this.route.snapshot.paramMap.get('id');
+   const URL= `https://localhost:7096/api/Product/getproductbyid/${this.productId}`;
+
+   this.http.get<{ data: Product }>(URL).subscribe({
+    next: (response) => {
+      this.product = response.data;
+      this.productForm.get('productName')?.setValue(this.product.name);
+      this.productForm.get('description')?.setValue(this.product.description);
+      this.priceForm.get('baseprice')?.setValue(this.product.amount);
+      this.categoryStatusForm.get('category')?.setValue(this.product.type);
+      this.categoryStatusForm.get('status')?.setValue(this.product.status);
+      const key = `product-${this.productId}`;
+      const localData = localStorage.getItem(key);
+      if (localData) {
+        const parsed = JSON.parse(localData);
+        this.inventoryForm.get('SKU')?.setValue(parsed.sku);
+        this.priceForm.get('discounttype')?.setValue(parsed.discounttype);
+        this.priceForm.get('discountper')?.setValue(parsed.discountpercentage);
+        this.priceForm.get('taxclass')?.setValue(parsed.tax);
+        this.priceForm.get('VAT')?.setValue(parsed.VAT);
+        this.shippingForm.get('weight')?.setValue(parsed.weight);
+        this.shippingForm.get('height')?.setValue(parsed.height);
+        this.shippingForm.get('length')?.setValue(parsed.length);
+        this.shippingForm.get('width')?.setValue(parsed.width);
+        parsed.images.forEach((img: any) => {
+          this.media.push(this.fb.control(img));
+        });
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching product:', err);
+      alert('Failed to load product details. Please try again later.');
+    }
+  });
+
+}
+ 
+
+
 
 onSave(){
   if(this.productForm.invalid && this.mediaForm.invalid && this.priceForm.invalid
@@ -107,11 +156,11 @@ status: this.categoryStatusForm.get('status')?.value,
 
 };
 
+this.productId = this.route.snapshot.paramMap.get('id');
 
+const APIurl = `https://localhost:7096/api/Product/updateproduct/${this.productId}`;
 
-const APIurl = "https://localhost:7096/api/Product/addproduct";
-
-this.http.post<any>(APIurl, data).subscribe({
+this.http.put<any>(APIurl, data).subscribe({
   next: (response) => {
     if (response?.data?.id) {
       const extraData = {

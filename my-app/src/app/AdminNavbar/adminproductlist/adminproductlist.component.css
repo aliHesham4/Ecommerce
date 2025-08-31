@@ -4,10 +4,6 @@ body {
 }
 
 
-
-
-
-
 h2,h3{
 font-family: inter,sans-serif;
 font-size: 24px;
@@ -75,9 +71,10 @@ a{
   position: relative;
 }
 
-.viewdata{
+.header{
   background-color: rgba(249, 249, 252, 1);
   color: rgba(51, 56, 67, 1);
+  border-radius: 4px;
   font-family: inter,sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -93,7 +90,7 @@ a{
 
 }
 
-.productlist,.paging{
+.noproductlist,.paging{
   color: rgba(102, 112, 133, 1);
   font-family: inter,sans-serif;
   font-size: 14px;
@@ -108,6 +105,7 @@ a{
   padding: 10px;
   background-color: white;
   font-size: 14px;
+  border-radius: 4px;
 }
 
 .previous,.next{
@@ -121,3 +119,70 @@ a{
   color: white;
   
 }
+
+.product-card{
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+  background-color: white;
+  font-family: inter,sans-serif;
+  font-size: 14px;
+}
+
+.row{
+  margin: 5px;
+}
+
+.image-cell{
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* border: 1px solid #ccc;  */
+  border-radius: 6px; 
+  flex-shrink: 0;
+  
+}
+
+
+.product-image{
+  display: block; /* prevent inline image spacing issues */
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-icon,.delete-icon,.update-icon{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.deleted{
+  background-color: lightcoral;
+
+  border-radius: 999px;
+  color: white;
+  text-align: center;
+}
+

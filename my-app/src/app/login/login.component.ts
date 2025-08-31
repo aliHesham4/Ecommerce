@@ -36,10 +36,12 @@ export class LoginComponent {
         next: (response) => {
           console.log('Login successful', response);
           const loginID = response.data.id;
+          localStorage.setItem('loginID', loginID);
           if(!response.data.isAdmin){
           this.router.navigate(['/products']);
           }else
-          this.router.navigate(['/admin/productlist'],{ queryParams: { loginID } });
+          this.router.navigate(['/admin/productlist'], );
+
         },
         error: (error) => {
           console.error('Login failed', error);
