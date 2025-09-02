@@ -22,6 +22,7 @@ export interface Product{
   "status": string,
   "SKU"?: string,
   "VAT"?: number,
+  "selected"?: boolean,
   "taxclass"?: string,
   "discounttype"?: string,
   "discountvalue"?: number,
@@ -43,13 +44,17 @@ export interface Product{
 
 
 export class AdminproductlistComponent {
-  select=false;
+  selectAll: boolean = false;
   searchText: string = ''; 
   loginID: string | null = null;
   hasError: boolean = false;
   products: Product[] = [];
   showDeletePopup: boolean = false;
   productIdToDelete: string | null = null;
+  on: boolean = true;
+  onP: boolean = true; 
+  onD: boolean=true;
+  
 
   constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {}
 
@@ -61,11 +66,58 @@ export class AdminproductlistComponent {
     }
 
     this.fetchProducts();
+    
 
   }
 
+  toggleSelectAll(): void {
+  this.products.forEach(product => product.selected = this.selectAll);
+}
+
+// Check if all items are selected and update header checkbox
+checkIfAllSelected(): void {
+  this.selectAll = this.products.every(product => product.selected);
+}
+
+  sortProducts(): void {
+
+   if (this.on){
+    this.products.sort((a, b) => b.name.localeCompare(a.name));  //if ascending make descending
+    this.onP=true;
+    this.onD=true;
+    
+   }else
+    this.products.sort((a,b)=> a.name.localeCompare(b.name));   // if descending make ascending
+    this.on=!this.on
+   
+  }
+
+
+  sortPrice():void{
+    if (this.onP) {
+      this.products.sort((a, b) => b.amount - a.amount);      // if ascending make descending
+      this.on = true;
+      this.onD=true;
+    } else {
+      this.products.sort((a, b) => a.amount - b.amount);     // if descending make ascending
+    }
+    this.onP = !this.onP;
+  }
+
+
+  sortDate(): void {
+  if (this.onD) {
+    this.products.sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
+  } else {
+    this.products.sort((a, b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
+  }
+  this.on = true;
+  this.onP = true;
+  this.onD = !this.onD;
+}
+
   onDelete(productId: string): void {
-    this.showDeletePopup = true;
+    this.showDeletePopup = false;
     this.productIdToDelete = productId;
   }
 
@@ -119,7 +171,9 @@ export class AdminproductlistComponent {
               return product;
 
             })
-             
+
+            this.products.sort((a, b) => a.name.localeCompare(b.name));
+
           },
           error: (err) => {
             console.error('Error fetching products:', err);

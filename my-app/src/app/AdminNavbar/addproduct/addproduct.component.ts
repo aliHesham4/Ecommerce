@@ -34,7 +34,7 @@ categoryStatusForm: FormGroup;
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10)]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]]
     });
     this.mediaForm=  this.fb.group({
       media: this.fb.array([],[Validators.required])
@@ -93,6 +93,7 @@ onSave(){
   this.shippingForm.markAllAsTouched();
   this.categoryStatusForm.markAllAsTouched();
    }
+   else{
 
   const productImages = [...this.media.value];
 
@@ -140,7 +141,7 @@ this.http.post<any>(APIurl, data).subscribe({
     alert('Failed to add product. Please try again.');
   }
 });
-
+   }
 }
 
 

@@ -39,7 +39,7 @@ productId: string | null = null;
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private route: ActivatedRoute) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10)]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]]
     });
     this.mediaForm=  this.fb.group({
       media: this.fb.array([],[Validators.required])
@@ -117,8 +117,11 @@ ngOnInit(): void{
         this.shippingForm.get('width')?.setValue(parsed.width);
         parsed.images.forEach((img: any) => {
           this.media.push(this.fb.control(img));
+        
         });
+        this.shippingForm.get('isPhysical')?.setValue(parsed.weight !== "");
       }
+
     },
     error: (err) => {
       console.error('Error fetching product:', err);
@@ -142,7 +145,7 @@ onSave(){
   this.shippingForm.markAllAsTouched();
   this.categoryStatusForm.markAllAsTouched();
    }
-
+  else{
   const productImages = [...this.media.value];
 
 const data={
@@ -190,6 +193,7 @@ this.http.put<any>(APIurl, data).subscribe({
   }
 });
 
+  }
 }
 
 
