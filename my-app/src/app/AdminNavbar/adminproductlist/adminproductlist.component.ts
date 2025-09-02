@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import {Router} from '@angular/router';
+import { response } from 'express';
 
 
 export interface Product{
@@ -56,7 +57,11 @@ export class AdminproductlistComponent {
   on: boolean = true;
   onP: boolean = true; 
   onD: boolean=true;
-  
+  pageNumber: number = 1;
+  stopNext: boolean=false;
+  allProducts:Product[]=[];
+
+  stoppingloop:boolean=false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {}
 
@@ -69,6 +74,54 @@ export class AdminproductlistComponent {
 
     this.fetchProducts();
     
+
+// -------------------------------------
+ while (!this.stoppingloop) {
+  this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=${this.pageNumber}`)
+    .subscribe({
+      next: (response) => {
+        if (response.data.length == 0) {
+          this.stoppingloop = true;
+        } else {
+          // Merge localStorage data into each product
+          const mergedProducts = response.data.map(product => {
+            const key = `product-${product.id}`;
+            const localData = localStorage.getItem(key);
+
+            if (localData) {
+              const parsed = JSON.parse(localData);
+              return {
+                ...product,
+                SKU: parsed.sku,
+                discounttype: parsed.discounttype,
+                VAT: parsed.VAT,
+                taxclass: parsed.tax,
+                discountvalue: parsed.discountpercentage,
+                images: Array.isArray(parsed.images) ? parsed.images : product.images,
+                weight: parsed.weight,
+                height: parsed.height,
+                length: parsed.length,
+                width: parsed.width,
+                oldPrice: ((parsed.discountpercentage + 100) / 100) * product.amount
+              };
+            }
+
+            return product;
+          });
+
+          // Push merged products to allProducts
+          this.allProducts.push(...mergedProducts);
+          this.pageNumber++;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+        this.stoppingloop = true; 
+      }
+    });
+}
+
+alert(this.allProducts.length);
 
   }
 
@@ -106,6 +159,27 @@ checkIfAllSelected(): void {
     this.onP = !this.onP;
   }
 
+  previousPage(): void {
+   
+      this.pageNumber--;
+      this.fetchProducts();
+      this.stopNext = false;
+    
+  }
+  nextPage(): void {
+  this.pageNumber++;
+  this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=${this.pageNumber + 1}`)
+    .subscribe({
+      next: (response) => {
+        if (response.data.length == 0) {
+          this.stopNext = true;
+        }
+      }
+    });
+  
+  this.fetchProducts();
+
+  }
 
   sortDate(): void {
   if (this.onD) {
@@ -154,7 +228,7 @@ checkIfAllSelected(): void {
 
   fetchProducts():void{
     if (this.loginID) {
-      this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=1`)
+      this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=${this.pageNumber}`)
         .subscribe({
           next: (response) => {
             this.products = response.data.map(product=>{
@@ -196,5 +270,12 @@ checkIfAllSelected(): void {
   onUpdate(productId: string): void {
     this.router.navigate(['/admin/productlist/edit-product', productId]);
   }
+
+
+
+
+
+
+
 
 }

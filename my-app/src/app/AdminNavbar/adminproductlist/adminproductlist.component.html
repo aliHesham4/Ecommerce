@@ -130,10 +130,11 @@ No products available
 
 
  <div class="paging d-flex justify-content-between align-items-center">
-<div> Showing 1-1 from 0</div>
-<div class="d-flex gap-2"> <button class="btn previous"><</button>
-<button class="btn num">1</button>
-<button class="btn next">></button>
+<div> Showing 1-{{ products.length }} from 0 </div>
+<div class="d-flex gap-2">
+ <button class="btn previous" [disabled]="pageNumber==1" (click)="previousPage()"><</button>
+<button class="btn num">{{this.pageNumber}}</button>
+<button class="btn next" [disabled]="stopNext" (click)="nextPage()">></button>
 </div>
 
  </div>

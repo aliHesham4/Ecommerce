@@ -10,7 +10,6 @@ import { ProductdetailComponent } from './productdetail/productdetail.component'
 import { AdminLayoutComponent } from './AdminNavbar/adminlayout/adminlayout.component';
 import { AdminproductlistComponent } from './AdminNavbar/adminproductlist/adminproductlist.component';
 import { OrdersComponent } from './AdminNavbar/orders/orders.component';
-import { CustomersComponent } from './AdminNavbar/customers/customers.component';
 import { DashboardComponent } from './AdminNavbar/dashboard/dashboard.component';
 import { AddproductComponent } from './AdminNavbar/addproduct/addproduct.component';
 import { EditproductComponent } from './AdminNavbar/editproduct/editproduct.component';
@@ -38,7 +37,6 @@ export const routes: Routes = [
     {path:'productlist/add-product',component: AddproductComponent},
     {path:'productlist/edit-product/:id',component: EditproductComponent},
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'customers', component: CustomersComponent },
     { path: 'orders', component: OrdersComponent }]},
 
 
