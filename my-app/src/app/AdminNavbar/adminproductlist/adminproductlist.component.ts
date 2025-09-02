@@ -8,6 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import {Router} from '@angular/router';
 
+
 export interface Product{
   "id": string,
   "isDeleted": boolean,
@@ -31,6 +32,7 @@ export interface Product{
   "width"?: number,
   "height"?: number,
   "weight"?: number,
+  "oldPrice"?: number
 
 
 }
@@ -117,7 +119,9 @@ checkIfAllSelected(): void {
 }
 
   onDelete(productId: string): void {
-    this.showDeletePopup = false;
+    console.log('hereeee');
+    
+    this.showDeletePopup = true;
     this.productIdToDelete = productId;
   }
 
@@ -141,6 +145,10 @@ checkIfAllSelected(): void {
     this.showDeletePopup = false;
     this.productIdToDelete = null;
 
+  }
+
+  openPreviewPopup(productID: string):void{
+    this.router.navigate([{ outlets: { popup: ['preview', productID] } }],{ relativeTo: this.route });
   }
 
 

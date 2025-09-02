@@ -50,7 +50,7 @@ categoryStatusForm: FormGroup;
 
     this.inventoryForm = this.fb.group({
        SKU: ['', Validators.required],
-      // stockquantity: ['', [Validators.required, Validators.min(0)]],
+       stockQuantity: ['', [Validators.required, Validators.min(0)]],
     });
 
     this.shippingForm = this.fb.group({
@@ -102,7 +102,7 @@ name: this.productForm.get('productName')?.value,
 description: this.productForm.get('description')?.value,
 amount: this.priceForm.get('baseprice')?.value,
 type: this.categoryStatusForm.get('category')?.value,
-// quantity: this.inventoryForm.get('stockquantity')?.value,
+stockQuantity: this.inventoryForm.get('stockQuantity')?.value,
 status: this.categoryStatusForm.get('status')?.value,
 // productImages: productImages
 

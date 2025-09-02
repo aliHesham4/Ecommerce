@@ -14,6 +14,7 @@ import { CustomersComponent } from './AdminNavbar/customers/customers.component'
 import { DashboardComponent } from './AdminNavbar/dashboard/dashboard.component';
 import { AddproductComponent } from './AdminNavbar/addproduct/addproduct.component';
 import { EditproductComponent } from './AdminNavbar/editproduct/editproduct.component';
+import { PreviewpopupComponent } from './AdminNavbar/previewpopup/previewpopup.component';
 
 export const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch:'full'},
@@ -31,7 +32,9 @@ export const routes: Routes = [
      {path: 'product/:id', component: ProductdetailComponent},
      {path: 'admin',component: AdminLayoutComponent,children: [
     { path: '', redirectTo: 'productlist', pathMatch: 'full' }, // ✅ Default child
-    { path: 'productlist', component: AdminproductlistComponent },
+    { path: 'productlist', component: AdminproductlistComponent ,children:[
+      { path: 'preview/:id', component: PreviewpopupComponent, outlet: 'popup' }
+    ]},
     {path:'productlist/add-product',component: AddproductComponent},
     {path:'productlist/edit-product/:id',component: EditproductComponent},
     { path: 'dashboard', component: DashboardComponent },

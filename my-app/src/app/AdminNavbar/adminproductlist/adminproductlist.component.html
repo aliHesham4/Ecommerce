@@ -117,7 +117,7 @@ No products available
     </div>
 
     <div class="col-1 d-flex gap-1 justify-content-center Action">
-        <img src="/assets/preview.png" alt="preview"  class="preview-icon"/>
+        <img src="/assets/preview.png" alt="preview"  (click)="openPreviewPopup(product.id)" class="preview-icon"/>
         <img src="/assets/update.png" alt="Update"  (click)="onUpdate(product.id)" class="update-icon"/>
         <img src="/assets/delete.png" alt="Delete" (click)="onDelete(product.id)" class="delete-icon"/>
 
@@ -151,3 +151,4 @@ No products available
     </div>
   </div>
 </div>
+<router-outlet name="popup"></router-outlet>
