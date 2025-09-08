@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +7,13 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import {Router} from '@angular/router';
-import { response } from 'express';
+import { AllproductsService } from '../../shared/allproducts.service';
+// for date picker
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 export interface Product{
@@ -40,100 +46,72 @@ export interface Product{
 
 @Component({
   selector: 'app-adminproductlist',
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [ FormsModule, CommonModule,MatDatepickerModule,MatNativeDateModule,MatInputModule,MatFormFieldModule],
   templateUrl: './adminproductlist.component.html',
   styleUrl: './adminproductlist.component.css'
 })
 
 
 export class AdminproductlistComponent {
-  selectAll: boolean = false;
-  searchText: string = ''; 
-  loginID: string | null = null;
-  hasError: boolean = false;
-  products: Product[] = [];
-  showDeletePopup: boolean = false;
-  productIdToDelete: string | null = null;
-  on: boolean = true;
-  onP: boolean = true; 
-  onD: boolean=true;
-  pageNumber: number = 1;
-  stopNext: boolean=false;
-  allProducts:Product[]=[];
+  selectAll: boolean = false;  // For "Select All" checkbox
+  searchText: string = '';  // For search input
+  loginID: string | null = null; // To store loginID from localStorage
+  hasError: boolean = false;  // To track if there was an error fetching products then display no products avaible in webpage
+  products: Product[] = []; // Array to hold products fetched from API
+  showDeletePopup: boolean = false; // To control visibility of delete confirmation popup
+  productIdToDelete: string | null = null; // To store the ID of the product to be deleted
+  on: boolean = true;  // For sorting toggle
+  onP: boolean = true; // For price sorting toggle
+  onD: boolean = true; // For date sorting toggle
+  pageNumber: number = 1; // Current page number for pagination
+  stopNext: boolean=false; // To stop next button if there are no more products
+  allProducts:Product[]=[]; // To hold all products for searching and filtering
+  openpreview:boolean=false; // To control visibility of preview popup
+  selectedProduct: any = null; // To hold the product being previewed
+  itemsPerPage: number = 10; // Number of items to display per page
+  filterSelected:boolean=false; // To check if filter is not selected and to show all products
+  startDate: Date | null = null; // To hold the selected start date from date picker
+  endDate: Date | null = null; // To hold the selected end date from date picker
+  filterpopup:boolean=false; // To control visibility of filter popup
+  topsSelected:boolean=true; // To check if top filter is selected
+  bottomsSelected:boolean=true; // To check if bottom filter is selected
+  shoesSelected:boolean=true; // To check if shoes filter is selected
+  accessoriesSelected:boolean=true; // To check if accessories filter is selected
 
-  stoppingloop:boolean=false;
-
-  constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private allProductsService: AllproductsService) {}
 
   ngOnInit(): void {
     // get loginID from local storage
     if (isPlatformBrowser(this.platformId)) {
     this.loginID = localStorage.getItem('loginID');
     console.log('Admin loginID:', this.loginID);
+    this.fetchProducts();
+    this.allProductsService.loginID = this.loginID; // Set loginID in the service
+    this.allProductsService.loadAllproducts(); // Load all products when component initializes
+    this.allProductsService.allProducts$.subscribe(allProducts => {
+      this.allProducts = allProducts;
+    
+    });
     }
 
-    this.fetchProducts();
     
 
-// -------------------------------------
- while (!this.stoppingloop) {
-  this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=${this.pageNumber}`)
-    .subscribe({
-      next: (response) => {
-        if (response.data.length == 0) {
-          this.stoppingloop = true;
-        } else {
-          // Merge localStorage data into each product
-          const mergedProducts = response.data.map(product => {
-            const key = `product-${product.id}`;
-            const localData = localStorage.getItem(key);
-
-            if (localData) {
-              const parsed = JSON.parse(localData);
-              return {
-                ...product,
-                SKU: parsed.sku,
-                discounttype: parsed.discounttype,
-                VAT: parsed.VAT,
-                taxclass: parsed.tax,
-                discountvalue: parsed.discountpercentage,
-                images: Array.isArray(parsed.images) ? parsed.images : product.images,
-                weight: parsed.weight,
-                height: parsed.height,
-                length: parsed.length,
-                width: parsed.width,
-                oldPrice: ((parsed.discountpercentage + 100) / 100) * product.amount
-              };
-            }
-
-            return product;
-          });
-
-          // Push merged products to allProducts
-          this.allProducts.push(...mergedProducts);
-          this.pageNumber++;
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-        this.stoppingloop = true; 
-      }
-    });
-}
-
-alert(this.allProducts.length);
 
   }
+
+
+  // select all checkbox
 
   toggleSelectAll(): void {
   this.products.forEach(product => product.selected = this.selectAll);
 }
 
-// Check if all items are selected and update header checkbox
 checkIfAllSelected(): void {
   this.selectAll = this.products.every(product => product.selected);
 }
 
+
+//  sorting
   sortProducts(): void {
 
    if (this.on){
@@ -159,6 +137,19 @@ checkIfAllSelected(): void {
     this.onP = !this.onP;
   }
 
+  sortDate(): void {
+  if (this.onD) {
+    this.products.sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
+  } else {
+    this.products.sort((a, b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
+  }
+  this.on = true;
+  this.onP = true;
+  this.onD = !this.onD;
+}
+
+
+// pagination
   previousPage(): void {
    
       this.pageNumber--;
@@ -181,16 +172,8 @@ checkIfAllSelected(): void {
 
   }
 
-  sortDate(): void {
-  if (this.onD) {
-    this.products.sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
-  } else {
-    this.products.sort((a, b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
-  }
-  this.on = true;
-  this.onP = true;
-  this.onD = !this.onD;
-}
+  
+  // delete product
 
   onDelete(productId: string): void {
     console.log('hereeee');
@@ -221,10 +204,19 @@ checkIfAllSelected(): void {
 
   }
 
-  openPreviewPopup(productID: string):void{
-    this.router.navigate([{ outlets: { popup: ['preview', productID] } }],{ relativeTo: this.route });
+  // preview popup
+
+  openPreviewPopup(product: Product):void{
+    this.selectedProduct = product;
+    this.openpreview=true;
   }
 
+  closePreviewPopup():void{
+    this.openpreview=false;
+    this.selectedProduct = null;
+  }
+
+  // fetch products from API
 
   fetchProducts():void{
     if (this.loginID) {
@@ -266,16 +258,48 @@ checkIfAllSelected(): void {
 
   }
 
-
+  // navigate to edit product page
   onUpdate(productId: string): void {
     this.router.navigate(['/admin/productlist/edit-product', productId]);
   }
 
 
+  // search products
+  Searchproducts():void{
+    const searchTerm = this.searchText.toLowerCase();
+    this.products = this.allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchTerm)
+    );
+    this.filterSelected=true;
+  }
 
+// filter by date
 
+closeDateRangePicker(){
+ this.filterSelected=true;
+  if(this.startDate && this.endDate){
+    this.products = this.allProducts.filter(product => {
+      const createdDate = new Date(product.createdOn);
+      return createdDate >= this.startDate! && createdDate <= this.endDate!;
+    });
+  }
+}
 
+// Filter by Category
+OpenFilters():void{
+  this.filterSelected=true;
+  this.filterpopup=true;
+}
 
-
+CloseFilters():void{
+  this.filterpopup=false;
+  this.products = this.allProducts.filter(product => {
+    const isTop = this.topsSelected && product.type.toLowerCase() === 'tops';
+    const isBottom = this.bottomsSelected && product.type.toLowerCase() === 'bottoms';
+    const isShoe = this.shoesSelected && product.type.toLowerCase() === 'shoes';
+    const isAccessory = this.accessoriesSelected && product.type.toLowerCase() === 'accessories';
+    return isTop || isBottom || isShoe || isAccessory; 
+  });
+}
 
 }
