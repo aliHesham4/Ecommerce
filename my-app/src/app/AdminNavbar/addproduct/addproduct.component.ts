@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, FormArray, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AllproductsService } from '../../shared/allproducts.service';
 
 
 @Component({
@@ -31,10 +32,10 @@ categoryStatusForm: FormGroup;
 
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private AllProductsService: AllproductsService) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(120)]]
     });
     this.mediaForm=  this.fb.group({
       media: this.fb.array([],[Validators.required])
@@ -82,7 +83,7 @@ categoryStatusForm: FormGroup;
 
   }
 
-onSave(){
+ onSave(){
   if(this.productForm.invalid && this.mediaForm.invalid && this.priceForm.invalid
    && this.inventoryForm.invalid
     && this.shippingForm.invalid && this.categoryStatusForm.invalid){
@@ -112,7 +113,7 @@ status: this.categoryStatusForm.get('status')?.value,
 
 const APIurl = "https://localhost:7096/api/Product/addproduct";
 
-this.http.post<any>(APIurl, data).subscribe({
+ this.http.post<any>(APIurl, data).subscribe({
   next: (response) => {
     if (response?.data?.id) {
       const extraData = {
@@ -131,7 +132,11 @@ this.http.post<any>(APIurl, data).subscribe({
 
       localStorage.setItem(`product-${productId}`, JSON.stringify(extraData));
       console.log('Product saved locally:', extraData);
-      this.router.navigate(['/admin/productlist']);
+      
+      this.router.navigate(['/admin/productlist']).then(()=>{
+      alert("Product is added successfully, please refresh the page");
+      });
+      
     } else {
       console.error('Invalid response structure:', response);
     }
@@ -141,7 +146,8 @@ this.http.post<any>(APIurl, data).subscribe({
     alert('Failed to add product. Please try again.');
   }
 });
-   }
+  this.AllProductsService.loadAllproducts();
+}
 }
 
 

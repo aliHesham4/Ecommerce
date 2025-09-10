@@ -31,7 +31,7 @@ export const routes: Routes = [
      {path: 'product/:id', component: ProductdetailComponent},
      {path: 'admin',component: AdminLayoutComponent,children: [
     { path: '', redirectTo: 'productlist', pathMatch: 'full' }, // ✅ Default child
-    { path: 'productlist', component: AdminproductlistComponent },
+    { path: 'productlist', component: AdminproductlistComponent},
     {path:'productlist/add-product',component: AddproductComponent},
     {path:'productlist/edit-product/:id',component: EditproductComponent},
     { path: 'dashboard', component: DashboardComponent },

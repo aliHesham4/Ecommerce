@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -46,7 +46,7 @@ export interface Product{
 
 @Component({
   selector: 'app-adminproductlist',
-  imports: [ FormsModule, CommonModule,MatDatepickerModule,MatNativeDateModule,MatInputModule,MatFormFieldModule],
+  imports: [ FormsModule, CommonModule,MatDatepickerModule,MatNativeDateModule,MatInputModule,MatFormFieldModule,RouterModule],
   templateUrl: './adminproductlist.component.html',
   styleUrl: './adminproductlist.component.css'
 })
@@ -77,6 +77,7 @@ export class AdminproductlistComponent {
   bottomsSelected:boolean=true; // To check if bottom filter is selected
   shoesSelected:boolean=true; // To check if shoes filter is selected
   accessoriesSelected:boolean=true; // To check if accessories filter is selected
+  Math=Math;
 
   constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private allProductsService: AllproductsService) {}
 
@@ -87,17 +88,23 @@ export class AdminproductlistComponent {
     console.log('Admin loginID:', this.loginID);
     this.fetchProducts();
     this.allProductsService.loginID = this.loginID; // Set loginID in the service
-    this.allProductsService.loadAllproducts(); // Load all products when component initializes
     this.allProductsService.allProducts$.subscribe(allProducts => {
       this.allProducts = allProducts;
-    
     });
+
+    this.allProductsService.loadAllproducts(); // Load all products when component initializes
     }
-
-    
-
-
+   
   }
+
+
+
+ checkStopNext(): void {
+  if(this.filterSelected){
+  const maxPages = Math.ceil(this.products.length / 10);
+  this.stopNext = this.pageNumber >= maxPages;
+  }
+}
 
 
   // select all checkbox
@@ -151,13 +158,16 @@ checkIfAllSelected(): void {
 
 // pagination
   previousPage(): void {
-   
+     
       this.pageNumber--;
+      if(!this.filterSelected)
       this.fetchProducts();
       this.stopNext = false;
     
   }
   nextPage(): void {
+  
+  if(!this.filterSelected){
   this.pageNumber++;
   this.http.get<{ data: Product[] }>(`https://localhost:7096/api/Product/getallproducts/${this.loginID}?pageNumber=${this.pageNumber + 1}`)
     .subscribe({
@@ -167,17 +177,26 @@ checkIfAllSelected(): void {
         }
       }
     });
-  
-  this.fetchProducts();
+    this.fetchProducts();
+     }else {
+    const maxPages = Math.ceil(this.products.length / 10);
 
+    if (this.pageNumber < maxPages) {
+      this.pageNumber++;
+    this.checkStopNext();
+    }
+   
   }
+    }
 
-  
+  get PaginatedProducts(){
+  const start= (this.pageNumber-1) * 10;
+  return this.products.slice(start,start+ 10 );
+}
+
   // delete product
 
   onDelete(productId: string): void {
-    console.log('hereeee');
-    
     this.showDeletePopup = true;
     this.productIdToDelete = productId;
   }
@@ -239,8 +258,9 @@ checkIfAllSelected(): void {
                    height: parsed.height ,
                    length: parsed.length ,
                    width: parsed.width ,
-                   images: Array.isArray(parsed.images) ? parsed.images : product.images
-                };
+                   images: Array.isArray(parsed.images) ? parsed.images : product.images,
+                  oldPrice: parsed.discountpercentage!=0 ? (parsed.discountpercentage+100)/100*product.amount: null
+                }as Product;
               }
               return product;
 
@@ -271,6 +291,7 @@ checkIfAllSelected(): void {
       product.name.toLowerCase().includes(searchTerm)
     );
     this.filterSelected=true;
+    this.checkStopNext();
   }
 
 // filter by date
@@ -282,6 +303,7 @@ closeDateRangePicker(){
       const createdDate = new Date(product.createdOn);
       return createdDate >= this.startDate! && createdDate <= this.endDate!;
     });
+    this.checkStopNext();
   }
 }
 
@@ -299,7 +321,9 @@ CloseFilters():void{
     const isShoe = this.shoesSelected && product.type.toLowerCase() === 'shoes';
     const isAccessory = this.accessoriesSelected && product.type.toLowerCase() === 'accessories';
     return isTop || isBottom || isShoe || isAccessory; 
+    
   });
+  this.checkStopNext();
 }
 
 }

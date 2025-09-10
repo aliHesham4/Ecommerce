@@ -23,7 +23,7 @@
     <label for="description" class="form-label">Description</label>
     <textarea type="text" id="description" class="form-control noresize " placeholder="Type product description here. . ." formControlName="description" rows="3"></textarea>
     <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-danger">
-      Description must be at least 10 characters.
+      Description must be at least 10 characters and maximum of 120.
     </div>
   </div>
 
@@ -132,7 +132,7 @@
         </div>
       </div> 
     </div>
-    <!--  
+     
     <div class="col-12 col-lg-6">
       <div class="stockquantity mb-3">
         <label for="stockquantity" class="form-label">Quantity</label>
@@ -142,7 +142,7 @@
         </div>
       </div>
     </div>
-     -->
+     
     </div>
   </form>
   </div>

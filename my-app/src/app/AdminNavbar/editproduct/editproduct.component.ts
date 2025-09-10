@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, FormArray, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../adminproductlist/adminproductlist.component';
+import { AllproductsService } from '../../shared/allproducts.service';
 
 
 @Component({
@@ -36,10 +37,10 @@ productId: string | null = null;
 
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private route: ActivatedRoute,private AllProductsService: AllproductsService) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(120)]]
     });
     this.mediaForm=  this.fb.group({
       media: this.fb.array([],[Validators.required])
@@ -55,7 +56,7 @@ productId: string | null = null;
 
     this.inventoryForm = this.fb.group({
        SKU: ['', Validators.required],
-      // stockquantity: ['', [Validators.required, Validators.min(0)]],
+       stockquantity: ['', [Validators.required, Validators.min(0)]],
     });
 
     this.shippingForm = this.fb.group({
@@ -100,6 +101,7 @@ ngOnInit(): void{
       this.productForm.get('productName')?.setValue(this.product.name);
       this.productForm.get('description')?.setValue(this.product.description);
       this.priceForm.get('baseprice')?.setValue(this.product.amount);
+      this.inventoryForm.get('stockquantity')?.setValue(this.product.stockQuantity);
       this.categoryStatusForm.get('category')?.setValue(this.product.type);
       this.categoryStatusForm.get('status')?.setValue(this.product.status);
       const key = `product-${this.productId}`;
@@ -134,7 +136,7 @@ ngOnInit(): void{
 
 
 
-onSave(){
+ onSave(){
   if(this.productForm.invalid && this.mediaForm.invalid && this.priceForm.invalid
    && this.inventoryForm.invalid
     && this.shippingForm.invalid && this.categoryStatusForm.invalid){
@@ -153,7 +155,7 @@ name: this.productForm.get('productName')?.value,
 description: this.productForm.get('description')?.value,
 amount: this.priceForm.get('baseprice')?.value,
 type: this.categoryStatusForm.get('category')?.value,
-// quantity: this.inventoryForm.get('stockquantity')?.value,
+stockQuantity: this.inventoryForm.get('stockquantity')?.value,
 status: this.categoryStatusForm.get('status')?.value,
 // productImages: productImages
 
@@ -164,7 +166,7 @@ this.productId = this.route.snapshot.paramMap.get('id');
 const APIurl = `https://localhost:7096/api/Product/updateproduct/${this.productId}`;
 
 this.http.put<any>(APIurl, data).subscribe({
-  next: (response) => {
+  next:  (response) => {
     if (response?.data?.id) {
       const extraData = {
         sku: this.inventoryForm.get('SKU')?.value,
@@ -182,7 +184,15 @@ this.http.put<any>(APIurl, data).subscribe({
 
       localStorage.setItem(`product-${productId}`, JSON.stringify(extraData));
       console.log('Product saved locally:', extraData);
-      this.router.navigate(['/admin/productlist']);
+  
+  this.AllProductsService.loadAllproducts(); 
+
+  this.router.navigate(['/admin/productlist']).then(()=>{
+    alert("Product is edited successfully, please refresh the page");
+  });
+
+
+     
     } else {
       console.error('Invalid response structure:', response);
     }
@@ -192,7 +202,7 @@ this.http.put<any>(APIurl, data).subscribe({
     alert('Failed to add product. Please try again.');
   }
 });
-
+  
   }
 }
 

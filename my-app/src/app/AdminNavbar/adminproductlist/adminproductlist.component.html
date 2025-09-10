@@ -197,7 +197,7 @@ No products available
 
  <!-- This is for the filtered products ------------------------ -->
  <div *ngIf="filterSelected">
-  <div  class="row m-0 product-card" *ngFor="let product of products"  >
+  <div  class="row m-0 product-card" *ngFor="let product of PaginatedProducts"  >
   
     <div class="col-3 productdata d-flex align-items-center gap-2">
      <input type="checkbox" [(ngModel)]="product.selected" (change)="checkIfAllSelected()" />
@@ -286,7 +286,12 @@ No products available
 
 
  <div class="paging d-flex justify-content-between align-items-center">
-<div> Showing 1-{{ products.length }} from {{ allProducts.length }} </div>
+<div>Showing {{ (pageNumber - 1) * 10 + 1 }}
+-
+{{ Math.min(pageNumber * 10, (filterSelected ? products.length : allProducts.length)) }}
+of {{ filterSelected ? products.length : allProducts.length }}
+
+ </div>
 <div class="d-flex gap-2">
  <button class="btn previous" [disabled]="pageNumber==1" (click)="previousPage()"><</button>
 <button class="btn num">{{this.pageNumber}}</button>

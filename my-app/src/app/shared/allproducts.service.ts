@@ -56,7 +56,7 @@ async loadAllproducts(){
           this.allproductspagination++;
         }
       }
-      alert(this.allProductsSubject.getValue().length);
+      
     }catch(error){
       console.error('Error fetching all products:', error);
     }
