@@ -1,8 +1,13 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { HeaderComponent } from '../Done/header/header.component';
 import { FooterComponent } from '../Done/footer/footer.component';
 import { ProductlayerComponent } from '../Done/productlayer/productlayer.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { AllproductsService } from '../shared/allproducts.service';
+import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -12,83 +17,77 @@ import { CommonModule } from '@angular/common';
   styleUrl: './productdetail.component.css',
 })
 export class ProductdetailComponent {
-
-   products = [
-    {
-      imageUrl: 'assets/product1.png',
-      title: 'Gradient Graphic T-shirt ',
-      rating: 3.5,
-      price: 145
-      
-    },
-    {
-      imageUrl: 'assets/product2.png',
-      title: 'Polo with Tipping Details',
-      rating: 4.5,
-      price: 180
-    }
-    ,
-    {
-      imageUrl: 'assets/product3.png',
-      title: 'Black Striped T-shirt',
-      rating: 5.0,
-      price: 120,
-      oldPrice: 150 
-    },
-    {
-      imageUrl: 'assets/product4.png',
-      title: 'Skinny Fit Jeans',
-      rating: 3.5,
-      price: 240,
-      oldPrice: 260
-    },
-    {
-      imageUrl: 'assets/product5.png',
-      title: 'Checkered Shirt',
-      rating: 4.5,
-      price: 180
-    },
-    {
-      imageUrl: 'assets/product6.png',
-      title: 'Sleeve Striped Tshirt',
-      rating: 4.5,
-      price: 130,
-      oldPrice: 160
-    },
-    {
-      imageUrl: 'assets/product7.png',
-      title: 'Vertical Striped Shirt',
-      rating: 5.0,
-      price: 212,
-      oldPrice: 232
-    },
-    {
-      imageUrl: 'assets/product8.png',
-      title: 'Courage Graphic T-shirt',
-      rating: 4.0,
-      price: 145
-    },
-    {
-      imageUrl: 'assets/product9.png',
-      title: 'Loose Fit Bermuda Shorts',
-      rating: 3.0,
-      price: 80,
-    },
-
-    {
-      imageUrl: 'assets/product10.png',
-      title: 'Blue Regular Polo T-shirt',
-      rating: 4.0,
-      price: 200,
-      oldPrice: 220
-    }
-    
-
-    
-  ];
-  
-  selected = 'assets/productdetail.png';
+  products:Product[]=[];
+  selected: string = '';
   itemquantity= 1;
+  loginID='';
+  shuffledProducts!: any[];
+  private platformId = inject(PLATFORM_ID);
+  private id='';
+  product: Product | null = null;
+
+  constructor(private router: Router, private route: ActivatedRoute,private AllProductsService: AllproductsService, private http:HttpClient) {}
+ ngOnInit() {
+  if (isPlatformBrowser(this.platformId)) {
+    this.loginID = localStorage.getItem('loginID') || '';
+    console.log('Admin loginID:', this.loginID);
+
+    if (!this.loginID) {
+      console.error("No loginID found in localStorage!");
+      return; // stop here if loginID is missing
+    }
+
+    this.AllProductsService.loginID = this.loginID; 
+    this.AllProductsService.loadAllproducts(); // ✅ move inside the if
+    this.AllProductsService.allProducts$.subscribe(products => {
+      this.products = products;
+      console.log(products.length);
+
+      // Shuffle after products arrive, not before
+      this.shuffledProducts = [...this.products].sort(() => Math.random() - 0.5);
+    });
+     this.id = this.route.snapshot.paramMap.get('id') || '';
+
+    this.getProduct();
+
+}
+ }
+
+
+
+  getRandomProducts() {
+    if (isPlatformBrowser(this.platformId)){
+    const width = window.innerWidth;
+     let count: number;
+     if(width<= 500){
+      count=1;
+    }else if (width <= 1040) {
+     count = 2;
+    } else if (width <= 1380) {
+     count = 3;
+     } else {
+      count = 4;
+    }
+
+    return [...this.shuffledProducts] // copy the array so we don’t mutate original
+     .slice(0,count); 
+  }
+  return
+}
+   
+
+ refreshPage(productID: string) {
+  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {  //this tricks angular router to go to root but without updating Url then go 
+    this.router.navigate(['/product', productID]);                           // to the same page I am on so it does a refresh
+  });
+}
+
+
+
+ @HostListener('window:resize')
+  onResize() {
+    this.getRandomProducts();
+  }
   onPreviewClick(imagePath: string) {
     this.selected = imagePath;
   }
@@ -102,27 +101,51 @@ export class ProductdetailComponent {
     if(this.itemquantity>1)
     this.itemquantity--;
   }
-  shuffledProducts!: any[];
-  ngOnInit() {
-  // Shuffle once on component load
-  this.shuffledProducts = [...this.products].sort(() => Math.random() - 0.5);
-}
 
-  getRandomProducts() {
-    const width = window.innerWidth;
-     const count = width < 800 ? 2 : 4;
-    return [...this.shuffledProducts] // copy the array so we don’t mutate original
-     .slice(0,count); 
+  getProduct(){
+    this.http
+  .get<{ data: Product }>(`https://localhost:7096/api/Product/getproductbyid/${this.id}`)
+  .subscribe({
+    next: (res) => {
+      let product = res.data;
+
+      const key = `product-${this.id}`;
+      const localData = localStorage.getItem(key);
+
+      if (localData) {
+        const parsed = JSON.parse(localData);
+
+        const oldPrice =
+          parsed.discountpercentage != 0
+            ? Math.round(((parsed.discountpercentage + 100) / 100) * product.amount)
+            : null;
+
+        product = {
+          ...product,
+          discounttype: parsed.discounttype,
+          SKU: parsed.sku,
+          discountvalue: oldPrice ? parsed.discountpercentage : null,
+          taxclass: parsed.tax,
+          VAT: parsed.VAT,
+          weight: parsed.weight,
+          height: parsed.height,
+          length: parsed.length,
+          width: parsed.width,
+          images: Array.isArray(parsed.images) ? parsed.images : product.images,
+          oldPrice,
+        } as Product;
+      }
+
+      // ✅ finally set the merged result
+      this.product = product;
+      this.selected = 'assets/' + (this.product?.images?.[0] || '');
+      console.log('Final merged product:', this.product);
+    },
+    error: (err) => {
+      console.error('Error fetching product:', err);
+    },
+  });
   }
-    
-
-
- @HostListener('window:resize')
-  onResize() {
-    this.getRandomProducts();
-  }
-
-
 
 }
 

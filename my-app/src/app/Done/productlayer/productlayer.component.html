@@ -1,17 +1,23 @@
-<div class=image-box>
-    <img [src]="imageUrl" alt="Product Image" class="image" width="100%" height="100%">
+<div class="productbox" style="cursor: pointer;">
+<div class=image-box (click)="chooseProduct(productID)" >
+    <img [src]="'/assets/' + images" alt="Product Image" class="image" width="100%" height="100%">
+
   </div>
   <div class="details">
-    <h3>{{ title }}</h3>
+    <h3>{{ name }}</h3>
     <div class="d-flex">
-    <div class="stars" [style.--rating]="rating"></div>
-    <p> {{ rating }} /5</p>
+    <p> {{ type }}</p>
     </div>
-    <div class="d-flex gap-2" ><h4> ${{ price }} </h4>
-    <h5 *ngIf="oldPrice"> ${{ oldPrice }} </h5> 
-    <div class="discount" *ngIf="oldPrice">
-  {{ ((oldPrice - price) / oldPrice) * 100 | number:'1.0-0' }}%
+    <div class="d-flex gap-2" ><h4> ${{ amount }} </h4>
+    <h5 *ngIf="oldPrice!=amount"> ${{ oldPrice | number:'1.0-0' }} </h5> 
+    <div class="discount" *ngIf="discountpercent">
+  {{discountpercent | number:'1.0-0'}}%
+
+
+
 </div> </div>
     
   
   </div>
+
+</div>

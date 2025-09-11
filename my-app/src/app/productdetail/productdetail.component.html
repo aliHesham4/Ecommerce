@@ -1,38 +1,37 @@
 <app-header></app-header>
 <div class="container">
 <div class="row ">
-    <div class="col-12 col-sm-6 images">
+    <div class="col-12 col-lg-6 images">
     <div class="row gap-2 layout">
-     <div class=" col-12 col-sm-3 d-flex flex-sm-column gap-2 justify-sm-content-center threepreviews">
+     <div class=" col-12 col-lg-3 d-flex flex-lg-column gap-2 justify-lg-content-center threepreviews">
         <div class="preview-1">
-         <img src="assets/productdetail.png" alt="Product 1" class="img" (click)="onPreviewClick('assets/productdetail.png')" [class.active]="selected === 'assets/productdetail.png'">
-
+        <img  [src]="'assets/' + (product?.images?.[0] || '')" alt="Product 1" class="img" (click)="onPreviewClick('assets/' + (product?.images?.[0] || ''))" [class.active]="selected === ('assets/' + (product?.images?.[0] || ''))" />
         </div>
 
         <div class="preview-2">
-            <img src="assets/productdetail2.png" alt="Product 2" class="img" (click)="onPreviewClick('assets/productdetail2.png')" [class.active]="selected === 'assets/productdetail2.png'">
+            <img [src]="'assets/' + (product?.images?.[1] || '')" alt="Product 1" class="img" (click)="onPreviewClick('assets/' + (product?.images?.[1] || ''))" [class.active]="selected === ('assets/' + (product?.images?.[1] || ''))"/>
         </div>
 
         <div class="preview-3">
-            <img src="assets/productdetail3.png" alt="Product 3" class="img" (click)="onPreviewClick('assets/productdetail3.png')" [class.active]="selected === 'assets/productdetail3.png'">
+           <img [src]="'assets/' + (product?.images?.[2] || '')" alt="Product 3" class="img" (click)="onPreviewClick('assets/' + (product?.images?.[2] || ''))" [class.active]="selected === ('assets/' + (product?.images?.[2] || ''))"/>
         </div>
+
     </div>
 
-    <div class="col-12 col-sm-9 d-flex main-image justify-content-center">
+    <div class="col-12 col-lg-9 d-flex main-image justify-content-center">
         <img [src]="selected" alt="Main Product Image" class="main-img">
 
     </div>
     </div>
     </div>
-    <div class="col-12 col-sm-6 details">
-        <div><h1 class="product-title mt-2 mt-sm-0">One Life Graphic Tshirt</h1>
+    <div class="col-12 col-lg-6 details">
+        <div><h1 class="product-title mt-2 mt-lg-0">{{product?.name}}</h1>
         <p class="product-rating">4.5/<span style="color: rgba(0, 0, 0, 0.6);">5</span></p>
-        <div class="price d-flex gap-2">$99.99
-        <div class="old-price">$129.99</div>
-        <div class="discount">20% </div>
+        <div class="price d-flex gap-2">${{product?.amount}}
+        <div class="old-price" *ngIf="product?.oldPrice">${{product?.oldPrice}}</div>
+        <div class="discount" *ngIf="product?.oldPrice">{{product?.discountvalue}}% </div>
         </div>
-        <div class="description">This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric,
-         it offers superior comfort and style.</div>
+        <div class="description">{{product?.description}}</div>
         <hr>
         </div>
        <div class="bars d-flex align-items-center gap-3 justify-content-between">
@@ -49,12 +48,15 @@
 <div class="recommendations">
     <div class="recommend-title"><h1>You might also like</h1></div>
     <div class="products d-flex gap-3">
-    <app-productlayer *ngFor="let product of getRandomProducts()" 
-        [imageUrl]="product.imageUrl" 
-        [title]="product.title" 
-        [rating]="product.rating"
-        [price]="product.price"
-        [oldPrice]="product.oldPrice">
+    <app-productlayer  *ngFor="let product of getRandomProducts()" (click)= "refreshPage(product.id)"
+        [images]="product.images?.[0] || 'assets/default.png'" 
+        [name]="product.name" 
+        [type]="product.type"
+        [amount]="product.amount"
+        [oldPrice]="product.oldPrice"
+        [discountpercent]="product.discountvalue"
+        [productID]="product.id">
+
     </app-productlayer>
     </div>
 </div>

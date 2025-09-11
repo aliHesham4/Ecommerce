@@ -39,7 +39,8 @@ export interface Product{
   "width"?: number,
   "height"?: number,
   "weight"?: number,
-  "oldPrice"?: number
+  "oldPrice"?: number,
+  
 
 
 }
@@ -76,6 +77,7 @@ export class AdminproductlistComponent {
   topsSelected:boolean=true; // To check if top filter is selected
   bottomsSelected:boolean=true; // To check if bottom filter is selected
   shoesSelected:boolean=true; // To check if shoes filter is selected
+  dressesSelected:boolean=true;
   accessoriesSelected:boolean=true; // To check if accessories filter is selected
   Math=Math;
 
@@ -247,11 +249,14 @@ checkIfAllSelected(): void {
               const localData= localStorage.getItem(key);
               if(localData){
                 const parsed=JSON.parse(localData);
+                const oldPrice = parsed.discountpercentage != 0 
+                 ? Math.round(((parsed.discountpercentage + 100) / 100) * product.amount)
+                 : null;
                 return {
                   ...product,
                   discounttype: parsed.discounttype,
                   SKU: parsed.sku,
-                  discountvalue: parsed.discountpercentage,
+                  discountvalue: oldPrice ? parsed.discountpercentage : null,
                   taxclass: parsed.tax ,
                   VAT: parsed.VAT,
                    weight: parsed.weight ,
@@ -259,7 +264,8 @@ checkIfAllSelected(): void {
                    length: parsed.length ,
                    width: parsed.width ,
                    images: Array.isArray(parsed.images) ? parsed.images : product.images,
-                  oldPrice: parsed.discountpercentage!=0 ? (parsed.discountpercentage+100)/100*product.amount: null
+                   oldPrice
+
                 }as Product;
               }
               return product;
@@ -318,9 +324,10 @@ CloseFilters():void{
   this.products = this.allProducts.filter(product => {
     const isTop = this.topsSelected && product.type.toLowerCase() === 'tops';
     const isBottom = this.bottomsSelected && product.type.toLowerCase() === 'bottoms';
+    const isDress=this.dressesSelected && product.type.toLowerCase() === 'dresses';
     const isShoe = this.shoesSelected && product.type.toLowerCase() === 'shoes';
     const isAccessory = this.accessoriesSelected && product.type.toLowerCase() === 'accessories';
-    return isTop || isBottom || isShoe || isAccessory; 
+    return isTop || isBottom || isShoe || isAccessory||isDress; 
     
   });
   this.checkStopNext();

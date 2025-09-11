@@ -11,9 +11,9 @@ import { PriceService } from '../../shared/price.service';
 })
 export class PriceSliderComponent {
   min = 0;
-  max = 250;
+  max = 600;
   minValue = 0;
-  maxValue = 250;
+  maxValue = 600;
 
   constructor(private priceService: PriceService) {}
 

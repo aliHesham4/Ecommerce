@@ -116,6 +116,14 @@ p{
 }
 
 
+.products{
+    justify-content: center;
+}
+
+
+
+
+
 
 
 
@@ -142,3 +150,43 @@ p{
 
     }
 }
+
+
+@media (min-width: 426px) and (max-width: 769px) {
+
+    .layout{
+        align-items: center;
+    }
+
+
+
+
+
+}
+
+
+@media (min-width: 769px) and (max-width: 992px) {
+
+    .layout{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .threepreviews{
+        justify-content: center;
+    }
+    
+
+}
+
+
+@media (min-width: 993px) and (max-width: 1400px) {
+
+    .main-image{
+        width: 290px;
+    }
+    
+
+}
+
+

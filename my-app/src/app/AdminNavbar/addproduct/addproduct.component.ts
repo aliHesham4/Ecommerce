@@ -35,7 +35,7 @@ categoryStatusForm: FormGroup;
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private AllProductsService: AllproductsService) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(120)]]
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(150)]]
     });
     this.mediaForm=  this.fb.group({
       media: this.fb.array([],[Validators.required])
@@ -134,7 +134,11 @@ const APIurl = "https://localhost:7096/api/Product/addproduct";
       console.log('Product saved locally:', extraData);
       
       this.router.navigate(['/admin/productlist']).then(()=>{
-      alert("Product is added successfully, please refresh the page");
+      setTimeout(()=>{
+        // alert("Product is added successfully, please refresh the page");
+        window.location.reload();
+      },200);
+      
       });
       
     } else {

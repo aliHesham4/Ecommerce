@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SearchbarComponent } from '../../searchbar/searchbar.component';
 import { Router, ActivatedRoute,RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,14 +10,19 @@ import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, SearchbarComponent,RouterLink],
+  imports: [CommonModule, SearchbarComponent,RouterLink,RouterModule],
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  currentRoute: string='';
 
-   constructor(private router: Router, private route: ActivatedRoute) {}
+   constructor(private router: Router, private route: ActivatedRoute) {
+     this.router.events.subscribe(() => {
+      this.currentRoute = this.router.url;
+    });
+   }
 
    openPopup() {
   this.router.navigate(['/products', { outlets: { popup: ['search'] } }]);
@@ -35,6 +41,13 @@ get isPopupSearch(): boolean {
   handleSearch(value: string) {
   console.log('Search value from child:', value);
 }
+
+isOnProductList(){
+  return this.currentRoute==="/products";
+}
+
+
+
 
 
 }

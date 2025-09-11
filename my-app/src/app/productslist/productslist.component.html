@@ -14,7 +14,6 @@
             <img src="assets/arrow-down.png" alt="arrow-down Icon" class="arrow-down">
             <ul *ngIf="displayOptions" class="sort-options">
             <li (click)="sortProducts('Most Popular')">Most Popular</li>
-            <li (click)="sortProducts('Rating')">Best Rating</li>
             <li (click)="sortProducts('Price: High to Low')">Price: High → Low</li>
             <li (click)="sortProducts('Price: Low to High')">Price: Low → High</li>
             </ul>
@@ -23,11 +22,13 @@
         </div>
         <div class="products d-flex flex-wrap ">
             <app-productlayer *ngFor="let product of PaginatedProducts" 
-                [imageUrl]="product.imageUrl" 
-                [title]="product.title" 
-                [rating]="product.rating"
-                [price]="product.price"
-                [oldPrice]="product.oldPrice">
+                [images]="product.images?.[0] || 'assets/default.png'"
+                [name]="product.name" 
+                [type]="product.type"
+                [amount]="product.amount"
+                [oldPrice]="product.oldPrice"
+                [discountpercent]="product.discountvalue"
+                [productID]="product.id">
             </app-productlayer>
         </div>
         

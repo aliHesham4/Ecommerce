@@ -8,6 +8,8 @@ import { PriceService } from '../shared/price.service';
 import {Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { AllproductsService } from '../shared/allproducts.service';
+import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
 
 
 
@@ -19,102 +21,49 @@ import { PLATFORM_ID } from '@angular/core';
 })
 export class ProductslistComponent implements OnInit,OnDestroy {
 
-  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService) {}
+  
   searchTerm: string = '';
   private sub!: Subscription;
   private priceSub!: Subscription;
-  
-  openPopup() {
-  this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
-}
-
-
-  
-  
- products = [
-    {
-      imageUrl: 'assets/product1.png',
-      title: 'Gradient Graphic T-shirt ',
-      rating: 3.5,
-      price: 145
-      
-    },
-    {
-      imageUrl: 'assets/product2.png',
-      title: 'Polo with Tipping Details',
-      rating: 4.5,
-      price: 180
-    }
-    ,
-    {
-      imageUrl: 'assets/product3.png',
-      title: 'Black Striped T-shirt',
-      rating: 5.0,
-      price: 120,
-      oldPrice: 150 
-    },
-    {
-      imageUrl: 'assets/product4.png',
-      title: 'Skinny Fit Jeans',
-      rating: 3.5,
-      price: 240,
-      oldPrice: 260
-    },
-    {
-      imageUrl: 'assets/product5.png',
-      title: 'Checkered Shirt',
-      rating: 4.5,
-      price: 180
-    },
-    {
-      imageUrl: 'assets/product6.png',
-      title: 'Sleeve Striped Tshirt',
-      rating: 4.5,
-      price: 130,
-      oldPrice: 160
-    },
-    {
-      imageUrl: 'assets/product7.png',
-      title: 'Vertical Striped Shirt',
-      rating: 5.0,
-      price: 212,
-      oldPrice: 232
-    },
-    {
-      imageUrl: 'assets/product8.png',
-      title: 'Courage Graphic T-shirt',
-      rating: 4.0,
-      price: 145
-    },
-    {
-      imageUrl: 'assets/product9.png',
-      title: 'Loose Fit Bermuda Shorts',
-      rating: 3.0,
-      price: 80,
-    },
-
-    {
-      imageUrl: 'assets/product10.png',
-      title: 'Blue Regular Polo T-shirt',
-      rating: 4.0,
-      price: 200,
-      oldPrice: 220
-    }
-    
-
-    
-  ];
+  products: Product[]=[];
 
   currentpage=1;
   itemsperpage=9;
   priceRange = { min: 0, max: 250 };
-
-  displayProducts: ProductlayerComponent[] = [];
+  loginID: string='';
+  displayProducts: Product[] = [];;
  
+  
+
+ constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService,private AllProductsService: AllproductsService) {}
+  
+
+
+  
+  
+
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+    this.loginID = localStorage.getItem('loginID') || '';
+    console.log('Admin loginID:', this.loginID);
+    this.AllProductsService.loginID = this.loginID; // Set loginID in the service
+     if (!this.loginID) {
+      console.error("No loginID found in localStorage!");
+      return; // stop here if loginID is missing
+    }
+    
     this.updateItemsPerPage();
-    this.displayProducts = [...this.filteredProducts];
+    this.AllProductsService.loadAllproducts();
+    this.AllProductsService.allProducts$.subscribe(products=>{
+      this.products=products;
+      this.products= this.products.filter(product=>{
+        return product.isDeleted==false;
+      })
+      this.displayProducts = [...this.filteredProducts];
+      
+    });
+
     this.sub= this.searchService.searchTerm$.subscribe(term => {
       this.searchTerm = term;
       this.applyFilters();
@@ -123,6 +72,7 @@ export class ProductslistComponent implements OnInit,OnDestroy {
       this.priceRange = range;
       this.applyFilters(); 
     });
+  }
 
   }
 
@@ -158,11 +108,13 @@ private platformId = inject(PLATFORM_ID);
 
 get filteredProducts() {
   return this.products.filter(product =>
-    product.title.toLowerCase().includes(this.searchTerm.toLowerCase())&&
-    product.price >= this.priceRange.min &&
-    product.price <= this.priceRange.max
+    product.name.toLowerCase().includes(this.searchTerm.toLowerCase())&&
+    product.amount >= this.priceRange.min &&
+    product.amount <= this.priceRange.max
   );
 }
+
+
 
 get PaginatedProducts(){
   const start= (this.currentpage-1) * this.itemsperpage;
@@ -204,17 +156,16 @@ sortProducts(criteria:string){
     this.displayProducts = [...this.filteredProducts];
 }
 
- else if(criteria==="Rating"){
-  this.displayProducts.sort((a,b)=>b.rating-a.rating);
-}
 else if(criteria==="Price: Low to High"){
-  this.displayProducts.sort((a,b)=>a.price-b.price);
+  this.displayProducts.sort((a,b)=>a.amount-b.amount);
 }
 else if(criteria==="Price: High to Low"){
-  this.displayProducts.sort((a,b)=>b.price-a.price);
+  this.displayProducts.sort((a,b)=>b.amount-a.amount);
+}
 }
 
-
+openPopup() {
+  this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
 }
 
 }

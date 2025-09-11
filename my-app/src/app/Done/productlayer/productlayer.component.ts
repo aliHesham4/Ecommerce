@@ -1,5 +1,6 @@
-import { Component,Input } from '@angular/core';
-import { CommonModule } from '@angular/common';  
+import { Component,input,Input } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { Router } from '@angular/router';
 
 
 
@@ -10,10 +11,23 @@ import { CommonModule } from '@angular/common';
   styleUrl: './productlayer.component.css'
 })
 export class ProductlayerComponent {
-@Input() imageUrl: string = '';
-  @Input() title: string = '';
-  @Input() rating: number = 0;
-  @Input() price: number = 0;
-  @Input() oldPrice?: number; // optional old price
+@Input() images: string ='';
+  @Input() name: string = '';
+  @Input() type: string = '';
+  @Input() amount: number = 0;
+  @Input() oldPrice?: number;
+  @Input() discountpercent?: number;
+  @Input() productID:string='';
+  
+
+  constructor(private router:Router) {}
+
+
+  chooseProduct(productID: string ):void{
+   this.router.navigate(['/product/', productID]);
+}
+
 
 }
+
+

@@ -188,7 +188,10 @@ this.http.put<any>(APIurl, data).subscribe({
   this.AllProductsService.loadAllproducts(); 
 
   this.router.navigate(['/admin/productlist']).then(()=>{
-    alert("Product is edited successfully, please refresh the page");
+    setTimeout(()=>{
+        // alert("Product is edited successfully, please refresh the page");
+        window.location.reload();
+      },200);
   });
 
 
