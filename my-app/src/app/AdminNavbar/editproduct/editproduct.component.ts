@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, CanActivate, RouterModule } from '@angular/router';
 import {Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule, FormArray, AbstractControl } from '@angular/forms';
@@ -14,7 +14,19 @@ import { AllproductsService } from '../../shared/allproducts.service';
   templateUrl: './editproduct.component.html',
   styleUrl: './editproduct.component.css'
 })
-export class EditproductComponent {
+export class EditproductComponent implements CanActivate{
+
+canActivate(): boolean {
+    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
+    const isAdmin= JSON.parse(localStorage.getItem('loginID') || '{}').isAdmin;
+    if (loginID && isAdmin) {
+      return true; // allow access
+    } else {
+      alert("You must log in to access this page.");
+      this.router.navigate(['/login']); // redirect to login
+      return false; // block access
+    }
+  }
 
 productForm: FormGroup;
 mediaForm: FormGroup;

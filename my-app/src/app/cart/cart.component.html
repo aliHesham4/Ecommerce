@@ -1,8 +1,9 @@
 <app-header></app-header>
 <div class="container">
 <div class="mb-3"><h2>Your Cart</h2></div>
-<div class="row">
-    <div class="col-lg-6 col-12 p-4 mycart ">
+<div class="row gap-4">
+    <div class="col-lg-6 col-12 p-4 mycart mb-5 ">
+        <div *ngIf="allProductsInCart.length==0" style="text-align: center;color: rgb(163, 162, 162);"><h3>No products in cart</h3></div>
         <div class="product " *ngFor="let product of allProductsInCart; let last = last">
          <div class="row">
           <div class="col-3 image">
@@ -11,9 +12,17 @@
 
           </div>
           <div class="col-9 details">
+            <div class="d-flex justify-content-between">
             <h3>{{product.name}}</h3>
+            <img src="/assets/bin.png" alt="remove-item" class="remove" (click)="remove(product.id);" style="width: 16px; cursor: pointer;" height="20px"/>
+            </div>
+            <p>{{product.type}}</p>
             <div class="additionalinfo d-flex justify-content-between">
+              <div class="d-flex gap-2">
               <h3 style="font-size: 24px;">${{product.amount}}</h3>
+              <h3 style="font-size: 24px; color: rgb(116, 115, 115); text-decoration: line-through;"
+               *ngIf="product.oldPrice">${{product.oldPrice}}</h3>
+             </div>
               <div> <button class="btn btn-primary quantity gap-4"><img src="assets/subtract.png" alt="subtract" class="subtract" (click)="subtract(product.id,product.stockQuantity)">
         {{product.quantityTaken}}<img src="assets/add.png" alt="add" class="add" (click)="add(product.id,product.stockQuantity);"></button>
             </div>
@@ -26,5 +35,28 @@
         </div>
 
     </div>
+    <div class="col-12 col-lg-5">
+      <div class="ordersummary justify-content-between align-items-center">
+      <h3 style="font-size: 24px;">Order Summary</h3>
+      <div class="amounts mt-5">
+       <div class="d-flex justify-content-between">
+        <h5>Subtotal</h5>
+        <div class="subtotal"><h3> ${{ totalAmount + discountAmount }}  </h3></div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+        <h5>Discount</h5>
+        <h2  *ngIf="discountAmount!=0"style="color: red; font-size: 20px;">-${{discountAmount}} </h2>
+        </div>
+         <hr style="border: 1px solid lightgray; width: 100%;">
+        <div class="d-flex justify-content-between">
+        <h5>Total</h5>
+        <div class="total"><h3>${{totalAmount}} </h3></div>
+        </div>
+
+       </div>
+      </div>
+      </div>
+    </div>
 </div>
-</div>
+

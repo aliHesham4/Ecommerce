@@ -11,7 +11,7 @@
       <div class="col-4 col-sm-9 d-flex d-sm-block justify-content-end" ><div *ngIf="isOnProductList()" [class.hide]="isPopupSearch"><app-searchbar></app-searchbar></div></div>
       <div class="col-4 col-sm-1  gap-2 d-flex justify-content-end justify-content-end"style="flex-wrap: wrap;">
         <img src="assets/blacksearch.png" alt="blacksearch" class="blacksearch" (click)="openPopup()"/>
-        <img src="assets/Cart.png" alt="Cart" class="cart"/> 
+        <img src="assets/Cart.png" alt="Cart" routerLink="/products/cart" style="cursor: pointer;"class="cart"/> 
         <img src="assets/Profile.png" alt="Profile" class="profile" /></div>
      </div>
     </div>

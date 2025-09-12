@@ -40,7 +40,7 @@ export class LoginComponent {
         next: (response) => {
           console.log('Login successful', response);
           const loginID = response.data.id;
-          localStorage.setItem('loginID', loginID);
+          localStorage.setItem('loginID', JSON.stringify({loginID, isAdmin: response.data.isAdmin}));
           if(!response.data.isAdmin){
           this.MycartService.setUser(loginID);
           this.router.navigate(['/products']);

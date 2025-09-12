@@ -5,10 +5,10 @@ h2{
 }
 
 
-.mycart{
+.mycart,.ordersummary{
     border: 1px solid lightgray;
     border-radius: 16px;
-    padding: 10px;
+    padding: 30px;
 }
 
 h3{
@@ -46,3 +46,25 @@ h3{
     border-color:  rgba(240, 240, 240, 1);
     padding: 10px;
 }
+
+
+p{
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+
+h5{
+    font-family: inter,sans-serif;
+    font-weight: 400;
+    font-size: 20;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+
+.amounts{
+    line-height: 5;
+}
+

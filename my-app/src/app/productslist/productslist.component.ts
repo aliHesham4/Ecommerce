@@ -11,6 +11,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { AllproductsService } from '../shared/allproducts.service';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
 import { MycartService } from '../shared/mycart.service';
+import { CanActivate } from '@angular/router';
 
 
 
@@ -20,14 +21,13 @@ import { MycartService } from '../shared/mycart.service';
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
-export class ProductslistComponent implements OnInit,OnDestroy {
+export class ProductslistComponent implements OnInit,OnDestroy,CanActivate {
 
   
   searchTerm: string = '';
   private sub!: Subscription;
   private priceSub!: Subscription;
   products: Product[]=[];
-
   currentpage=1;
   itemsperpage=9;
   priceRange = { min: 0, max: 250 };
@@ -39,14 +39,23 @@ export class ProductslistComponent implements OnInit,OnDestroy {
  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService,private AllProductsService: AllproductsService,private MycartService: MycartService) {}
   
 
-
+ canActivate(): boolean {
+    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
+    if (loginID) {
+      return true; // allow access
+    } else {
+      alert("You must log in to access this page.");
+      this.router.navigate(['/login']); // redirect to login
+      return false; // block access
+    }
+  }
   
   
 
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-    this.loginID = localStorage.getItem('loginID') || '';
+    this.loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID;
      this.MycartService.setUser(this.loginID);
     console.log('Admin loginID:', this.loginID);
     this.AllProductsService.loginID = this.loginID; // Set loginID in the service

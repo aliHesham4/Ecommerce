@@ -25,6 +25,7 @@ export class ProductlayerComponent {
 
   chooseProduct(productID: string ):void{
    this.router.navigate(['/product/', productID]);
+   scroll(0,0);
 }
 
 

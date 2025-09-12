@@ -26,7 +26,7 @@
     </div>
     <div class="col-12 col-lg-6 details">
         <div><h1 class="product-title mt-2 mt-lg-0">{{product?.name}}</h1>
-        <p class="product-rating">4.5/<span style="color: rgba(0, 0, 0, 0.6);">5</span></p>
+        <p class="product-rating">{{product?.type}}</p>
         <div class="price d-flex gap-2">${{product?.amount}}
         <div class="old-price" *ngIf="product?.oldPrice">${{product?.oldPrice}}</div>
         <div class="discount" *ngIf="product?.oldPrice">{{product?.discountvalue}}% </div>

@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { CanActivate } from '@angular/router';
 
 
 
@@ -54,7 +55,7 @@ export interface Product{
 })
 
 
-export class AdminproductlistComponent {
+export class AdminproductlistComponent implements CanActivate {
   selectAll: boolean = false;  // For "Select All" checkbox
   searchText: string = '';  // For search input
   loginID: string | null = null; // To store loginID from localStorage
@@ -84,10 +85,12 @@ export class AdminproductlistComponent {
 
   constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private allProductsService: AllproductsService) {}
 
+  
+
   ngOnInit(): void {
     // get loginID from local storage
     if (isPlatformBrowser(this.platformId)) {
-    this.loginID = localStorage.getItem('loginID');
+    this.loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID;
     console.log('Admin loginID:', this.loginID);
     this.fetchProducts();
     this.allProductsService.loginID = this.loginID; // Set loginID in the service
@@ -98,6 +101,18 @@ export class AdminproductlistComponent {
     this.allProductsService.loadAllproducts(); // Load all products when component initializes
     }
    
+  }
+
+  canActivate(): boolean {
+    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
+    const isAdmin= JSON.parse(localStorage.getItem('loginID') || '{}').isAdmin;
+    if (loginID && isAdmin) {
+      return true; // allow access
+    } else {
+      alert("You must log in or be an admin to access this page.");
+      this.router.navigate(['/login']); // redirect to login
+      return false; // block access
+    }
   }
 
 
