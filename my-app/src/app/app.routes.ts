@@ -13,6 +13,7 @@ import { OrdersComponent } from './AdminNavbar/orders/orders.component';
 import { DashboardComponent } from './AdminNavbar/dashboard/dashboard.component';
 import { AddproductComponent } from './AdminNavbar/addproduct/addproduct.component';
 import { EditproductComponent } from './AdminNavbar/editproduct/editproduct.component';
+import { CartComponent } from './cart/cart.component';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
 },
      {path: 'register',component: RegisterComponent},
      {path: 'product/:id', component: ProductdetailComponent},
+     {path:'products/cart',component: CartComponent },
      {path: 'admin',component: AdminLayoutComponent,children: [
     { path: '', redirectTo: 'productlist', pathMatch: 'full' }, // ✅ Default child
     { path: 'productlist', component: AdminproductlistComponent},

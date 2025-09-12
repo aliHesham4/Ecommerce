@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  ngOnInit(){
+    this.currentRoute = this.router.url;
+  }
   currentRoute: string='';
 
    constructor(private router: Router, private route: ActivatedRoute) {
@@ -46,7 +49,9 @@ isOnProductList(){
   return this.currentRoute==="/products";
 }
 
-
+isOnCart(){
+  return this.currentRoute==="/products/cart";
+}
 
 
 

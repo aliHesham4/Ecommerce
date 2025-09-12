@@ -20,7 +20,8 @@
       <h3 style="font-size: 16px; color: black; word-spacing: 10px; text-align: left;">
       <span style="color: gray;"> Home </span>
       <img src="assets/arrow-right.png" alt="arrow-right" class="arrow-right" style="margin-right: 14px;"/> <span routerLink="/products" style="cursor: pointer; margin-right: 14px; ">Shop</span>
-      <span *ngIf="!isOnProductList()"><img src="assets/arrow-right.png" alt="arrow-right" class="arrow-right" style="margin-right: 14px;"/>Product</span>
+      <span *ngIf="!isOnProductList() && !isOnCart()"><img src="assets/arrow-right.png" alt="arrow-right" class="arrow-right" style="margin-right: 14px;"/>Product</span>
+      <span *ngIf="isOnCart()"><img src="assets/arrow-right.png" alt="arrow-right" class="arrow-right" style="margin-right: 14px;"/>Cart</span>
     </h3>
     </div>
 

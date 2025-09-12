@@ -10,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { AllproductsService } from '../shared/allproducts.service';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
+import { MycartService } from '../shared/mycart.service';
 
 
 
@@ -35,7 +36,7 @@ export class ProductslistComponent implements OnInit,OnDestroy {
  
   
 
- constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService,private AllProductsService: AllproductsService) {}
+ constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService,private AllProductsService: AllproductsService,private MycartService: MycartService) {}
   
 
 
@@ -46,10 +47,15 @@ export class ProductslistComponent implements OnInit,OnDestroy {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
     this.loginID = localStorage.getItem('loginID') || '';
+     this.MycartService.setUser(this.loginID);
     console.log('Admin loginID:', this.loginID);
     this.AllProductsService.loginID = this.loginID; // Set loginID in the service
      if (!this.loginID) {
-      console.error("No loginID found in localStorage!");
+      alert("You are not logged in,please log in to access our website")
+      setTimeout(()=>{
+      this.router.navigate(['/login']);
+      },500
+      )
       return; // stop here if loginID is missing
     }
     

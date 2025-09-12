@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { FormGroup,FormBuilder,ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Cart } from '../shared/mycart.service';
+import { MycartService } from '../shared/mycart.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent {
   private APIurl="https://localhost:7096/api/Customer/login";
   loginForm!: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,private MycartService: MycartService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -26,6 +28,8 @@ export class LoginComponent {
   onSubmit() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
+    // const emptyCart: Cart[] | null = null; 
+
 
     if (this.loginForm.get('email')?.value=="" || this.loginForm.get('password')?.value==""){
       this.loginForm.markAllAsTouched();
@@ -38,6 +42,7 @@ export class LoginComponent {
           const loginID = response.data.id;
           localStorage.setItem('loginID', loginID);
           if(!response.data.isAdmin){
+          this.MycartService.setUser(loginID);
           this.router.navigate(['/products']);
           }else
           this.router.navigate(['/admin/productlist'], );

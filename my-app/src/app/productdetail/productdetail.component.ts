@@ -8,6 +8,7 @@ import { PLATFORM_ID, Inject } from '@angular/core';
 import { AllproductsService } from '../shared/allproducts.service';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MycartService } from '../shared/mycart.service';
 
 
 @Component({
@@ -26,14 +27,18 @@ export class ProductdetailComponent {
   private id='';
   product: Product | null = null;
 
-  constructor(private router: Router, private route: ActivatedRoute,private AllProductsService: AllproductsService, private http:HttpClient) {}
+  constructor(private router: Router, private route: ActivatedRoute,private AllProductsService: AllproductsService, private http:HttpClient,private MycartService: MycartService) {}
  ngOnInit() {
   if (isPlatformBrowser(this.platformId)) {
     this.loginID = localStorage.getItem('loginID') || '';
     console.log('Admin loginID:', this.loginID);
 
     if (!this.loginID) {
-      console.error("No loginID found in localStorage!");
+      alert("You are not logged in,please log in to access our website")
+      setTimeout(()=>{
+      this.router.navigate(['/login']);
+      },500
+      )
       return; // stop here if loginID is missing
     }
 
@@ -145,6 +150,11 @@ export class ProductdetailComponent {
       console.error('Error fetching product:', err);
     },
   });
+  }
+
+  addtocart(){
+    this.MycartService.addProduct(this.id,this.itemquantity);
+    alert("product is added to cart successfully!");
   }
 
 }

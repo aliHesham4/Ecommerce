@@ -40,7 +40,8 @@ export interface Product{
   "height"?: number,
   "weight"?: number,
   "oldPrice"?: number,
-  
+  "isSelected"?:string
+  "quantityTaken"?:number
 
 
 }
