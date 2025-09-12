@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+
+  displayOptions=false;
+
   ngOnInit(){
     this.currentRoute = this.router.url;
   }
@@ -51,6 +54,16 @@ isOnProductList(){
 
 isOnCart(){
   return this.currentRoute==="/products/cart";
+}
+
+openOptions(){
+  this.displayOptions=!this.displayOptions;
+}
+
+logOut(){
+  this.router.navigate(['/login']);
+  localStorage.removeItem('loginID');
+
 }
 
 

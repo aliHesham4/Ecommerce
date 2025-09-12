@@ -12,9 +12,20 @@
       <div class="col-4 col-sm-1  gap-2 d-flex justify-content-end justify-content-end"style="flex-wrap: wrap;">
         <img src="assets/blacksearch.png" alt="blacksearch" class="blacksearch" (click)="openPopup()"/>
         <img src="assets/Cart.png" alt="Cart" routerLink="/products/cart" style="cursor: pointer;"class="cart"/> 
-        <img src="assets/Profile.png" alt="Profile" class="profile" /></div>
+        <div class="position-relative">
+        <img src="assets/Profile.png" alt="Profile" class="profile" style="cursor: pointer;" (click)="openOptions();" />
+        
+      <ul *ngIf="displayOptions" class="sort-options">
+            <li (click)="logOut()">Log Out</li>
+            <li routerLink="/myOrders">My Orders</li>
+      </ul>
+       </div>
+      </div>
      </div>
     </div>
+
+    
+    
     <div class="col-sm-12 custom-line"></div>
     <div class="col-12 pt-3 location-part d-flex justify-content-sm-start">
       <h3 style="font-size: 16px; color: black; word-spacing: 10px; text-align: left;">

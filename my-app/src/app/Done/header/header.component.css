@@ -70,7 +70,41 @@ h3{
  .hide{
         display: none!important;
     }
+    
 
+
+li{
+    font-family: inter,sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.sort-options{
+    position: absolute;
+    top: 15%;
+    right: 3.5%;
+    background-color: white;
+    border-radius: 16px;
+     border: 1px solid gray;
+    list-style: none;
+    width: 100px;
+    z-index: 10;
+    padding: 0;
+    }
+
+    .sort-options li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.sort-options li:hover {
+  background: #f5f5f5;
+  border-radius: 16px;
+}
+
+.profile{
+   cursor: pointer;
+}
 
 @media  (max-width: 576px){  
    
