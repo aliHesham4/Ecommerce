@@ -81,8 +81,8 @@ li{
 
 .sort-options{
     position: absolute;
-    top: 15%;
-    right: 3.5%;
+    top: 120%;
+    right: -80%;
     background-color: white;
     border-radius: 16px;
      border: 1px solid gray;

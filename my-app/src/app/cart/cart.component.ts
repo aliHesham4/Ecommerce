@@ -7,11 +7,12 @@ import { Cart, MycartService } from '../shared/mycart.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
 import { CanActivate } from '@angular/router';
+import { FooterComponent } from '../Done/footer/footer.component';
 
 
 @Component({
   selector: 'app-cart',
-  imports: [HeaderComponent,CommonModule],
+  imports: [HeaderComponent,CommonModule,FooterComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -49,7 +50,7 @@ constructor(private router:Router,private MycartService: MycartService,private h
     
    }
   //  ----------------------------------------------------------
-    this.MycartService.myCart$?.subscribe(async cart => {      //any change that happens to mycart gets saved in cart
+    this.MycartService.myCart$?.subscribe( cart => {      //any change that happens to mycart gets saved in cart
       this.cart = cart;
       this.productIDs=this.MycartService.productsID;              //save productIDs in service here
       
@@ -138,6 +139,12 @@ remove(productID:string){
    this.MycartService.allProductsInCart=this.allProductsInCart;
    this.totalAmount= this.MycartService.TotalValue;
    this.discountAmount=this.MycartService.TotalDiscountValue;
+}
+
+
+
+addOrder() {
+ this.MycartService.addOrder();
 }
 
 }

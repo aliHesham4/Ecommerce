@@ -64,7 +64,6 @@ export class MycartService {
     if (!isPlatformBrowser(this.platformId) || !this.myCartSubject) return;
     const cart: Cart = { customerId: this.loginID ?? '', orderItems: [] };  //make cart empty
     localStorage.setItem(`cart_${this.loginID}`, JSON.stringify(cart));   //save cart
-    // this.myCartSubject.next(cart);   // myCartSubject is now empty
     this.productsID=[];   //clear productsID
   }
 
@@ -110,6 +109,35 @@ get TotalDiscountValue(){
       discountAmount += (((product.discountvalue ?? 0)/100)*product.amount) * number; 
   }
   return Math.ceil(discountAmount);
+}
+
+
+addOrder(){
+   const cart= this.myCartSubject.value;
+   if(cart.orderItems.length > 0){
+   this.http.post('https://localhost:7096/api/Order/addorder', cart)
+      .subscribe({
+        next: () => {
+          alert("Order Placed Succesfully, Thank you for shopping with us!");
+          setTimeout(() => { this.Router.navigate(['/myOrders/']);}, 200);
+          const cart: Cart = { customerId: this.loginID ?? '', orderItems: [] };  //make cart empty
+          localStorage.setItem(`cart_${this.loginID}`, JSON.stringify(cart));   //save cart
+          this.productsID=[];   //clear productsID
+          
+        },
+        error: (err) => {
+          if(err.error?.errors){
+           alert(err.error.errors["Validation Error:"][0]);
+          }else{
+          console.error("Order failed:", err);
+          alert("Could not place order, please try again.");
+          }
+          
+        }
+      });
+
+    }
+
 }
 
 }

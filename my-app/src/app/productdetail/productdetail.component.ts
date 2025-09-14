@@ -31,7 +31,7 @@ export class ProductdetailComponent implements CanActivate {
   constructor(private router: Router, private route: ActivatedRoute,private AllProductsService: AllproductsService, private http:HttpClient,private MycartService: MycartService) {}
  ngOnInit() {
   if (isPlatformBrowser(this.platformId)) {
-    this.loginID = localStorage.getItem('loginID') || '';
+    this.loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID;
     console.log('Admin loginID:', this.loginID);
 
     if (!this.loginID) {
@@ -52,10 +52,10 @@ export class ProductdetailComponent implements CanActivate {
       // Shuffle after products arrive, not before
       this.shuffledProducts = [...this.products].sort(() => Math.random() - 0.5);
     });
-     this.id = this.route.snapshot.paramMap.get('id') || '';
 
-    this.getProduct();
-
+    this.route.paramMap.subscribe(params=>{ 
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    this.getProduct();})
 }
  }
 

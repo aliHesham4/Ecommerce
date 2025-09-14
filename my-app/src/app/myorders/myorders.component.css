@@ -1,0 +1,12 @@
+h3{
+    font-family: inter,sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.order-box{
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+    padding: 10px;
+
+}

@@ -56,6 +56,10 @@ isOnCart(){
   return this.currentRoute==="/products/cart";
 }
 
+isOnOrders(){
+  return this.currentRoute==="/myOrders";
+}
+
 openOptions(){
   this.displayOptions=!this.displayOptions;
 }
