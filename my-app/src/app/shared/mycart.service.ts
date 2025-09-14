@@ -119,7 +119,8 @@ addOrder(){
       .subscribe({
         next: () => {
           alert("Order Placed Succesfully, Thank you for shopping with us!");
-          setTimeout(() => { this.Router.navigate(['/myOrders/']);}, 200);
+          setTimeout(() => { this.Router.navigate(['/myOrders/']);
+            alert("System is processing your order, the order will be submitted shortly ");}, 200);
           const cart: Cart = { customerId: this.loginID ?? '', orderItems: [] };  //make cart empty
           localStorage.setItem(`cart_${this.loginID}`, JSON.stringify(cart));   //save cart
           this.productsID=[];   //clear productsID

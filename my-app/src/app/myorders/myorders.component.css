@@ -10,3 +10,46 @@ h3{
     padding: 10px;
 
 }
+
+.orders{
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+    padding: 10px;
+
+}
+
+h4{
+    font-family: inter,sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+span{
+    font-weight: 350;
+}
+
+
+.deletepopup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.deleted{
+  background-color: lightcoral;
+
+  border-radius: 999px;
+  color: white;
+  text-align: center;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

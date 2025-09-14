@@ -80,3 +80,71 @@ h5{
     padding: 0px;
 }
 
+
+@media(min-width:470px) and (max-width:768px){
+ .imagebox{
+   height: 99px;
+   width:99px;
+ }
+
+ h3{
+    font-size: 16px;
+ }
+ p{
+    font-size: 12px;
+ }
+
+ .quantity{
+    width:105px;
+    height:31px;
+    gap: 12px;
+    align-content: center;
+    justify-content: center;
+ }
+ .add,.subtract{
+    width:12px;
+    height: 12px;
+
+ }
+
+
+}
+
+@media(max-width:470px){
+ .imagebox{
+   height: 120px;
+   width:70px;
+ }
+
+ h3{
+    font-size: 16px;
+ }
+ p{
+    font-size: 12px;
+ }
+
+ .quantity{
+    width:80px;
+    height:31px;
+    gap: 12px;
+    align-content: center;
+    justify-content: center;
+ }
+ .add,.subtract{
+    width:12px;
+    height: 12px;
+
+ }
+ .details{
+    padding-left: 10px;
+ }
+
+ .mycart{
+    padding: 8px;
+ }
+
+
+}
+
+
+

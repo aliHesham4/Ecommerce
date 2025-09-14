@@ -3,7 +3,7 @@
 <div class="mb-3"><h2>Your Cart</h2></div>
 <div class="row gap-4">
   <div class="col-lg-6 col-12">
-    <div class="p-4 mycart mb-5 ">
+    <div class="p-lg-4 mycart mb-5 ">
         <div class="d-flex align-items-center justify-content-center"*ngIf="allProductsInCart.length==0" style="color: rgb(163, 162, 162);"><h3>No products in cart</h3></div>
         <div class="product " *ngFor="let product of allProductsInCart; let last = last">
          <div class="row">
@@ -24,7 +24,7 @@
               <h3 style="font-size: 24px; color: rgb(116, 115, 115); text-decoration: line-through;"
                *ngIf="product.oldPrice">${{product.oldPrice}}</h3>
              </div>
-              <div> <button class="btn btn-primary quantity gap-4"><img src="assets/subtract.png" alt="subtract" class="subtract" (click)="subtract(product.id,product.stockQuantity)">
+              <div> <button class="btn btn-primary quantity gap-lg-4"><img src="assets/subtract.png" alt="subtract" class="subtract" (click)="subtract(product.id,product.stockQuantity)">
         {{product.quantityTaken}}<img src="assets/add.png" alt="add" class="add" (click)="add(product.id,product.stockQuantity);"></button>
             </div>
             </div>
