@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {interval,switchMap,takeWhile}from 'rxjs'
 
 export interface Cart {
   customerId: string;
@@ -20,6 +21,8 @@ export class MycartService {
   myCart$!: Observable<Cart>;     //myCart observable
   productsID: string[]=[];       // array to store productsID to fetch them one by one
   allProductsInCart: Product[]=[];   //all products in cart in an array
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
 
   constructor(private http: HttpClient,private Router: Router) {
     if (isPlatformBrowser(this.platformId)) {
@@ -27,7 +30,6 @@ export class MycartService {
       if (this.loginID) {
         this.setUser(this.loginID);     // set User
       }else{
-        alert("something went wrong, please try again");
          this.Router.navigateByUrl('/login');
         
       }
@@ -115,22 +117,31 @@ get TotalDiscountValue(){
 addOrder(){
    const cart= this.myCartSubject.value;
    if(cart.orderItems.length > 0){
-   this.http.post('https://localhost:7096/api/Order/addorder', cart)
+    this.loadingSubject.next(true);
+   this.http.post<{data:any}>('https://localhost:7096/api/Order/addorder', cart)
       .subscribe({
-        next: () => {
-          alert("Order Placed Succesfully, Thank you for shopping with us!");
-          setTimeout(() => { this.Router.navigate(['/myOrders/']);
-            alert("System is processing your order, the order will be submitted shortly ");}, 200);
+        next: (res) => {
+          const orderid= res.data.id;
+          const pageNumber=1
           const cart: Cart = { customerId: this.loginID ?? '', orderItems: [] };  //make cart empty
           localStorage.setItem(`cart_${this.loginID}`, JSON.stringify(cart));   //save cart
           this.productsID=[];   //clear productsID
-          
+         interval(2000).pipe(
+          switchMap(()=>this.http.get<{ data: any[] }>(`https://localhost:7096/api/Order/getallorders/${this.loginID}?pageNumber=${pageNumber}`)),
+          takeWhile(response => !response.data.some(o => o.id === orderid))).subscribe({
+            complete:()=> {
+                alert('Order is submitted, Thank You for shopping with us');
+                this.Router.navigate(['/myOrders/']);
+                this.loadingSubject.next(false); }});
         },
         error: (err) => {
           if(err.error?.errors){
-           alert(err.error.errors["Validation Error:"][0]);
+          this.loadingSubject.next(false);
+          alert(err.error.errors["Validation Error:"][0]);
+           
           }else{
           console.error("Order failed:", err);
+          this.loadingSubject.next(false);
           alert("Could not place order, please try again.");
           }
           

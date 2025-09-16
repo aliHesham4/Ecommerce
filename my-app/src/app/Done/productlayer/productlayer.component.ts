@@ -18,6 +18,7 @@ export class ProductlayerComponent {
   @Input() oldPrice?: number;
   @Input() discountpercent?: number;
   @Input() productID:string='';
+  @Input() stockQuantity:number=0;
   
 
   constructor(private router:Router) {}
@@ -27,6 +28,8 @@ export class ProductlayerComponent {
    this.router.navigate(['/product/', productID]);
    scroll(0,0);
 }
+
+
 
 
 }

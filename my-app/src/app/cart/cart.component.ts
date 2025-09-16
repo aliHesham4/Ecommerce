@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { Cart, MycartService } from '../shared/mycart.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
-import { CanActivate } from '@angular/router';
 import { FooterComponent } from '../Done/footer/footer.component';
 
 
@@ -16,24 +15,17 @@ import { FooterComponent } from '../Done/footer/footer.component';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent implements CanActivate {
+export class CartComponent  {
 loginID: string | null = null; // To store loginID from localStorage
 productIDs:string[]=[];        // array to store productsID to fetch them one by one
 cart: Cart | null = null;
 allProductsInCart: Product[]=[]; //all products in cart in an array
 totalAmount:number=0;
 discountAmount:number=0;
+loading:boolean=false;
 
-canActivate(): boolean {
-    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
-    if (loginID) {
-      return true; // allow access
-    } else {
-      alert("You must log in to access this page.");
-      this.router.navigate(['/login']); // redirect to login
-      return false; // block access
-    }
-  }
+
+
 constructor(private router:Router,private MycartService: MycartService,private http: HttpClient){}
 
   ngOnInit():void{
@@ -47,8 +39,11 @@ constructor(private router:Router,private MycartService: MycartService,private h
       )
       return; 
     }
-    
+
    }
+   this.MycartService.loading$.subscribe(state => {
+    this.loading = state;
+  });
   //  ----------------------------------------------------------
     this.MycartService.myCart$?.subscribe( cart => {      //any change that happens to mycart gets saved in cart
       this.cart = cart;
@@ -113,12 +108,12 @@ constructor(private router:Router,private MycartService: MycartService,private h
  add(productID:string,stockQuantity:number):void{    
    const product = this.allProductsInCart.find(p => p.id === productID);   //get product from id
     if (product && (product.quantityTaken ?? 0) < stockQuantity ) {  //add quantities while < stockQuantity
-      this.MycartService.addProduct(productID, +1);  
+      this.MycartService.addProduct(productID, 1,);  
       product.quantityTaken = (product.quantityTaken ?? 0) + 1; // for immediate increase in add
       this.totalAmount= this.MycartService.TotalValue;  //update totalvalue
        this.discountAmount=this.MycartService.TotalDiscountValue;  //update discount amount
-
     }
+    
    }
 
    subtract(productID:string,stockQuantity:number):void{    //same logic like add
@@ -144,6 +139,7 @@ remove(productID:string){
 
 
 addOrder() {
+
  this.MycartService.addOrder();
 }
 

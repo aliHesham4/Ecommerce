@@ -9,7 +9,7 @@ import { AllproductsService } from '../shared/allproducts.service';
 import { ActivatedRoute, Router,RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MycartService } from '../shared/mycart.service';
-import { CanActivate } from '@angular/router';
+
 
 
 @Component({
@@ -18,7 +18,7 @@ import { CanActivate } from '@angular/router';
   templateUrl: './productdetail.component.html',
   styleUrl: './productdetail.component.css',
 })
-export class ProductdetailComponent implements CanActivate {
+export class ProductdetailComponent  {
   products:Product[]=[];
   selected: string = '';
   itemquantity= 1;
@@ -98,8 +98,8 @@ export class ProductdetailComponent implements CanActivate {
     this.selected = imagePath;
   }
 
-  add(){
-    if(this.itemquantity<99)
+  add(quantity:any){
+    if(this.itemquantity<quantity)
     this.itemquantity++;
   }
 
@@ -160,16 +160,7 @@ export class ProductdetailComponent implements CanActivate {
 
 
 
-  canActivate(): boolean {
-    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
-    if (loginID) {
-      return true; // allow access
-    } else {
-      alert("You must log in to access this page.");
-      this.router.navigate(['/login']); // redirect to login
-      return false; // block access
-    }
-  }
+
 
 }
 

@@ -11,7 +11,6 @@ import { PLATFORM_ID } from '@angular/core';
 import { AllproductsService } from '../shared/allproducts.service';
 import { Product } from '../AdminNavbar/adminproductlist/adminproductlist.component';
 import { MycartService } from '../shared/mycart.service';
-import { CanActivate } from '@angular/router';
 
 
 
@@ -21,7 +20,7 @@ import { CanActivate } from '@angular/router';
   templateUrl: './productslist.component.html',
   styleUrl: './productslist.component.css'
 })
-export class ProductslistComponent implements OnInit,OnDestroy,CanActivate {
+export class ProductslistComponent implements OnInit,OnDestroy {
 
   
   searchTerm: string = '';
@@ -39,16 +38,7 @@ export class ProductslistComponent implements OnInit,OnDestroy,CanActivate {
  constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService,private priceService: PriceService,private AllProductsService: AllproductsService,private MycartService: MycartService) {}
   
 
- canActivate(): boolean {
-    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
-    if (loginID) {
-      return true; // allow access
-    } else {
-      alert("You must log in to access this page.");
-      this.router.navigate(['/login']); // redirect to login
-      return false; // block access
-    }
-  }
+ 
   
   
 

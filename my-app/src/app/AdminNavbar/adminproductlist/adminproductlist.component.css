@@ -31,6 +31,13 @@ a{
 
 }
 
+h5{
+  font-family: inter,sans-serif;
+    color: rgb(105, 103, 103);
+    font-weight: 600;
+    font-size: 14px;
+}
+
 .options{
     color: rgba(102, 112, 133, 1);
     font-family: inter,sans-serif;
@@ -65,7 +72,7 @@ a{
   border-radius: 4px; 
   height: 40px;
   outline: none;
-  width: 100%;
+  width: 60%;
 }
 .search-wrapper {
   position: relative;
@@ -292,4 +299,69 @@ a{
   accent-color: #000000; /* Change color */
   border-radius: 6px; /* Makes it curved */
   cursor: pointer;
+}
+
+.product{
+  justify-content: space-between;
+   flex: 0 0 auto;
+  width: 25%;
+}
+
+.productdata{
+  flex: 0 0 auto;
+  width: 25%;
+}
+
+
+
+
+@media(max-width:992px){
+
+.SKU,
+.Categories,
+.Stock,
+.Price,
+.Status,
+.Added,
+.SKUdata,
+.Categoriesdata,
+.stockdata,
+.productamountdata,
+.status,
+.Action {
+  display: none!important;
+}
+
+ 
+
+.product,.productdata{
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.previous,.num,.next{
+  width:32px;
+  height: 32px;
+  align-items: center;
+  display: flex;
+}
+
+.options h5{
+  display: none!important;
+}
+
+.twobuttons{
+  margin-top: 10px;
+}
+
+
+
+}
+
+
+
+@media(max-width:500px){
+  .search-input{
+    width:100%
+  }
 }

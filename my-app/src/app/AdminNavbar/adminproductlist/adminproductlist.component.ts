@@ -13,7 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { CanActivate } from '@angular/router';
+
 
 
 
@@ -55,7 +55,7 @@ export interface Product{
 })
 
 
-export class AdminproductlistComponent implements CanActivate {
+export class AdminproductlistComponent  {
   selectAll: boolean = false;  // For "Select All" checkbox
   searchText: string = '';  // For search input
   loginID: string | null = null; // To store loginID from localStorage
@@ -86,6 +86,7 @@ export class AdminproductlistComponent implements CanActivate {
   constructor(private http: HttpClient, private route: ActivatedRoute,@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private allProductsService: AllproductsService) {}
 
   
+  
 
   ngOnInit(): void {
     // get loginID from local storage
@@ -103,17 +104,7 @@ export class AdminproductlistComponent implements CanActivate {
    
   }
 
-  canActivate(): boolean {
-    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
-    const isAdmin= JSON.parse(localStorage.getItem('loginID') || '{}').isAdmin;
-    if (loginID && isAdmin) {
-      return true; // allow access
-    } else {
-      alert("You must log in or be an admin to access this page.");
-      this.router.navigate(['/login']); // redirect to login
-      return false; // block access
-    }
-  }
+ 
 
 
 

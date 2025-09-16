@@ -61,18 +61,13 @@ p{
   display: inline-block;        /* so stars act like text */
 }
 
-.stars::before {
-  content: "★★★★★";   
-  letter-spacing: 2px; 
-  
-  background: linear-gradient(
-    90deg,
-    var(--star-background) calc(var(--rating) / 5 * 100%),
-    var(--star-color) calc(var(--rating) / 5 * 100%)
-  );
-  
-  background-clip: text;  /* apply gradient only inside text */
-  -webkit-text-fill-color: transparent; /* hide text color so gradient shows */
+
+
+.blurred {
+  background-color: #fff9f9;  
+  opacity: 0.7; 
+  border-radius: 16px;              
+
 }
 
 

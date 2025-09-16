@@ -14,17 +14,8 @@ import { Router } from '@angular/router';
   templateUrl: './productspage.component.html',
   styleUrl: './productspage.component.css'
 })
-export class ProductspageComponent implements CanActivate {
+export class ProductspageComponent  {
   constructor(private router:Router){}
-  canActivate(): boolean {
-    const loginID = JSON.parse(localStorage.getItem('loginID') || '{}').loginID; // ✅ check if logged in
-    if (loginID) {
-      return true; // allow access
-    } else {
-      alert("You must log in to access this page.");
-      this.router.navigate(['/login']); // redirect to login
-      return false; // block access
-    }
-  }
+
 
 }

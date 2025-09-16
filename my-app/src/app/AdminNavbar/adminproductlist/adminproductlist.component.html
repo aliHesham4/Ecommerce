@@ -1,38 +1,58 @@
 
-<div class="row viewproducts p-2">
-    <div class="col-12 titles d-flex justify-content-between">
-        <div class="left">
-            <h2>Product</h2>
-            <h3><a routerLink="/admin/dashboard" class="text-decoration-none" style="color: rgba(92, 89, 232, 1);">Dashboard</a>  >   
-                <a routerLink="/admin/productlist" class="text-decoration-none">Product</a></h3>
-            
-                <div class="search-wrapper"> <img src="assets/Search.png" alt="Search" class="search-icon" /> 
-                <input type="text" class="form-control search-input"   (input)="Searchproducts()" [(ngModel)]="searchText" placeholder="Search Product ..." aria-label="Search">
+<div class="container viewproducts p-2">
+    <div class="row titles">
+    <div class=" col-12 col-lg-6">
+     <h2>Product</h2>
+     <h3><a routerLink="/admin/dashboard" class="text-decoration-none" style="color: rgba(92, 89, 232, 1);">Dashboard</a>  >   
+     <a routerLink="/admin/productlist" class="text-decoration-none">Product</a></h3>
+     </div>
 
-                </div>   
-                
-            </div>
+     <div class="col-12 col-lg-6 d-flex align-items-center justify-content-lg-end">
+      <div class="d-flex"><button class="btn btn-primary add " routerLink="/admin/productlist/add-product">+ Add Product</button></div>
+     </div>
+     
+     <div class="row m-0 align-items-center">
+     <div class="col-12 col-lg-6 mt-2 p-0">
+       <div class="search-wrapper"> <img src="assets/Search.png" alt="Search" class="search-icon" /> 
+         <input type="text" class="form-control search-input"   (input)="Searchproducts()" [(ngModel)]="searchText" placeholder="Search Product ..." aria-label="Search">
+         </div>
+     </div>
 
-       
-       <div class="right ">
-            <div class="d-flex justify-content-end"><button class="btn btn-primary add " routerLink="/admin/productlist/add-product">+ Add Product</button></div>
-            <div class=" d-flex align-items-end gap-2 mt-2 twobuttons">
-             <button class="btn options d-flex gap-2" (click)="rangePicker.open()"><img src="/assets/calender.png" alt="calender"/>Select Dates</button>
-             <button class="btn options d-flex gap-2" (click)="OpenFilters()"><img src="/assets/filteradmin.png" alt="filter"/>Filters</button>
+
+        <div class="col-12 col-lg-6 p-0"> 
+            <div class=" d-flex align-items-center justify-content-lg-end gap-2 twobuttons">
+             <button class="btn options d-flex gap-2" (click)="rangePicker.open()"><img src="/assets/calender.png" alt="calender"/><h5>Select Dates</h5></button>
+             <button class="btn options d-flex gap-2" (click)="OpenFilters()"><img src="/assets/filteradmin.png" alt="filter"/><h5>Filters</h5></button>
              <div class="filter-popup" *ngIf="filterpopup" (click)="CloseFilters()">
                 <div class="filterpopup-content" (click)="$event.stopPropagation()">
                     <h2 style="font-size: 25px; font-weight: 600;">Filter by Category</h2>
-                    <div class="categories d-flex gap-4 mt-3 align-items-center">
+                    <div class="categories flex-wrap d-flex gap-4 mt-3 align-items-center">
+
+                    <div class="gap-2 d-flex align-items-center">
                     <input type="checkbox" id="Tops" [(ngModel)]="topsSelected" name="Tops" value="Tops">
                     <label for="Tops">Tops</label>
+                    </div>
+
+                    <div class="gap-2 d-flex align-items-center">
                     <input type="checkbox" id="Bottoms" [(ngModel)]="bottomsSelected" name="Bottoms" value="Bottoms">
                     <label for="Bottoms">Bottoms</label>
+                    </div>
+
+                    <div class="gap-2 d-flex align-items-center">
                     <input type="checkbox" id="Dresses" [(ngModel)]="dressesSelected" name="Dresses" value="Dresses">
                     <label for="Dresses">Dresses</label>
+                    </div>
+
+                    <div class="gap-2 d-flex align-items-center">
                     <input type="checkbox" id="Accessories" [(ngModel)]="accessoriesSelected" name="Accessories" value="Accessories">
                     <label for="Accessories">Accessories</label>
+                    </div>
+                    
+                    <div class="gap-2 d-flex align-items-center">
                     <input type="checkbox" id="Shoes" [(ngModel)]="shoesSelected" name="Shoes" value="Shoes">
                     <label for="Shoes">Shoes</label>
+                    </div>
+
                     </div>
                     </div>
              </div>
@@ -44,18 +64,20 @@
             </mat-date-range-input>
 
             <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
-            <mat-date-range-picker #rangePicker (closed)="closeDateRangePicker()"></mat-date-range-picker>
+            <mat-date-range-picker [touchUi]="true" #rangePicker (closed)="closeDateRangePicker()"></mat-date-range-picker>
             </mat-form-field>
              
            </div>
 
+        </div>
+        </div>
 
-</div>
-
-</div>
+     </div>
+     
+            
 <div class="product-box mt-3 ">
 <div class=" row mb-0 header border-bottom">
-    <div class="col-3 product d-flex justify-content-between">
+    <div class="col-3 product d-flex ">
      <div><input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" /> 
       Product
      </div>
@@ -71,11 +93,11 @@
             Categories
         </div>
 
-    <div class="col-1 d-flex gap-1 justify-content-center">
+    <div class="col-1 Stock d-flex gap-1 justify-content-center">
         Stock
     </div>
 
-    <div class="col-1 d-flex justify-content-center gap-1">
+    <div class="col-1 Price d-flex justify-content-center gap-1">
         Price
     <div *ngIf="onP"><img src="/assets/arrow-down.png" (click)="sortPrice()" class="arrowdown" alt="arrow" style="cursor: pointer;"></div>
      <div *ngIf="!onP"><img src="/assets/arrow-up.png" (click)="sortPrice()" class="arrowup" alt="arrow" style="cursor: pointer;"></div>
@@ -106,7 +128,7 @@ No products available
 <div *ngIf="!filterSelected">
  <div  class="row m-0 product-card" *ngFor="let product of products"  >
   
-    <div class="col-3 productdata d-flex align-items-center gap-2">
+    <div class=" productdata d-flex align-items-center gap-2">
      <input type="checkbox" [(ngModel)]="product.selected" (change)="checkIfAllSelected()" />
      <div class="image-cell">
      <img [src]="'/assets/' + (product.images?.[0])" alt="Product Image" class="product-image" />
@@ -132,7 +154,7 @@ No products available
         {{product.stockQuantity}}
     </div>
 
-    <div class="col-1 text-center">
+    <div class="col-1 productamountdata text-center">
         {{product.amount}}$
     </div>
 
@@ -227,7 +249,7 @@ No products available
         {{product.stockQuantity}}
     </div>
 
-    <div class="col-1 text-center">
+    <div class="col-1 productamountdata text-center">
         {{product.amount}}$
     </div>
 

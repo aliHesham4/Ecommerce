@@ -33,12 +33,13 @@
         </div>
         <div class="description">{{product?.description}}</div>
         <hr>
+        <div style="font-family: inter,sans-serif;"*ngIf="product?.stockQuantity==0">Out Of Stock</div>
         </div>
        <div class="bars d-flex align-items-center gap-3 justify-content-between">
        <div> <button class="btn btn-primary quantity gap-4"><img src="assets/subtract.png" alt="subtract" class="subtract" (click)="subtract()">
-        {{itemquantity}}<img src="assets/add.png" alt="add" class="add" (click)="add()"></button>
+        {{itemquantity}}<img src="assets/add.png" alt="add" class="add" (click)="add(product?.stockQuantity)"></button>
     </div>
-        <button class="btn btn-primary add-to-cart" (click)="addtocart()">Add to Cart</button>
+        <button class="btn btn-primary add-to-cart" [class.disabled]="product?.stockQuantity==0"(click)="addtocart()">Add to Cart</button>
         </div>
         
 
@@ -55,7 +56,8 @@
         [amount]="product.amount"
         [oldPrice]="product.oldPrice"
         [discountpercent]="product.discountvalue"
-        [productID]="product.id">
+        [productID]="product.id"
+        [stockQuantity]="product.stockQuantity">
 
     </app-productlayer>
     </div>

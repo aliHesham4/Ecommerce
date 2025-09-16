@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { CanActivate } from '@angular/router';
+
 
 @Component({
   selector: 'app-adminlayout',
@@ -8,6 +10,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './adminlayout.component.html',
   styleUrls: ['./adminlayout.component.css']
 })
-export class AdminLayoutComponent {
+export class AdminLayoutComponent  {
+
 
 }
