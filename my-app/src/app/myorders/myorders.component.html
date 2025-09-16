@@ -5,22 +5,22 @@
     <div class="row gap-4">
     <div *ngIf="TotalOrders.length==0"><h4 style="text-align: center;">No Orders Till Now</h4></div>
     <div class="orders col-lg-5 col-12 mt-3 mb-3 " *ngFor="let order of TotalOrders">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex flex-wrap justify-content-between">
      <h4 style="display: flex; align-items: center; gap: 5px; margin: 0 0 8px 0;">Order ID:
      <span style="color: darkgray; font-size: 10px;">{{order.id}}</span>
      </h4>
      <img src="/assets/bin.png" alt="remove-item" class="remove" (click)="onDelete(order.id);" style="width: 16px; cursor: pointer;" height="20px"/>
     </div>
-     <h4 style="display: flex; align-items: center; gap: 5px; margin: 0 0 8px 0;">Created On:
+     <h4 style="display: flex;flex-wrap: wrap; align-items: center; gap: 5px; margin: 0 0 8px 0;">Created On:
      <span >{{ order.createdOn | date:'short' }}</span>
      </h4>
-     <h4 style="display: flex; align-items: center; gap: 5px; margin: 0 0 8px 0;">Product Amount:
+     <h4 style="display: flex;flex-wrap: wrap; align-items: center; gap: 5px; margin: 0 0 8px 0;">Product Amount:
      <span >${{order.amount}}</span>
      </h4>
-     <h4 style="display: flex; align-items: center; gap: 5px; margin: 0 0 8px 0;">Total Amount:
+     <h4 style="display: flex;flex-wrap: wrap; align-items: center; gap: 5px; margin: 0 0 8px 0;">Total Amount:
      <span style="color: green; font-weight: 600;">${{order.totalAmount}}</span>
      </h4>
-     <h4 style="display: flex; align-items: center; gap: 5px; margin: 0 0 8px 0;">Order Status:
+     <h4 style="display: flex;flex-wrap: wrap; align-items: center; gap: 5px; margin: 0 0 8px 0;">Order Status:
      <span *ngIf="!order.isDeleted">Confirmed</span>
      </h4>
     </div>
