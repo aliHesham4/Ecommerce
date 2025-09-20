@@ -198,12 +198,10 @@ span{
   background-color: rgb(255, 255, 255);
   border: 1px ridge rgb(211, 211, 211,0.3);
   padding: 10px;
-  position: fixed;
-  bottom: 0;
   margin-left: -15px;
-  width: 84%;
+
   
-  z-index: 1000; /* stays above other elements */
+  
 }
 
 .cancel{
