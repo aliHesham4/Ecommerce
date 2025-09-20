@@ -4,6 +4,9 @@
     padding-right: 100px;
 
 }
+.no-padding{
+    max-width: 1550px;
+}
 
 .header-part{
     gap: 20px;
