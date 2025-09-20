@@ -124,6 +124,8 @@ h5{
 .num{
   background-color: rgba(92, 89, 232, 1);
   color: white;
+  display: flex;
+  justify-content: center;
   
 }
 

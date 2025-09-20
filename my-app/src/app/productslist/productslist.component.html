@@ -41,12 +41,12 @@
                 <button class="btnp btn-primary" (click)=changePage(currentpage-1)><img src="assets/arrow-left-real.png" alt="Previous">Previous</button>
             </div>
             <div class="col-8 d-flex range justify-content-center ">
-            <div class="repeat" *ngFor="let page of [].constructor(totalPages); let i = index"
-              [class.active]="currentpage === i + 1">
-               <button class="btn-page" (click)="changePage(i + 1)">{{ i + 1 }}</button>
+            <div class="repeat" *ngFor="let page of getPagesToShow()"
+              [class.active]="currentpage === page">
+               <button class="btn-page" (click)="changePage(page)">{{ page}}</button>
                </div>
             </div>
-            <div class="col-2 previous d-flex justify-content-end" [class.disabled]="currentpage>=totalPages">
+            <div class="col-2 previous next d-flex justify-content-end" [class.disabled]="currentpage>=totalPages">
                 <button class="btnn btn-primary" (click)=changePage(currentpage+1)>Next<img src="assets/arrow-right-real.png" alt="Next"></button>
             </div>
         </nav>

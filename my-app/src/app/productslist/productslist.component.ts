@@ -173,4 +173,24 @@ openPopup() {
   this.router.navigate(['/products', { outlets: { popup: ['filter'] } }]);
 }
 
+
+
+getPagesToShow(): number[] {
+  const total = this.totalPages;
+  const current = this.currentpage;
+
+  let start = Math.max(current - 1, 1);   // show one before
+  let end = Math.min(start + 2, total);   // only 3 total
+
+  // adjust start if near the end
+  start = Math.max(end - 2, 1);
+
+  const pages: number[] = [];
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  return pages;
+}
+
+
 }
