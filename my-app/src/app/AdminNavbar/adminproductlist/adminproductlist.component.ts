@@ -129,6 +129,8 @@ checkIfAllSelected(): void {
 
 //  sorting
   sortProducts(): void {
+  this.filterSelected=true;
+  this.products=this.allProducts;
 
    if (this.on){
     this.products.sort((a, b) => b.name.localeCompare(a.name));  //if ascending make descending
@@ -143,6 +145,8 @@ checkIfAllSelected(): void {
 
 
   sortPrice():void{
+    this.filterSelected=true;
+  this.products=this.allProducts;
     if (this.onP) {
       this.products.sort((a, b) => b.amount - a.amount);      // if ascending make descending
       this.on = true;
@@ -154,6 +158,8 @@ checkIfAllSelected(): void {
   }
 
   sortDate(): void {
+    this.filterSelected=true;
+  this.products=this.allProducts;
   if (this.onD) {
     this.products.sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime());
   } else {
@@ -299,6 +305,7 @@ checkIfAllSelected(): void {
 
   // search products
   Searchproducts():void{
+    this.pageNumber=1;
     const searchTerm = this.searchText.toLowerCase();
     this.products = this.allProducts.filter(product =>
       product.name.toLowerCase().includes(searchTerm)
@@ -310,6 +317,7 @@ checkIfAllSelected(): void {
 // filter by date
 
 closeDateRangePicker(){
+this.pageNumber=1;
  this.filterSelected=true;
   if(this.startDate && this.endDate){
     this.products = this.allProducts.filter(product => {
@@ -327,6 +335,7 @@ OpenFilters():void{
 }
 
 CloseFilters():void{
+  this.pageNumber=1;
   this.filterpopup=false;
   this.products = this.allProducts.filter(product => {
     const isTop = this.topsSelected && product.type.toLowerCase() === 'tops';

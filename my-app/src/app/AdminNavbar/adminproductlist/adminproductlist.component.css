@@ -304,8 +304,9 @@ h5{
 }
 
 .product{
-  justify-content: space-between;
-   flex: 0 0 auto;
+  /* justify-content: space-between; */
+  gap: 3px;
+  flex: 0 0 auto;
   width: 25%;
 }
 
@@ -329,8 +330,7 @@ h5{
 .Categoriesdata,
 .stockdata,
 .productamountdata,
-.status,
-.Action {
+.status {
   display: none!important;
 }
 
@@ -338,7 +338,12 @@ h5{
 
 .product,.productdata{
   flex: 0 0 auto;
-  width: 100%;
+  width: 75%;
+}
+
+.Action{
+   flex: 0 0 auto;
+  width: 25%;
 }
 
 .previous,.num,.next{
@@ -366,4 +371,15 @@ h5{
   .search-input{
     width:100%
   }
+
+  .paging{
+    font-size: 10px;
+  }
+
 }
+
+
+
+
+
+
